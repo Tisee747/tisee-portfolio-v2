@@ -1,43 +1,44 @@
 # Tisee Portfolio V4
 
-Production-ready static portfolio source designed from scratch for Tisee.
+A standalone, zero-dependency portfolio redesign authored for Tisee.
 
-## Design direction
+## Stack
 
-- Big-tech product-site feel: Apple-style restraint + Google-style clarity
-- Dark neutral palette with off-white experience section
-- One restrained lime accent (`#c7ff5e`)
-- Product-first project storytelling
-- No glassmorphism, neon gradients, animated blobs, 3D grids, or theme switchers
-- Responsive and accessible
-- Zero dependencies and zero build step
+- Semantic HTML
+- Modern CSS
+- Small vanilla JavaScript enhancement layer
+- Vercel static hosting
+- No runtime dependencies
+- No environment variables
+- No build step
 
 ## Local preview
 
-Any static server works:
+First vendor assets (internet access required once):
+
+```bash
+./scripts/vendor-assets.sh
+```
+
+Then serve the directory:
 
 ```bash
 python3 -m http.server 3000
 ```
 
-Then open `http://localhost:3000`.
+Open `http://localhost:3000`.
 
-## Deploy
+## Design system
 
-This folder can be deployed directly to Vercel as a static site. No framework preset, env vars, or build command are required.
+The visual direction takes big-tech product-site principles rather than copying a specific brand:
 
-## Asset strategy
+- restrained dark/off-white palette
+- large product-led typography
+- generous whitespace
+- one lime accent
+- full-size product storytelling rather than card grids
+- subtle motion only
 
-The initial V4 references project screenshots and the resume from the existing production portfolio at:
+## Deployment
 
-`https://web-tisee.vercel.app`
-
-This is intentional so the old repo/site remains untouched while the new site is developed separately.
-
-Once the new repo is live, assets can optionally be copied into this repo's `/public` or root asset folder and the URLs updated. That is an asset migration only; the UI/source code does not need to change.
-
-## Contact links
-
-- Email: `tisee656@gmail.com`
-- GitHub: `https://github.com/Tisee747`
-- LinkedIn: `https://linkedin.com/in/tisee/`
+See `AG_HANDOFF.md`. The old `Tisee747/web-tisee` repository and its Vercel deployment are intentionally out of scope and must not be modified.

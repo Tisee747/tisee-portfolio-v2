@@ -1,85 +1,83 @@
-# AG HANDOFF — SETUP ONLY
+# AG HANDOFF — INFRA/SETUP ONLY
 
-The application source and design are already complete. Do not redesign or rewrite the UI unless explicitly requested by Tisee.
+The UI, copy, CSS, JS, SEO metadata, responsive behavior, and Vercel configuration are already authored. Do not redesign or rewrite the application unless Tisee explicitly asks.
 
-## Goal
+## Hard safety boundary
 
-Create a completely new GitHub repository and completely new Vercel project for this codebase.
+The existing portfolio is production and must remain untouched:
 
-The existing project must remain untouched:
+- GitHub: `Tisee747/web-tisee`
+- Vercel project: `web-tisee`
+- Existing URL: `https://web-tisee.vercel.app`
 
-- Existing GitHub repo: `Tisee747/web-tisee`
-- Existing Vercel project: `web-tisee`
-- Existing public URL: `web-tisee.vercel.app`
+Do not commit, branch, merge, change settings, redeploy, rename, delete, or change domains on those existing resources.
 
-Do NOT:
-- push commits to `Tisee747/web-tisee`
-- change its `main` branch
-- modify its Vercel project settings
-- change its production aliases/domains
-- delete or redeploy its existing production deployment
+## Your scope
 
-## Preferred new names
+Only perform setup/infrastructure work for a brand-new site:
 
-GitHub repository:
-`Tisee747/tisee-portfolio-v2`
+1. Create a NEW public GitHub repository named `Tisee747/tisee-portfolio-v2`.
+2. Put the supplied source bundle contents at that repo root.
+3. Run `./scripts/vendor-assets.sh` from the new repo. This copies the required screenshots and resume into the NEW repo; it only reads public files from the old repo.
+4. Verify `assets/` contains:
+   - `resume.pdf`
+   - `projects/posyandu_dashboard.png`
+   - `projects/nexevent_mobile_login.jpg`
+   - `projects/nexevent_mobile_dashboard.jpg`
+   - `projects/nexevent_mobile_tiket.jpg`
+5. Commit everything to the NEW repo only.
+6. Create/import a NEW Vercel project named `tisee-portfolio-v2` from that new GitHub repo.
+7. Deploy it to a separate `*.vercel.app` URL.
+8. Verify the old production URL is still live and unchanged.
 
-Vercel project:
-`tisee-portfolio-v2`
-
-If either exact name is unavailable, use:
-`tisee-portfolio-next`
-
-## GitHub setup
-
-From this folder:
+## Suggested GitHub commands
 
 ```bash
 git init
 git add .
-git commit -m "Initial big-tech portfolio redesign"
+git commit -m "Initial portfolio V4"
 git branch -M main
 gh repo create Tisee747/tisee-portfolio-v2 --public --source=. --remote=origin --push
 ```
 
-If `gh` is unavailable, create the repo in GitHub UI and push this folder to that NEW repo only.
+If the repository is created before you receive the source, clone that NEW repository and copy the supplied bundle into it instead.
 
-## Vercel setup
+## Vercel settings
 
-Import the NEW GitHub repo into Vercel.
+The site is static and zero-dependency:
 
-Settings:
-- Framework Preset: Other
-- Build Command: none / leave blank
-- Output Directory: `.`
-- Install Command: none / leave blank
-- Root Directory: repository root
+- Framework preset: Other
+- Root directory: repo root
+- Install command: none
+- Build command: none
+- Output directory: `.`
+- Environment variables: none
 
-Do not connect the new repo to the old Vercel project.
+Do not attach this repository to the existing `web-tisee` project.
 
-Expected result:
-- old site remains at `web-tisee.vercel.app`
-- new site receives a separate `*.vercel.app` URL
+## Required QA
 
-## Verification
+After deployment, verify all of the following:
 
-Check:
-1. `/` returns HTTP 200
-2. navigation anchors work
-3. mobile menu opens/closes
-4. three featured product visuals load
-5. external project links work
-6. resume link opens the OLD production resume
-7. email/GitHub/LinkedIn links work
-8. browser console has no errors
-9. mobile viewport has no horizontal overflow
-10. old `web-tisee.vercel.app` still works unchanged
+1. Home page returns HTTP 200.
+2. No browser console errors.
+3. No missing images or resume 404s.
+4. Desktop navigation anchors work.
+5. Mobile menu opens, closes, and its links work.
+6. No horizontal overflow at 375px viewport width.
+7. Featured project external links open correctly.
+8. Email, GitHub, and LinkedIn links work.
+9. `prefers-reduced-motion` does not hide content.
+10. `https://web-tisee.vercel.app` still works unchanged.
 
-## Report back
+## Return to Tisee / ChatGPT
 
-Return:
+Report only infrastructure outcomes and blockers:
+
 - new GitHub repo URL
-- new Vercel project URL
+- new Vercel project name/ID if available
 - new deployment URL
-- confirmation that old site remains unchanged
-- any asset-loading or DNS issues
+- QA failures, if any
+- explicit confirmation that `web-tisee` was not modified
+
+Do not make subjective UI/design changes yourself; return visual issues to ChatGPT for source changes.
