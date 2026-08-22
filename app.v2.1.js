@@ -4,6 +4,7 @@
   const menuButton = document.querySelector('[data-menu-toggle]');
   const mobileMenu = document.querySelector('[data-mobile-menu]');
   const mobileLinks = mobileMenu ? [...mobileMenu.querySelectorAll('a')] : [];
+  const desktopMedia = window.matchMedia('(min-width: 981px)');
 
   const setMenu = (open) => {
     if (!menuButton || !mobileMenu) return;
@@ -20,6 +21,9 @@
   mobileLinks.forEach((link) => link.addEventListener('click', () => setMenu(false)));
   window.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') setMenu(false);
+  });
+  desktopMedia.addEventListener?.('change', (event) => {
+    if (event.matches) setMenu(false);
   });
 
   const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 24);
