@@ -1,44 +1,11 @@
-# Tisee Portfolio V4
+# Tisee portfolio — V2 redesign
 
-A standalone, zero-dependency portfolio redesign authored for Tisee.
+Static portfolio source authored directly in ChatGPT.
 
-## Stack
-
-- Semantic HTML
-- Modern CSS
-- Small vanilla JavaScript enhancement layer
-- Vercel static hosting
-- No runtime dependencies
-- No environment variables
-- No build step
-
-## Local preview
-
-First vendor assets (internet access required once):
-
-```bash
-./scripts/vendor-assets.sh
-```
-
-Then serve the directory:
-
-```bash
-python3 -m http.server 3000
-```
-
-Open `http://localhost:3000`.
-
-## Design system
-
-The visual direction takes big-tech product-site principles rather than copying a specific brand:
-
-- restrained dark/off-white palette
-- large product-led typography
-- generous whitespace
-- one lime accent
-- full-size product storytelling rather than card grids
-- subtle motion only
-
-## Deployment
-
-See `AG_HANDOFF.md`. The old `Tisee747/web-tisee` repository and its Vercel deployment are intentionally out of scope and must not be modified.
+- Bright, minimal visual system
+- Scroll- and interaction-driven motion only
+- No ambient/background animation
+- No invented project metrics, diagrams, or features
+- Uses existing factual V2 project assets
+- Responsive desktop/mobile layouts
+- Static deployment; no API endpoint, so application rate limiting is intentionally unnecessary

@@ -2,323 +2,198 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tisee — Backend Engineer & Applied AI</title>
-  <meta name="description" content="Tisee is a backend engineer working across APIs, data systems, automation, and applied AI.">
-  <meta name="theme-color" content="#080808">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f4f4f1">
+  <meta name="color-scheme" content="light">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <title>Tisee — Backend Engineering & Applied AI</title>
+  <meta name="description" content="Tisee is an Informatics undergraduate at Telkom University working across backend engineering, automation, data systems, and applied AI.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Tisee — Backend Engineer & Applied AI">
-  <meta property="og:description" content="Backend engineering, data systems, automation, and applied AI.">
-  <meta property="og:image" content="assets/projects/posyandu_dashboard.png">
+  <meta property="og:title" content="Tisee — Backend Engineering & Applied AI">
+  <meta property="og:description" content="Backend engineering, automation, data systems, and applied AI.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tisee — Backend Engineer & Applied AI">
-  <meta name="twitter:description" content="Backend engineering, data systems, automation, and applied AI.">
-  <meta name="twitter:image" content="assets/projects/posyandu_dashboard.png">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="app.js"></script>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://tisee-portfolio-v2.vercel.app/">
+  <link rel="stylesheet" href="/styles.v2.1.css">
+  <script defer src="/app.v2.1.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header" data-header>
-    <div class="shell nav-shell">
-      <a class="brand" href="#top" aria-label="Tisee home">Tisee<span>.</span></a>
-      <nav class="desktop-nav" aria-label="Primary navigation">
-        <a href="#work">Work</a>
-        <a href="#experience">Experience</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a class="nav-resume" href="assets/resume.pdf" target="_blank" rel="noreferrer">Resume ↗</a>
-      </nav>
-      <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" data-menu-button>
+    <a class="brand" href="#top" aria-label="Tisee, back to top">Tisee<span>.</span></a>
+    <nav class="nav-desktop" aria-label="Primary navigation">
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a class="resume-link" href="/assets/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
         <span></span><span></span>
       </button>
     </div>
-    <div class="mobile-menu" data-mobile-menu>
-      <a href="#work">Work</a>
-      <a href="#experience">Experience</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-      <a href="assets/resume.pdf" target="_blank" rel="noreferrer">Resume ↗</a>
-    </div>
   </header>
 
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true" data-mobile-menu>
+    <nav aria-label="Mobile navigation">
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+      <a href="/assets/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+    </nav>
+  </div>
+
   <main id="main">
-    <section class="hero section-dark" id="top">
-      <div class="shell hero-grid">
-        <div class="hero-main" data-reveal>
-          <p class="eyebrow mono">Backend systems / Applied AI</p>
-          <h1>
-            I build systems
-            <span>behind useful products.</span>
+    <section class="hero" id="top">
+      <div class="hero-kicker reveal" data-reveal>
+        <span>Informatics Undergraduate</span>
+        <span>Telkom University</span>
+      </div>
+
+      <div class="hero-main">
+        <div class="hero-title-wrap">
+          <h1 class="hero-title" aria-label="Tisee">
+            <span class="hero-line"><span>Tisee</span></span>
           </h1>
-          <p class="hero-copy">
-            Backend engineer working across APIs, databases, automation, and applied AI.
-            Focused on turning ambiguous ideas into reliable software people can actually use.
-          </p>
+          <p class="hero-role reveal" data-reveal>Backend Engineering<br>&amp; Applied AI</p>
+        </div>
+
+        <div class="hero-summary reveal" data-reveal>
+          <p>I build APIs, automation, data workflows, and AI-backed features.</p>
           <div class="hero-actions">
-            <a class="button-primary" href="#work">Explore selected work <span>↓</span></a>
-            <a class="text-link" href="#contact">Contact me</a>
+            <a class="button button-dark" href="#projects" data-press>View projects</a>
+            <a class="button button-light" href="#contact" data-press>Contact me</a>
           </div>
         </div>
+      </div>
 
-        <aside class="hero-aside" data-reveal>
-          <div class="metric">
-            <strong>10+</strong>
-            <span class="mono">Projects shipped</span>
-          </div>
-          <div class="metric">
-            <strong>3+ years</strong>
-            <span class="mono">Building software</span>
-          </div>
-          <div class="metric metric-copy">
-            <span class="mono">Currently</span>
-            <p>Informatics undergraduate at Telkom University. Interested in backend, platform, and practical AI engineering.</p>
-          </div>
-        </aside>
+      <dl class="hero-facts reveal" data-reveal>
+        <div><dt>GPA</dt><dd>3.66</dd></div>
+        <div><dt>Projects</dt><dd>10+</dd></div>
+        <div><dt>Internships</dt><dd>3</dd></div>
+        <div><dt>Based in</dt><dd>Indonesia</dd></div>
+      </dl>
+    </section>
+
+    <section class="section intro" aria-labelledby="intro-title">
+      <div class="section-index reveal" data-reveal>01</div>
+      <div class="intro-grid">
+        <h2 class="section-title reveal" data-reveal id="intro-title">About</h2>
+        <p class="intro-copy reveal" data-reveal>Informatics undergraduate at Telkom University, focused on backend development, APIs, automation, data processing, and AI integration.</p>
       </div>
     </section>
 
-    <div class="discipline-strip">
-      <div class="shell discipline-inner mono" aria-label="Areas of focus">
-        <strong>Backend Engineering</strong>
-        <span>Data Systems</span>
-        <span>Applied AI</span>
-        <span>Product Engineering</span>
-        <span>Indonesia</span>
+    <section class="section experience" id="experience" aria-labelledby="experience-title">
+      <div class="section-index reveal" data-reveal>02</div>
+      <div class="section-heading reveal" data-reveal>
+        <h2 class="section-title" id="experience-title">Experience</h2>
       </div>
-    </div>
 
-    <section class="work-section section-dark-alt" id="work">
-      <div class="shell">
-        <div class="section-heading" data-reveal>
-          <p class="section-index mono">01 / Selected Work</p>
-          <div>
-            <h2>Products first.<br>Technology where it matters.</h2>
-            <p class="section-lede">
-              Selected work across health, campus systems, and AI.
-              Each project is presented as a product, not a card in a grid.
-            </p>
-          </div>
+      <div class="timeline">
+        <article class="timeline-row reveal" data-reveal>
+          <div class="timeline-date">Jun — Aug 2026</div>
+          <div class="timeline-role"><h3>Programming Intern</h3><p>Medusa Technology</p></div>
+          <div class="timeline-stack">Node.js, Go, FastAPI, AWS EC2, Llama 3, LangChain, ChromaDB, LSL</div>
+        </article>
+        <article class="timeline-row reveal" data-reveal>
+          <div class="timeline-date">Feb — Aug 2023</div>
+          <div class="timeline-role"><h3>IT &amp; Data Intern</h3><p>PT. Indonesia Indicator</p></div>
+          <div class="timeline-stack">Python, RegEx, web scraping, automation tools, data processing</div>
+        </article>
+        <article class="timeline-row reveal" data-reveal>
+          <div class="timeline-date">Feb 2021 — Jan 2023</div>
+          <div class="timeline-role"><h3>Digital Marketing Intern</h3><p>PT. Gucob E-Service / Lensza</p></div>
+          <div class="timeline-stack">Shopify, Canva, email marketing, e-commerce operations</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section skills" id="skills" aria-labelledby="skills-title">
+      <div class="section-index reveal" data-reveal>03</div>
+      <div class="skills-layout">
+        <div class="skills-lead reveal" data-reveal>
+          <h2 class="section-title" id="skills-title">Skills</h2>
         </div>
+        <div class="skill-list">
+          <article class="skill-row reveal" data-reveal><h3>Backend</h3><p>Go · Python · FastAPI · Node.js · Laravel · Spring Boot · PostgreSQL · MongoDB</p></article>
+          <article class="skill-row reveal" data-reveal><h3>AI &amp; Data</h3><p>LangChain · Llama 3 · ChromaDB · OpenCV · Scikit-Learn · CatBoost · data processing</p></article>
+          <article class="skill-row reveal" data-reveal><h3>Product</h3><p>Next.js · React · TypeScript · Flutter · PHP · Dart · PWA · LSL</p></article>
+          <article class="skill-row reveal" data-reveal><h3>Engineering</h3><p>AWS EC2 · Git · Linux · Docker · automation workflows</p></article>
+        </div>
+      </div>
+    </section>
 
-        <article class="feature-project" data-reveal>
+    <section class="section projects" id="projects" aria-labelledby="projects-title">
+      <div class="section-index reveal" data-reveal>04</div>
+      <div class="section-heading projects-heading reveal" data-reveal>
+        <h2 class="section-title" id="projects-title">Projects</h2>
+      </div>
+
+      <div class="featured-projects">
+        <article class="project-feature reveal" data-reveal>
+          <div class="project-media project-media-wide">
+            <img src="/assets/projects/posyandu_dashboard.png" alt="Posyandu Pintar dashboard" loading="lazy" decoding="async">
+          </div>
           <div class="project-copy">
-            <p class="project-index mono">01 / Health Tech</p>
+            <div class="project-meta"><span>01</span><span>Web application</span></div>
             <h3>Posyandu Pintar</h3>
-            <p>
-              Health insights without the complexity. An AI-assisted platform for toddler and maternal monitoring,
-              designed around developmental metrics and clearer care workflows.
-            </p>
-            <div class="tech-row mono">
-              <span>Next.js</span><span>TypeScript</span><span>AI Analytics</span><span>Tailwind</span>
-            </div>
+            <p>AI-assisted health monitoring for toddlers and maternal health.</p>
+            <p class="project-tech">Next.js · React · TypeScript · TailwindCSS</p>
             <div class="project-links">
-              <a href="https://posyandu-web-app.vercel.app" target="_blank" rel="noreferrer">Live product ↗</a>
-              <a href="https://github.com/Tisee747/Posyandu_Pintar" target="_blank" rel="noreferrer">Code ↗</a>
+              <a href="https://posyandu-web-app.vercel.app" target="_blank" rel="noreferrer" data-press>Live site</a>
+              <a href="https://github.com/Tisee747/Posyandu_Pintar" target="_blank" rel="noreferrer" data-press>GitHub</a>
             </div>
           </div>
-          <a class="product-stage product-stage-dark" href="https://posyandu-web-app.vercel.app" target="_blank" rel="noreferrer" aria-label="Open Posyandu Pintar">
-            <div class="browser-frame">
-              <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i></div>
-              <img src="assets/projects/posyandu_dashboard.png" alt="Posyandu Pintar dashboard">
-            </div>
-          </a>
         </article>
 
-        <article class="feature-project" data-reveal>
+        <article class="project-feature project-feature-reverse reveal" data-reveal>
+          <div class="project-media project-media-phones">
+            <img src="/assets/projects/nexevent_mobile_login.jpg" alt="NexEvent mobile login screen" loading="lazy" decoding="async">
+            <img src="/assets/projects/nexevent_mobile_dashboard.jpg" alt="NexEvent mobile dashboard screen" loading="lazy" decoding="async">
+            <img src="/assets/projects/nexevent_mobile_tiket.jpg" alt="NexEvent mobile ticket screen" loading="lazy" decoding="async">
+          </div>
           <div class="project-copy">
-            <p class="project-index mono">02 / Campus Product</p>
+            <div class="project-meta"><span>02</span><span>Web &amp; mobile application</span></div>
             <h3>NexEvent</h3>
-            <p>
-              Campus events, minus the chaos. Registration, waiting lists, and event operations
-              connected across a Laravel backend and Flutter mobile experience.
-            </p>
-            <div class="tech-row mono">
-              <span>Laravel</span><span>Flutter</span><span>REST API</span><span>MariaDB</span>
-            </div>
-          </div>
-          <div class="product-stage product-stage-light" aria-label="NexEvent mobile app screens">
-            <div class="phone-stack">
-              <figure class="phone phone-left">
-                <img src="assets/projects/nexevent_mobile_login.jpg" alt="NexEvent login screen">
-              </figure>
-              <figure class="phone phone-center">
-                <img src="assets/projects/nexevent_mobile_dashboard.jpg" alt="NexEvent dashboard">
-              </figure>
-              <figure class="phone phone-right">
-                <img src="assets/projects/nexevent_mobile_tiket.jpg" alt="NexEvent ticket screen">
-              </figure>
-            </div>
+            <p>Campus event registration and management platform with a waitlist flow.</p>
+            <p class="project-tech">Laravel · Flutter · PHP · Dart</p>
           </div>
         </article>
+      </div>
 
-        <article class="feature-project" data-reveal>
-          <div class="project-copy">
-            <p class="project-index mono">03 / Applied AI</p>
-            <h3>Intelligent NPC Chatbot</h3>
-            <p>
-              A memory-aware NPC system built during a Medusa Technology internship,
-              combining retrieval, player context, and Llama 3 into a practical RAG pipeline.
-            </p>
-            <div class="tech-row mono">
-              <span>Python</span><span>Llama 3</span><span>LangChain</span><span>ChromaDB</span>
-            </div>
-          </div>
-          <div class="product-stage product-stage-dark ai-stage" aria-label="AI chatbot architecture">
-            <div class="ai-flow">
-              <div class="flow-node">
-                <small class="mono">PLAYER CONTEXT</small>
-                <strong>Memory + state</strong>
-                <span>Identity, history, and current world context.</span>
-              </div>
-              <div class="flow-line" aria-hidden="true"></div>
-              <div class="flow-node">
-                <small class="mono">RAG PIPELINE</small>
-                <strong>Llama 3 + ChromaDB</strong>
-                <span>Retrieval, grounding, and generated response.</span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <div class="more-work" data-reveal>
-          <div class="more-work-title">
-            <p class="mono">More work</p>
-            <h3>Other projects.</h3>
-          </div>
-          <div class="project-list">
-            <a class="list-row" href="https://github.com/Tisee747/TelyuTalks" target="_blank" rel="noreferrer">
-              <span class="list-name">TelyuTalks</span>
-              <span class="list-desc">Academic Q&A platform</span>
-              <span class="list-tech mono">Java / Spring Boot / PWA</span>
-              <span class="list-arrow">↗</span>
-            </a>
-            <a class="list-row" href="https://github.com/Tisee747/mydormitory-backend" target="_blank" rel="noreferrer">
-              <span class="list-name">MyDormitory</span>
-              <span class="list-desc">QR attendance and security system</span>
-              <span class="list-tech mono">Laravel / Flutter</span>
-              <span class="list-arrow">↗</span>
-            </a>
-            <a class="list-row" href="https://gpt-ner.streamlit.app/" target="_blank" rel="noreferrer">
-              <span class="list-name">GPT-NER</span>
-              <span class="list-desc">LLM-powered entity extraction</span>
-              <span class="list-tech mono">Python / Streamlit / Llama 3</span>
-              <span class="list-arrow">↗</span>
-            </a>
-            <a class="list-row" href="https://microplast.streamlit.app/" target="_blank" rel="noreferrer">
-              <span class="list-name">MicroPlast CV Scanner</span>
-              <span class="list-desc">Computer vision for microplastic analysis</span>
-              <span class="list-tech mono">Python / OpenCV</span>
-              <span class="list-arrow">↗</span>
-            </a>
-            <a class="list-row" href="https://github.com/Tisee747/House-Pricing" target="_blank" rel="noreferrer">
-              <span class="list-name">House Pricing Predictor</span>
-              <span class="list-desc">Real-estate regression model</span>
-              <span class="list-tech mono">Python / CatBoost</span>
-              <span class="list-arrow">↗</span>
-            </a>
-          </div>
-        </div>
+      <div class="project-table reveal" data-reveal>
+        <a href="https://github.com/Tisee747/TelyuTalks" target="_blank" rel="noreferrer"><span>TelyuTalks</span><small>Academic Q&amp;A PWA</small><em>Java · Spring Boot · PWA</em></a>
+        <div><span>Intelligent AI NPC Chatbot</span><small>Internship project</small><em>Python · Llama 3 · LangChain · ChromaDB</em></div>
+        <div><span>MyDormitory</span><small>Dormitory attendance &amp; security</small><em>Laravel · Flutter</em></div>
+        <a href="https://gpt-ner.streamlit.app/" target="_blank" rel="noreferrer"><span>GPT-NER Implementation</span><small>Named entity recognition</small><em>Python · Streamlit · Llama 3</em></a>
+        <a href="https://microplast.streamlit.app/" target="_blank" rel="noreferrer"><span>MicroPlast CV Scanner</span><small>Computer vision scanner</small><em>Python · OpenCV</em></a>
+        <div><span>House Pricing Predictor</span><small>Machine learning regression</small><em>Python · CatBoost</em></div>
+        <div><span>Metaverse Racing &amp; Leaderboards</span><small>Virtual-world game systems</small><em>LSL</em></div>
       </div>
     </section>
 
-    <section class="experience-section section-light" id="experience">
-      <div class="shell">
-        <div class="section-heading" data-reveal>
-          <p class="section-index mono">02 / Experience</p>
-          <div>
-            <h2>Learning by shipping.</h2>
-            <p class="section-lede">A path from digital operations to data, backend, and AI engineering.</p>
-          </div>
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="section-index reveal" data-reveal>05</div>
+      <div class="contact-layout">
+        <div class="contact-copy reveal" data-reveal>
+          <p class="contact-kicker">Contact</p>
+          <h2 id="contact-title">tisee656@gmail.com</h2>
         </div>
-
-        <div class="experience-list" data-reveal>
-          <div class="experience-row">
-            <p class="experience-date mono">JUN 2026 — AUG 2026</p>
-            <div class="experience-role">
-              <strong>Programming Intern</strong>
-              <span>Medusa Technology</span>
-            </div>
-            <p class="experience-copy">
-              Built Llama-3/RAG NPC chatbots, deployed REST APIs on AWS EC2,
-              and programmed virtual-world systems using Linden Scripting Language.
-            </p>
-          </div>
-
-          <div class="experience-row">
-            <p class="experience-date mono">FEB 2023 — AUG 2023</p>
-            <div class="experience-role">
-              <strong>IT & Data Intern</strong>
-              <span>PT. Indonesia Indicator</span>
-            </div>
-            <p class="experience-copy">
-              Worked on scraping, data crawling, regex-heavy processing,
-              and internal automation at a Big Data & AI institute.
-            </p>
-          </div>
-
-          <div class="experience-row">
-            <p class="experience-date mono">FEB 2021 — JAN 2023</p>
-            <div class="experience-role">
-              <strong>Digital Marketing Intern</strong>
-              <span>PT. Gucob E-Service / Lensza</span>
-            </div>
-            <p class="experience-copy">
-              Started early in digital operations: promotional content, Shopify newsletters,
-              upload scheduling, and customer engagement.
-            </p>
-          </div>
+        <div class="contact-links reveal" data-reveal>
+          <a href="mailto:tisee656@gmail.com" data-press>Email</a>
+          <a href="https://linkedin.com/in/tisee/" target="_blank" rel="noreferrer" data-press>LinkedIn</a>
+          <a href="https://github.com/Tisee747" target="_blank" rel="noreferrer" data-press>GitHub</a>
+          <a href="/assets/resume.pdf" target="_blank" rel="noreferrer" data-press>Resume</a>
         </div>
-      </div>
-    </section>
-
-    <section class="about-section section-dark" id="about">
-      <div class="shell">
-        <div class="section-heading" data-reveal>
-          <p class="section-index mono">03 / About</p>
-          <div>
-            <h2>Useful systems over flashy stacks.</h2>
-          </div>
-        </div>
-
-        <div class="about-grid" data-reveal>
-          <h3>
-            I’m Tisee, an Informatics student building software across backend engineering,
-            data systems, and applied AI.
-          </h3>
-          <div class="about-side">
-            <p>
-              I’m most interested in work where engineering choices show up in the product:
-              faster operations, clearer data, more reliable systems, or capabilities that were previously hard to ship.
-              I’m comfortable moving between backend, infrastructure, and enough product engineering to own an end-to-end path.
-            </p>
-            <dl class="facts">
-              <div><dt class="mono">FOCUS</dt><dd>Backend / AI / Platform</dd></div>
-              <div><dt class="mono">LOCATION</dt><dd>Indonesia</dd></div>
-              <div><dt class="mono">STATUS</dt><dd>Open to opportunities</dd></div>
-            </dl>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="contact-section section-dark" id="contact">
-      <div class="shell" data-reveal>
-        <p class="section-index mono">04 / Contact</p>
-        <h2>Build something useful.</h2>
-        <div class="contact-bottom">
-          <p>Open to backend, platform, and applied-AI opportunities where engineering quality matters.</p>
-          <nav class="social-links mono" aria-label="Contact links">
-            <a href="mailto:tisee656@gmail.com">Email ↗</a>
-            <a href="https://github.com/Tisee747" target="_blank" rel="noreferrer">GitHub ↗</a>
-            <a href="https://linkedin.com/in/tisee/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-          </nav>
-        </div>
-        <footer class="mono">TISEE / PORTFOLIO V4</footer>
       </div>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <span>Tisee</span><span>Backend Engineering &amp; Applied AI</span><span>2026</span>
+  </footer>
 </body>
 </html>
