@@ -1,83 +1,100 @@
-# AG HANDOFF — INFRA/SETUP ONLY
+# AG HANDOFF — LOCAL / RUNTIME QA ONLY
 
-The UI, copy, CSS, JS, SEO metadata, responsive behavior, and Vercel configuration are already authored. Do not redesign or rewrite the application unless Tisee explicitly asks.
+Read `TISEE_CV_PROJECT_PROTOCOL.md` first. It is the project-specific workflow authority. The canonical BridgeWorker protocol remains authoritative for routing, identity, queueing, and failure handling.
 
-## Hard safety boundary
+## Role
 
-The existing portfolio is production and must remain untouched:
+Antigravity is a local/runtime verifier for this portfolio. It is **not** the normal source-code author and must not make independent design decisions.
+
+ChatGPT owns:
+
+- UI/UX and typography decisions;
+- HTML/CSS/JS source changes;
+- copy/content changes;
+- direct GitHub source edits and commits;
+- final QA interpretation;
+- Vercel deployment actions when available through direct connectors.
+
+## Fixed BridgeWorker identity
+
+For this project, use only the registered portfolio route:
+
+- project alias: `tisee_cv`
+- client identity: `GPT_CV`
+- local root: `C:\Projects\Tisee_CV` unless the server-side registry later changes it
+- Antigravity model: `gemini-3.7-flash-high`
+
+Do not route portfolio work through the `bridgeworker` project alias. Do not invoke OpenCode, Codex, another Antigravity task, subagent, or nested harness. No fallback.
+
+## Allowed Antigravity work
+
+Use AG only for machine-local/runtime operations that ChatGPT cannot perform directly, including:
+
+- inspect local Git/worktree state;
+- verify exact branch/HEAD/cleanliness;
+- safely fast-forward a clean local checkout to an already-authored GitHub commit when explicitly requested for QA;
+- run a local static server;
+- render pages in a local browser;
+- capture QA screenshots;
+- test desktop/mobile viewport behavior;
+- inspect horizontal overflow, clipping, computed styles, menu/anchor behavior, console/page errors, and reduced-motion behavior;
+- verify local asset paths and runtime behavior.
+
+If the local tree is dirty or does not match the expected repository/branch, stop and report the exact state.
+
+## Forbidden Antigravity work unless the owner explicitly changes the workflow
+
+Do not:
+
+- edit HTML, CSS, JavaScript, content, or design files;
+- redesign the site;
+- author or rewrite copy;
+- commit or push source code;
+- create or rename GitHub repositories;
+- create another Vercel project/version;
+- deploy a new numbered staging site;
+- change domains;
+- alter Google Drive archives;
+- mutate `Tisee747/web-tisee` or its Vercel project;
+- recreate retired V5 resources.
+
+When QA finds a source/design problem, report it to ChatGPT. ChatGPT performs the source fix directly in GitHub, then AG may verify the new rendered state.
+
+## Current resources
+
+Active redesign staging:
+
+- GitHub: `Tisee747/tisee-portfolio-v2`
+- Vercel: `tisee-portfolio-v2`
+- staging URL: `https://tisee-portfolio-v2.vercel.app`
+
+Protected original production:
 
 - GitHub: `Tisee747/web-tisee`
-- Vercel project: `web-tisee`
-- Existing URL: `https://web-tisee.vercel.app`
+- Vercel: `web-tisee`
+- URL: `https://web-tisee.vercel.app`
 
-Do not commit, branch, merge, change settings, redeploy, rename, delete, or change domains on those existing resources.
+Do not touch the protected production resources.
 
-## Your scope
+## QA baseline
 
-Only perform setup/infrastructure work for a brand-new site:
+For meaningful visual changes, report at minimum:
 
-1. Create a NEW public GitHub repository named `Tisee747/tisee-portfolio-v2`.
-2. Put the supplied source bundle contents at that repo root.
-3. Run `./scripts/vendor-assets.sh` from the new repo. This copies the required screenshots and resume into the NEW repo; it only reads public files from the old repo.
-4. Verify `assets/` contains:
-   - `resume.pdf`
-   - `projects/posyandu_dashboard.png`
-   - `projects/nexevent_mobile_login.jpg`
-   - `projects/nexevent_mobile_dashboard.jpg`
-   - `projects/nexevent_mobile_tiket.jpg`
-5. Commit everything to the NEW repo only.
-6. Create/import a NEW Vercel project named `tisee-portfolio-v2` from that new GitHub repo.
-7. Deploy it to a separate `*.vercel.app` URL.
-8. Verify the old production URL is still live and unchanged.
+- desktop around 1440x900;
+- mobile around 390x844;
+- narrow mobile around 360px when typography/layout is involved;
+- horizontal overflow;
+- clipping/collisions;
+- computed font family and weight when typography is under review;
+- mobile menu and anchor behavior;
+- console/page errors;
+- reduced-motion behavior;
+- resume/project asset availability.
 
-## Suggested GitHub commands
+Screenshots are QA evidence only. Do not invent replacement portfolio imagery.
 
-```bash
-git init
-git add .
-git commit -m "Initial portfolio V4"
-git branch -M main
-gh repo create Tisee747/tisee-portfolio-v2 --public --source=. --remote=origin --push
-```
+## Failure rule
 
-If the repository is created before you receive the source, clone that NEW repository and copy the supplied bundle into it instead.
+A timeout, cancellation, parser error, or wrapper error does not prove the local tree was unchanged. If a task had mutation permission and fails uncertainly, the next step is read-only reconciliation before any retry or sync.
 
-## Vercel settings
-
-The site is static and zero-dependency:
-
-- Framework preset: Other
-- Root directory: repo root
-- Install command: none
-- Build command: none
-- Output directory: `.`
-- Environment variables: none
-
-Do not attach this repository to the existing `web-tisee` project.
-
-## Required QA
-
-After deployment, verify all of the following:
-
-1. Home page returns HTTP 200.
-2. No browser console errors.
-3. No missing images or resume 404s.
-4. Desktop navigation anchors work.
-5. Mobile menu opens, closes, and its links work.
-6. No horizontal overflow at 375px viewport width.
-7. Featured project external links open correctly.
-8. Email, GitHub, and LinkedIn links work.
-9. `prefers-reduced-motion` does not hide content.
-10. `https://web-tisee.vercel.app` still works unchanged.
-
-## Return to Tisee / ChatGPT
-
-Report only infrastructure outcomes and blockers:
-
-- new GitHub repo URL
-- new Vercel project name/ID if available
-- new deployment URL
-- QA failures, if any
-- explicit confirmation that `web-tisee` was not modified
-
-Do not make subjective UI/design changes yourself; return visual issues to ChatGPT for source changes.
+Never blindly rerun a failed mutating local task.
