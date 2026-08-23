@@ -70,7 +70,7 @@ const moreProjects = [
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7">
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.7">
       {diagonal ? <path d="M7 17 17 7M8 7h9v9" /> : <path d="M5 12h14M13 6l6 6-6 6" />}
     </svg>
   );
@@ -168,7 +168,7 @@ export default function Home() {
         </div>
 
         <div className="grid flex-1 items-center gap-16 py-20 lg:grid-cols-[1.2fr_.8fr] lg:gap-10 lg:py-10">
-          <div>
+          <div className="min-w-0">
             <Reveal>
               <p className="mb-7 text-sm font-semibold text-[#8e96ff]">Tisee / Backend Engineering & Applied AI</p>
             </Reveal>
@@ -220,7 +220,7 @@ export default function Home() {
       <section id="about" className="container-x scroll-mt-24 py-28 md:py-40">
         <Reveal className="grid gap-12 lg:grid-cols-[220px_1fr]">
           <div><div className="eyebrow">01 / About</div></div>
-          <div>
+          <div className="min-w-0">
             <h2 className="max-w-[1050px] text-[clamp(38px,5vw,72px)] font-semibold leading-[1.03] tracking-[-.05em]">Engineering fundamentals first. AI where it actually helps.</h2>
             <div className="mt-12 grid gap-8 border-t border-white/10 pt-8 md:grid-cols-2">
               <p className="max-w-[580px] text-lg leading-8 text-white/55">Informatics undergraduate at Telkom University focused on backend development, APIs, automation, data processing, and AI integration.</p>
@@ -234,7 +234,7 @@ export default function Home() {
         <div className="container-x">
           <Reveal className="mb-16 grid gap-8 lg:grid-cols-[220px_1fr] lg:items-end">
             <div className="eyebrow">02 / Experience</div>
-            <div className="flex items-end justify-between gap-8"><h2 className="text-[clamp(44px,6vw,82px)] font-semibold leading-none tracking-[-.055em]">Three internships.<br /><span className="text-white/30">Different systems.</span></h2></div>
+            <div className="min-w-0"><h2 className="text-[clamp(44px,6vw,82px)] font-semibold leading-none tracking-[-.055em]">Three internships.<br /><span className="text-white/30">Different systems.</span></h2></div>
           </Reveal>
           <div className="border-t border-white/15">
             {experience.map((item, index) => (
@@ -242,8 +242,8 @@ export default function Home() {
                 <article className="group grid gap-6 border-b border-white/10 py-8 transition md:grid-cols-[70px_190px_1fr_1.2fr] md:items-start md:py-9">
                   <div className="font-mono text-[10px] text-white/25">0{index + 1}</div>
                   <div className="font-mono text-[11px] uppercase tracking-[.08em] text-white/36">{item.date}</div>
-                  <div><h3 className="text-2xl font-semibold tracking-[-.035em] transition group-hover:text-[#aeb4ff]">{item.role}</h3><p className="mt-2 text-sm text-white/42">{item.company}</p></div>
-                  <div className="flex flex-wrap gap-2 md:justify-end">{item.stack.map((tech) => <span key={tech} className="rounded-full border border-white/10 bg-white/[.035] px-3 py-1.5 text-[11px] text-white/48">{tech}</span>)}</div>
+                  <div className="min-w-0"><h3 className="text-2xl font-semibold tracking-[-.035em] transition group-hover:text-[#aeb4ff]">{item.role}</h3><p className="mt-2 text-sm text-white/42">{item.company}</p></div>
+                  <div className="flex min-w-0 flex-wrap gap-2 md:justify-end">{item.stack.map((tech) => <span key={tech} className="rounded-full border border-white/10 bg-white/[.035] px-3 py-1.5 text-[11px] text-white/48">{tech}</span>)}</div>
                 </article>
               </Reveal>
             ))}
@@ -283,8 +283,8 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mt-8 grid gap-7 md:grid-cols-[1fr_.65fr]">
-                  <div><div className="eyebrow">01 / {projects[0].type}</div><h3 className="mt-4 text-4xl font-semibold tracking-[-.045em] md:text-6xl">{projects[0].name}</h3></div>
-                  <div><p className="text-base leading-7 text-white/52">{projects[0].summary}</p><p className="mt-4 text-sm text-white/32">{projects[0].tech}</p><div className="mt-6 flex gap-5 text-sm font-semibold"><a className="focus-ring inline-flex items-center gap-2" href={projects[0].live} target="_blank" rel="noreferrer">Live <Arrow diagonal /></a><a className="focus-ring inline-flex items-center gap-2" href={projects[0].repo} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a></div></div>
+                  <div className="min-w-0"><div className="eyebrow">01 / {projects[0].type}</div><h3 className="mt-4 text-4xl font-semibold tracking-[-.045em] md:text-6xl">{projects[0].name}</h3></div>
+                  <div className="min-w-0"><p className="text-base leading-7 text-white/52">{projects[0].summary}</p><p className="mt-4 text-sm text-white/32">{projects[0].tech}</p><div className="mt-6 flex gap-5 text-sm font-semibold"><a className="focus-ring inline-flex items-center gap-2" href={projects[0].live} target="_blank" rel="noreferrer">Live <Arrow diagonal /></a><a className="focus-ring inline-flex items-center gap-2" href={projects[0].repo} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a></div></div>
                 </div>
               </article>
             </Reveal>
@@ -301,7 +301,7 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-                <div className="lg:pl-8"><div className="eyebrow">02 / {projects[1].type}</div><h3 className="mt-4 text-5xl font-semibold tracking-[-.05em] md:text-7xl">{projects[1].name}</h3><p className="mt-7 max-w-[530px] text-lg leading-8 text-white/52">{projects[1].summary}</p><p className="mt-4 text-sm text-white/32">{projects[1].tech}</p></div>
+                <div className="min-w-0 lg:pl-8"><div className="eyebrow">02 / {projects[1].type}</div><h3 className="mt-4 text-5xl font-semibold tracking-[-.05em] md:text-7xl">{projects[1].name}</h3><p className="mt-7 max-w-[530px] text-lg leading-8 text-white/52">{projects[1].summary}</p><p className="mt-4 text-sm text-white/32">{projects[1].tech}</p></div>
               </article>
             </Reveal>
           </div>
@@ -310,8 +310,9 @@ export default function Home() {
             <div className="mb-8 flex items-end justify-between gap-8"><div><div className="eyebrow">Project index</div><h3 className="mt-3 text-3xl font-semibold tracking-[-.04em]">More work</h3></div><span className="font-mono text-[10px] text-white/25">03 — 09</span></div>
             <div className="border-t border-white/15">
               {moreProjects.map(([name, desc, tech, href], index) => {
-                const content = <><span className="font-mono text-[10px] text-white/22">{String(index + 3).padStart(2, "0")}</span><span className="text-lg font-semibold tracking-[-.025em]">{name}</span><span className="text-sm text-white/38">{desc}</span><span className="hidden text-right text-xs text-white/27 lg:block">{tech}</span>{href ? <Arrow diagonal /> : <span />}</>;
-                return href ? <a key={name} href={href} target="_blank" rel="noreferrer" className="focus-ring grid grid-cols-[42px_1fr_auto] items-center gap-4 border-b border-white/10 py-5 transition hover:bg-white/[.025] md:grid-cols-[50px_1.1fr_.9fr] lg:grid-cols-[50px_1fr_.75fr_1fr_20px]">{content}</a> : <div key={name} className="grid grid-cols-[42px_1fr_auto] items-center gap-4 border-b border-white/10 py-5 md:grid-cols-[50px_1.1fr_.9fr] lg:grid-cols-[50px_1fr_.75fr_1fr_20px]">{content}</div>;
+                const content = <><span className="font-mono text-[10px] text-white/22">{String(index + 3).padStart(2, "0")}</span><span className="min-w-0 text-base font-semibold tracking-[-.025em] sm:text-lg">{name}</span><span className="hidden min-w-0 text-sm text-white/38 md:block">{desc}</span><span className="hidden min-w-0 text-right text-xs text-white/27 lg:block">{tech}</span>{href ? <Arrow diagonal /> : <span className="h-4 w-4" />}</>;
+                const rowClass = "grid grid-cols-[36px_minmax(0,1fr)_20px] items-center gap-3 border-b border-white/10 py-5 md:grid-cols-[50px_minmax(0,1.1fr)_minmax(0,.9fr)_20px] md:gap-4 lg:grid-cols-[50px_minmax(0,1fr)_minmax(0,.75fr)_minmax(0,1fr)_20px]";
+                return href ? <a key={name} href={href} target="_blank" rel="noreferrer" className={`focus-ring ${rowClass} transition hover:bg-white/[.025]`}>{content}</a> : <div key={name} className={rowClass}>{content}</div>;
               })}
             </div>
           </Reveal>
@@ -324,8 +325,8 @@ export default function Home() {
             <div className="absolute -right-24 -top-28 h-80 w-80 rounded-full bg-indigo-500/20 blur-[90px]" />
             <div className="absolute -bottom-40 left-[20%] h-72 w-72 rounded-full bg-cyan-400/10 blur-[100px]" />
             <div className="relative grid gap-16 lg:grid-cols-[1fr_auto] lg:items-end">
-              <div><div className="eyebrow">05 / Contact</div><h2 className="mt-7 max-w-[900px] text-[clamp(56px,8vw,118px)] font-semibold leading-[.89] tracking-[-.065em]">Let&apos;s build<br /><span className="gradient-text">something useful.</span></h2><a href="mailto:tisee656@gmail.com" className="focus-ring mt-10 inline-flex items-center gap-3 text-xl font-semibold text-white/72 transition hover:text-white md:text-3xl">tisee656@gmail.com <Arrow diagonal /></a></div>
-              <div className="grid min-w-[200px] gap-3 text-sm text-white/48">{[["LinkedIn", "https://linkedin.com/in/tisee/"], ["GitHub", "https://github.com/Tisee747"], ["Resume", RESUME]].map(([label, href]) => <a key={label} href={href} target="_blank" rel="noreferrer" className="focus-ring flex items-center justify-between border-b border-white/10 py-3 transition hover:text-white">{label}<Arrow diagonal /></a>)}</div>
+              <div className="min-w-0"><div className="eyebrow">05 / Contact</div><h2 className="mt-7 max-w-[900px] text-[clamp(56px,8vw,118px)] font-semibold leading-[.89] tracking-[-.065em]">Let&apos;s build<br /><span className="gradient-text">something useful.</span></h2><a href="mailto:tisee656@gmail.com" className="focus-ring mt-10 inline-flex max-w-full items-center gap-3 break-all text-xl font-semibold text-white/72 transition hover:text-white sm:break-normal md:text-3xl">tisee656@gmail.com <Arrow diagonal /></a></div>
+              <div className="grid min-w-0 gap-3 text-sm text-white/48 lg:min-w-[200px]">{[["LinkedIn", "https://linkedin.com/in/tisee/"], ["GitHub", "https://github.com/Tisee747"], ["Resume", RESUME]].map(([label, href]) => <a key={label} href={href} target="_blank" rel="noreferrer" className="focus-ring flex items-center justify-between border-b border-white/10 py-3 transition hover:text-white">{label}<Arrow diagonal /></a>)}</div>
             </div>
           </div>
         </Reveal>
