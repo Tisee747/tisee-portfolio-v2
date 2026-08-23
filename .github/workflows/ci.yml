@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,3 +23,30 @@ jobs:
         run: npm install --no-package-lock
       - name: Production build
         run: npm run build
+      - name: Install Playwright for temporary visual QA
+        run: |
+          npm install --no-save --no-package-lock @playwright/test
+          npx playwright install --with-deps chromium
+      - name: Start production server
+        run: |
+          npm run start -- -p 3000 > /tmp/tisee-next.log 2>&1 &
+          echo $! > /tmp/tisee-next.pid
+          for i in {1..45}; do
+            if curl -fsS http://127.0.0.1:3000 >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/tisee-next.log
+          exit 1
+      - name: Browser visual QA
+        run: node scripts/ci-visual.mjs
+      - name: Stop production server
+        if: always()
+        run: |
+          if [ -f /tmp/tisee-next.pid ]; then kill "$(cat /tmp/tisee-next.pid)" || true; fi
+      - name: Upload visual QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-final-visual-qa
+          path: artifacts/visual-qa
+          if-no-files-found: ignore
