@@ -15,6 +15,16 @@ const failures = [];
 const results = [];
 const browser = await chromium.launch({ headless: true });
 
+async function revealPage(page, viewportHeight) {
+  const height = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < height; y += Math.max(360, Math.floor(viewportHeight * 0.72))) {
+    await page.evaluate((scrollY) => window.scrollTo(0, scrollY), y);
+    await page.waitForTimeout(90);
+  }
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(180);
+}
+
 for (const viewport of viewports) {
   const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height } });
   const page = await context.newPage();
@@ -24,7 +34,7 @@ for (const viewport of viewports) {
   page.on('pageerror', (err) => pageErrors.push(err.message));
 
   await page.goto(baseURL, { waitUntil: 'networkidle' });
-  await page.screenshot({ path: `${outDir}/${viewport.name}.png`, fullPage: true });
+  await revealPage(page, viewport.height);
 
   const metrics = await page.evaluate(() => {
     const root = document.documentElement;
@@ -46,6 +56,8 @@ for (const viewport of viewports) {
     };
   });
 
+  await page.screenshot({ path: `${outDir}/${viewport.name}.png`, fullPage: true });
+
   const overflow = metrics.scrollWidth > metrics.clientWidth;
   const heroOK = metrics.h1Text.includes('Backend systems.') && metrics.h1Text.includes('Applied intelligence.');
   if (overflow) failures.push(`${viewport.name}: horizontal overflow ${metrics.scrollWidth}/${metrics.clientWidth}`);
@@ -57,7 +69,7 @@ for (const viewport of viewports) {
   if (pageErrors.length) failures.push(`${viewport.name}: ${pageErrors.length} page error(s)`);
 
   if (viewport.width <= 390) {
-    const button = page.getByRole('button', { name: 'Toggle menu' });
+    const button = page.locator('button[aria-label="Toggle menu"]');
     await button.click();
     const expanded = await button.getAttribute('aria-expanded');
     if (expanded !== 'true') failures.push(`${viewport.name}: mobile menu did not open`);
@@ -73,17 +85,17 @@ for (const viewport of viewports) {
 const resizeContext = await browser.newContext({ viewport: { width: 390, height: 844 } });
 const resizePage = await resizeContext.newPage();
 await resizePage.goto(baseURL, { waitUntil: 'networkidle' });
-const resizeButton = resizePage.getByRole('button', { name: 'Toggle menu' });
-await resizeButton.click();
+await resizePage.locator('button[aria-label="Toggle menu"]').click();
 await resizePage.setViewportSize({ width: 1100, height: 900 });
-await resizePage.waitForTimeout(250);
-const resizeExpanded = await resizeButton.getAttribute('aria-expanded');
-if (resizeExpanded !== 'false') failures.push('mobile-to-desktop resize did not reset menu state');
+await resizePage.waitForTimeout(300);
+const resizeExpanded = await resizePage.evaluate(() => document.querySelector('button[aria-label="Toggle menu"]')?.getAttribute('aria-expanded'));
+if (resizeExpanded !== 'false') failures.push(`mobile-to-desktop resize did not reset menu state (${resizeExpanded})`);
 await resizeContext.close();
 
 const reducedContext = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
 const reducedPage = await reducedContext.newPage();
 await reducedPage.goto(baseURL, { waitUntil: 'networkidle' });
+await revealPage(reducedPage, 900);
 const reducedVisible = await reducedPage.locator('h1').isVisible() && await reducedPage.locator('#projects').isVisible() && await reducedPage.locator('#contact').isVisible();
 if (!reducedVisible) failures.push('reduced-motion mode hides key content');
 await reducedContext.close();
