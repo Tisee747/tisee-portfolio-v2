@@ -8,19 +8,6 @@ import { FadeIn } from "@/components/FadeIn";
 export default function Home() {
   return (
     <main className="w-full bg-white selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden relative">
-      
-      {/* Hero Section Background Decor */}
-      <div className="absolute top-0 left-0 w-full h-[850px] overflow-hidden pointer-events-none z-0">
-         {/* Decorative SVG Grid Lines */}
-         <svg className="absolute inset-0 w-full h-full opacity-[0.15]" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="hero-grid" width="60" height="60" patternUnits="userSpaceOnUse">
-                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="1" className="text-zinc-400"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#hero-grid)" />
-         </svg>
-      </div>
 
       {/* Hero Section */}
       <section className="w-full flex justify-center pt-32 pb-16 px-6 md:px-12 relative z-10">
@@ -29,20 +16,20 @@ export default function Home() {
           <div className="flex-1 flex flex-col justify-center text-center md:text-left">
             <FadeIn delay={0.1}>
               <h1 className="text-5xl md:text-7xl font-semibold text-zinc-900 leading-[1.1] tracking-tighter mb-6 md:mb-8">
-                Hi! I’m Tisee
+                Hi! I&apos;m Tisee
               </h1>
             </FadeIn>
             
             <FadeIn delay={0.2}>
               <h2 className="text-2xl md:text-5xl font-normal text-zinc-900 leading-tight md:leading-[1.15] tracking-tight mb-6 md:mb-10 max-w-2xl mx-auto md:mx-0">
-                Backend engineering<br className="hidden md:block" />
-                <span className="md:hidden"> & </span>Applied AI
+                Backend systems<br className="hidden md:block" />
+                <span className="md:hidden"> &amp; </span>applied AI
               </h2>
             </FadeIn>
 
             <FadeIn delay={0.3}>
               <p className="text-base md:text-xl text-gray-500 mb-10 max-w-xl mx-auto md:mx-0 leading-relaxed">
-                Building scalable APIs, automation pipelines, and integrating AI into robust data workflows.
+                I build practical APIs, automation tools, and AI features for real-world workflows.
               </p>
             </FadeIn>
             
@@ -52,8 +39,8 @@ export default function Home() {
                   View Resume
                 </Link>
                 <Link href="#projects" className="bg-white text-zinc-900 border border-zinc-200 px-8 py-4 rounded-full text-sm font-medium hover:bg-zinc-50 hover:border-zinc-300 hover:scale-[1.02] active:scale-95 transition-all shadow-sm flex items-center gap-2 group">
-                  Projects
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+                  View Work
+                  <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
                     <path d="M1 11L11 1M11 1H3.5M11 1V8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </Link>
@@ -84,14 +71,20 @@ export default function Home() {
             </FadeIn>
           </div>
 
-          <FadeIn delay={0.2} className="w-full md:w-[420px] shrink-0 mb-8 md:mb-0 relative">
-            <div className="absolute inset-0 bg-blue-100/50 rounded-full blur-3xl scale-90 -z-10" />
-            <div className="aspect-square md:aspect-[4/5] bg-zinc-100 rounded-[3rem] relative overflow-hidden flex flex-col justify-end shadow-xl border border-zinc-200/60 group mx-auto max-w-[320px] md:max-w-none">
+          <FadeIn delay={0.2} className="relative mb-8 w-full shrink-0 md:mb-0 md:w-[420px]">
+            <div className="pointer-events-none absolute -inset-8 z-0 md:-inset-16" aria-hidden="true">
+              <span className="absolute inset-[8%] rounded-full border border-zinc-200/75" />
+              <span className="absolute inset-[18%] rounded-full border border-zinc-200/50" />
+              <span className="absolute left-1/2 top-1/2 h-[28%] w-[118%] -translate-x-1/2 -translate-y-1/2 rotate-[-18deg] rounded-[50%] border border-zinc-200/65" />
+              <span className="absolute left-[13%] top-[24%] h-2 w-2 rounded-full bg-zinc-300" />
+            </div>
+            <div className="relative z-10 mx-auto aspect-square max-w-[320px] overflow-hidden rounded-[3rem] border border-zinc-200/60 bg-zinc-100 shadow-xl md:aspect-[4/5] md:max-w-none">
               <Image 
                 src="/profile.png" 
                 alt="Tisee Profile" 
                 fill 
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" 
+                sizes="(min-width: 768px) 420px, 320px"
+                className="object-cover"
                 priority
               />
             </div>
@@ -116,8 +109,8 @@ export default function Home() {
             href="/projects"
             className="inline-flex items-center gap-2 px-8 py-4 bg-zinc-900 text-white rounded-full font-medium text-sm hover:bg-zinc-800 transition-all hover:scale-105 active:scale-95 shadow-lg"
           >
-            See all projects
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            See all work
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </Link>

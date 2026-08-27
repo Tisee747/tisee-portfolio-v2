@@ -90,6 +90,7 @@ export default function ExperienceSection() {
                     src={`/images/journey/${exp.imageFile}`}
                     alt={exp.title}
                     fill
+                    sizes="(min-width: 768px) 50vw, 85vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
@@ -181,6 +182,7 @@ export default function ExperienceSection() {
                 src={`/images/journey/${experiences[active].imageFile}`}
                 alt={experiences[active].title}
                 fill
+                sizes="(min-width: 768px) 50vw, 85vw"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>

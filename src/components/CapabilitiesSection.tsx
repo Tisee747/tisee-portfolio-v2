@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 
 const techStack = [
@@ -25,6 +25,7 @@ const techStack = [
 export default function CapabilitiesSection() {
   // Duplicate array to create a seamless loop
   const marqueeItems = [...techStack, ...techStack];
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section className="w-full bg-white py-6 md:py-8 flex flex-col items-center justify-center overflow-hidden border-y border-zinc-100">
@@ -35,8 +36,8 @@ export default function CapabilitiesSection() {
         
         <motion.div
           className="flex gap-6 md:gap-10 w-max"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ ease: "linear", duration: 35, repeat: Infinity }}
+          animate={shouldReduceMotion ? { x: 0 } : { x: ["0%", "-50%"] }}
+          transition={shouldReduceMotion ? { duration: 0 } : { ease: "linear", duration: 35, repeat: Infinity }}
         >
           {marqueeItems.map((tech, idx) => {
             // Slight vertical wave offset based on index to make it look like the reference image
@@ -54,6 +55,7 @@ export default function CapabilitiesSection() {
                     src={tech.icon}
                     alt={tech.name}
                     fill
+                    sizes="64px"
                     className="object-contain"
                   />
                 </div>
