@@ -1,156 +1,156 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { projectsData } from "@/data/portfolioData";
 import Link from "next/link";
+import { projectsData } from "@/data/portfolioData";
 import { FadeIn } from "@/components/FadeIn";
 
 export default function ProjectsList() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  
-  // Pick only top 4 selected projects
-  const selectedProjects = projectsData.slice(0, 4);
 
-  // Auto-scroll logic via state
+  const selectedProjects = useMemo(
+    () => projectsData.filter((project) => project.images && project.images.length > 0).slice(0, 6),
+    []
+  );
+
   useEffect(() => {
-    if (isHovered) return;
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % selectedProjects.length);
-    }, 4000); 
+    if (isHovered || selectedProjects.length < 2) return;
 
-    return () => clearInterval(interval);
+    const interval = window.setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % selectedProjects.length);
+    }, 5600);
+
+    return () => window.clearInterval(interval);
   }, [isHovered, selectedProjects.length]);
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % selectedProjects.length);
+  const goTo = (index: number) => {
+    setCurrentIndex((index + selectedProjects.length) % selectedProjects.length);
   };
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + selectedProjects.length) % selectedProjects.length);
-  };
+  const previousIndex = (currentIndex - 1 + selectedProjects.length) % selectedProjects.length;
+  const nextIndex = (currentIndex + 1) % selectedProjects.length;
+  const activeProject = selectedProjects[currentIndex];
+  const previousProject = selectedProjects[previousIndex];
+  const nextProject = selectedProjects[nextIndex];
+  const activeHref = activeProject.demoUrl || activeProject.repoUrl || "/projects";
+  const activeExternal = Boolean(activeProject.demoUrl || activeProject.repoUrl);
 
   return (
-    <section id="projects" className="relative w-full bg-white py-24 flex flex-col justify-center overflow-hidden border-t border-zinc-100">
-      
-      {/* Decorative background for Projects */}
-      <svg className="absolute inset-0 w-full h-full opacity-[0.03] pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="plus-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M30 25 V35 M25 30 H35" stroke="black" strokeWidth="2" strokeLinecap="round"/>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#plus-pattern)" />
-      </svg>
-
-      <div className="max-w-[1200px] mx-auto w-full px-6 md:px-12 relative z-10">
-        
-        {/* Header */}
-        <FadeIn className="flex justify-between items-end mb-12">
+    <section
+      id="projects"
+      className="relative w-full overflow-hidden border-t border-zinc-100 bg-white py-24 md:py-32"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="mx-auto w-full max-w-6xl px-6 md:px-12">
+        <FadeIn className="mb-14 flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="text-4xl md:text-5xl font-medium text-neutral-900 tracking-tight">
-              Selected Projects
-            </h2>
+            <div className="mb-3 text-[10px] font-semibold uppercase tracking-[0.32em] text-blue-600">Selected work</div>
+            <h2 className="text-5xl font-semibold tracking-[-0.055em] text-zinc-900 md:text-7xl">Work Gallery</h2>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-zinc-500 md:text-lg">
+              A rotating selection of systems, apps, and applied AI projects I’ve built.
+            </p>
           </div>
+
+          <Link
+            href="/projects"
+            className="group inline-flex w-fit items-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50 px-5 py-3 text-sm font-semibold text-zinc-900 transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:bg-white"
+          >
+            View More Projects
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" className="transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+              <path d="M4 12 12 4M6 4h6v6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
         </FadeIn>
 
-        {/* Carousel Container */}
-        <FadeIn delay={0.2} className="relative w-full overflow-hidden rounded-[2rem] bg-white border border-zinc-200 shadow-sm">
-          <div 
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            onTouchStart={() => setIsHovered(true)}
-            onTouchEnd={() => setIsHovered(false)}
-            className="flex transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-          >
-            {selectedProjects.map((project) => (
-              <div 
-                key={project.id} 
-                className="w-full shrink-0 flex flex-col md:flex-row p-6 md:p-12 gap-8 md:gap-12"
-              >
-                {/* Left: Details */}
-                <div className="flex flex-col flex-1 justify-center order-2 md:order-1">
-                  <div className="text-[10px] font-semibold text-blue-600 tracking-widest uppercase mb-3">
-                    {project.projectLayout === 'none' ? 'Backend' : (project.projectLayout || 'web')}
-                  </div>
-                  <h3 className="text-3xl md:text-4xl font-medium text-neutral-900 mb-4 tracking-tight">
-                    {project.title}
-                  </h3>
-                  <p className="text-base text-gray-500 mb-8 line-clamp-3 leading-relaxed">
-                    {project.description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-3">
-                    {project.repoUrl && (
-                      <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="bg-slate-50 border border-zinc-200 text-zinc-900 px-6 py-3 rounded-full text-sm font-semibold hover:bg-zinc-100 transition-colors flex items-center justify-center shadow-sm">
-                        Repository
-                      </Link>
-                    )}
-                    {project.demoUrl && (
-                      <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="bg-zinc-900 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-zinc-800 transition-colors flex items-center justify-center shadow-sm">
-                        Live Demo
-                      </Link>
-                    )}
-                  </div>
-                </div>
+        <FadeIn delay={0.12}>
+          <div className="relative h-[300px] sm:h-[390px] md:h-[470px]">
+            <button
+              type="button"
+              onClick={() => goTo(previousIndex)}
+              className="absolute left-[-18%] top-1/2 z-10 h-[56%] w-[58%] -translate-y-1/2 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100 opacity-45 shadow-sm transition-all duration-700 hover:opacity-65 sm:left-[-10%] sm:h-[60%] sm:w-[48%] md:left-[-2%] md:h-[62%] md:w-[40%]"
+              aria-label={`Show ${previousProject.title}`}
+            >
+              <Image src={previousProject.images![0]} alt="" fill className="object-contain p-4" />
+            </button>
 
-                {/* Right: Image */}
-                <div className="flex-1 w-full aspect-video md:aspect-auto md:h-[400px] bg-zinc-50 rounded-2xl relative overflow-hidden border border-zinc-200 flex items-center justify-center p-4 order-1 md:order-2 group">
-                  <div className="relative w-full h-full rounded-xl overflow-hidden shadow-sm bg-white">
-                    {project.images && project.images.length > 0 ? (
-                      <Image 
-                        src={project.images[0]} 
-                        alt={project.title}
-                        fill
-                        className="object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-zinc-400">
-                        No Image Available
-                      </div>
-                    )}
-                  </div>
+            <Link
+              href={activeHref}
+              target={activeExternal ? "_blank" : undefined}
+              rel={activeExternal ? "noopener noreferrer" : undefined}
+              className="group absolute left-1/2 top-1/2 z-30 h-[78%] w-[76%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[1.75rem] border border-zinc-200 bg-white shadow-[0_24px_70px_rgba(0,0,0,0.10)] transition-all duration-700 hover:-translate-y-[52%] sm:w-[68%] md:h-[82%] md:w-[52%]"
+              aria-label={`Open ${activeProject.title}`}
+            >
+              <div className="relative h-full w-full bg-zinc-50 p-4 md:p-7">
+                <div className="relative h-full w-full overflow-hidden rounded-2xl bg-white">
+                  <Image
+                    key={activeProject.id}
+                    src={activeProject.images![0]}
+                    alt={`${activeProject.title} preview`}
+                    fill
+                    priority={currentIndex === 0}
+                    className="object-contain transition-transform duration-700 group-hover:scale-[1.025]"
+                  />
                 </div>
               </div>
-            ))}
-          </div>
-        </FadeIn>
+            </Link>
 
-        {/* Carousel Controls */}
-        <FadeIn delay={0.3} className="flex justify-between items-center mt-8">
-          
-          {/* Progress Indicators */}
-          <div className="flex gap-2">
-            {selectedProjects.map((_, idx) => (
-              <button 
-                key={idx}
-                onClick={() => setCurrentIndex(idx)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  currentIndex === idx ? "w-8 bg-blue-600" : "w-2 bg-zinc-300 hover:bg-zinc-400"
-                }`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
-          </div>
-
-          <div className="flex gap-4">
-            <button 
-              onClick={handlePrev}
-              className="w-12 h-12 rounded-full flex items-center justify-center bg-white text-zinc-900 hover:bg-zinc-50 transition-colors border border-zinc-200 shadow-sm active:scale-95"
+            <button
+              type="button"
+              onClick={() => goTo(nextIndex)}
+              className="absolute right-[-18%] top-1/2 z-10 h-[56%] w-[58%] -translate-y-1/2 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100 opacity-45 shadow-sm transition-all duration-700 hover:opacity-65 sm:right-[-10%] sm:h-[60%] sm:w-[48%] md:right-[-2%] md:h-[62%] md:w-[40%]"
+              aria-label={`Show ${nextProject.title}`}
             >
-              &larr;
-            </button>
-            <button 
-              onClick={handleNext}
-              className="w-12 h-12 rounded-full flex items-center justify-center bg-white text-zinc-900 hover:bg-zinc-50 transition-colors border border-zinc-200 shadow-sm active:scale-95"
-            >
-              &rarr;
+              <Image src={nextProject.images![0]} alt="" fill className="object-contain p-4" />
             </button>
           </div>
         </FadeIn>
-        
+
+        <FadeIn delay={0.18} className="mx-auto mt-4 max-w-4xl text-center md:mt-8">
+          <div className="mb-3 text-[10px] font-semibold uppercase tracking-[0.26em] text-blue-600">
+            {activeProject.projectLayout === "none" ? "Backend" : activeProject.projectLayout || "Project"}
+          </div>
+          <h3 className="text-2xl font-semibold tracking-[-0.035em] text-zinc-900 md:text-4xl">{activeProject.title}</h3>
+          <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-zinc-500 md:text-base">
+            {activeProject.description}
+          </p>
+
+          <div className="mt-7 flex items-center justify-center gap-5">
+            <button
+              type="button"
+              onClick={() => goTo(previousIndex)}
+              className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 bg-white text-zinc-900 transition hover:border-zinc-300 hover:bg-zinc-50 active:scale-95"
+              aria-label="Previous project"
+            >
+              ←
+            </button>
+
+            <div className="flex items-center gap-2">
+              {selectedProjects.map((project, index) => (
+                <button
+                  key={project.id}
+                  type="button"
+                  onClick={() => goTo(index)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    currentIndex === index ? "w-7 bg-zinc-900" : "w-1.5 bg-zinc-300 hover:bg-zinc-400"
+                  }`}
+                  aria-label={`Show ${project.title}`}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => goTo(nextIndex)}
+              className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 bg-white text-zinc-900 transition hover:border-zinc-300 hover:bg-zinc-50 active:scale-95"
+              aria-label="Next project"
+            >
+              →
+            </button>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
