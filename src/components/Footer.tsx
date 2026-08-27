@@ -3,7 +3,6 @@ import Link from "next/link";
 const contacts = [
   {
     name: "Email",
-    value: "tisee656@gmail.com",
     url: "mailto:tisee656@gmail.com",
     external: false,
     icon: (
@@ -15,7 +14,6 @@ const contacts = [
   },
   {
     name: "GitHub",
-    value: "github.com/Tisee747",
     url: "https://github.com/Tisee747",
     external: true,
     icon: (
@@ -26,7 +24,6 @@ const contacts = [
   },
   {
     name: "LinkedIn",
-    value: "linkedin.com/in/tisee",
     url: "https://linkedin.com/in/tisee",
     external: true,
     icon: (
@@ -37,8 +34,7 @@ const contacts = [
   },
   {
     name: "WhatsApp",
-    value: "+62 851 5671 7713",
-    url: "https://wa.me/+6285156717713",
+    url: "https://wa.me/6285156717713",
     external: true,
     icon: (
       <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -48,7 +44,6 @@ const contacts = [
   },
   {
     name: "Telegram",
-    value: "@NotBul77",
     url: "https://t.me/NotBul77",
     external: true,
     icon: (
@@ -61,78 +56,52 @@ const contacts = [
 
 export default function Footer() {
   return (
-    <footer className="mt-auto w-full border-t border-zinc-200 bg-white pb-10 pt-20 md:pt-28" id="contact">
+    <footer className="mt-auto w-full bg-white pb-10 pt-20 md:pt-28" id="contact">
       <div className="mx-auto w-full max-w-6xl px-6 md:px-12">
-        <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.8fr)] lg:gap-24">
+        <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.75fr)] lg:gap-24">
           <div className="max-w-2xl">
-            <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
-              Let&apos;s work together
-            </p>
-            <h2 className="text-5xl font-medium leading-[1.05] tracking-tighter text-zinc-900 sm:text-6xl md:text-7xl">
-              Have a useful
-              <br />
-              <span className="text-zinc-400">idea?</span>
+            <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">Get in touch</p>
+            <h2 className="text-5xl font-medium leading-[1.04] tracking-tighter text-zinc-950 sm:text-6xl md:text-7xl">
+              Let&apos;s build something useful.
             </h2>
-            <p className="mt-7 max-w-lg text-base leading-relaxed text-zinc-600 md:text-lg">
-              If you&apos;re building something thoughtful, I&apos;d be glad to hear what you have in mind.
+            <p className="mt-7 max-w-xl text-base leading-relaxed text-zinc-600 md:text-lg">
+              Have a role, project, or collaboration in mind? Reach out through whichever channel works best for you.
             </p>
             <Link
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex min-h-12 items-center gap-3 rounded-full bg-zinc-900 px-6 text-sm font-medium text-white transition-colors hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+              className="group mt-8 inline-flex min-h-12 items-center gap-2 rounded-full bg-zinc-950 px-6 text-sm font-medium text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
             >
               View Resume
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 13L13 3M13 3H6M13 3V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <span className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">↗</span>
             </Link>
           </div>
 
-          <div className="flex flex-col">
-            <div className="mb-5 flex items-center justify-between gap-4">
-              <p className="text-sm font-medium text-zinc-900">Contact</p>
-              <span className="text-xs text-zinc-500">Open to good work</span>
-            </div>
-
-            <div className="flex flex-col gap-2">
+          <div className="flex flex-col lg:pt-2">
+            <p className="mb-5 text-sm font-medium text-zinc-900">Contact</p>
+            <div className="grid grid-cols-2 gap-x-5 gap-y-1 sm:grid-cols-3 lg:grid-cols-2">
               {contacts.map((contact) => (
                 <Link
                   key={contact.name}
                   href={contact.url}
                   target={contact.external ? "_blank" : undefined}
                   rel={contact.external ? "noopener noreferrer" : undefined}
-                  className="group flex min-h-16 items-center gap-4 rounded-2xl border border-zinc-200 bg-white px-4 transition-colors hover:border-zinc-400 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:px-5"
+                  className="group inline-flex min-h-12 items-center gap-3 py-2 text-sm font-medium text-zinc-700 transition-colors hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
                 >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-zinc-50 text-zinc-700">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center text-zinc-700 transition-colors group-hover:text-zinc-950">
                     {contact.icon}
                   </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-sm font-medium text-zinc-900">{contact.name}</span>
-                    <span className="block truncate text-sm text-zinc-500">{contact.value}</span>
-                  </span>
-                  <span className="shrink-0 text-zinc-400 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">
-                    ↗
-                  </span>
+                  <span>{contact.name}</span>
                 </Link>
               ))}
             </div>
-
-            <Link
-              href="mailto:tisee656@gmail.com"
-              className="group mt-4 flex min-h-16 items-center justify-between gap-4 rounded-2xl bg-zinc-900 px-5 text-base font-medium text-white transition-colors hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
-            >
-              <span>Send a message</span>
-              <span className="text-xl transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">
-                ↗
-              </span>
-            </Link>
           </div>
         </div>
 
-        <div className="mt-20 flex flex-col gap-3 border-t border-zinc-200 pt-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-20 flex flex-col gap-3 border-t border-zinc-100 pt-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
           <span>&copy; 2026 Tisee. All rights reserved.</span>
-          <span>Backend systems &amp; applied AI</span>
+          <span>Building practical software and learning along the way.</span>
         </div>
       </div>
     </footer>

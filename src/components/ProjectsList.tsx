@@ -23,31 +23,42 @@ function getProjectCategory(project: Project) {
   return "Web";
 }
 
-function ProjectPreview({ project }: { project: Project }) {
+function GalleryCard({ project, active = false }: { project: Project; active?: boolean }) {
   return (
-    <div className="flex h-full min-h-[250px] w-full flex-col overflow-hidden rounded-3xl border border-zinc-200 bg-zinc-50 p-3 text-left shadow-sm transition-transform duration-500 group-hover:-translate-y-1 sm:p-4">
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white">
+    <div
+      className={`flex h-full w-full flex-col overflow-hidden rounded-[1.8rem] border bg-white text-left transition-shadow duration-300 ${
+        active
+          ? "border-zinc-200 shadow-[0_26px_80px_rgba(24,24,27,0.14)]"
+          : "border-zinc-200/80 shadow-[0_12px_40px_rgba(24,24,27,0.08)]"
+      }`}
+    >
+      <div className="relative min-h-0 flex-1 overflow-hidden bg-white">
         {project.images?.[0] ? (
           <Image
             src={project.images[0]}
-            alt=""
+            alt={active ? project.title : ""}
             fill
-            sizes="(min-width: 1024px) 260px, 30vw"
-            className="object-contain opacity-60"
+            sizes="(min-width: 1024px) 720px, 88vw"
+            className={`object-contain p-4 sm:p-7 ${active ? "opacity-100" : "opacity-60 grayscale-[20%]"}`}
+            priority={active}
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-xs text-zinc-400">
-            No image
-          </div>
+          <div className="flex h-full items-center justify-center text-sm text-zinc-400">No image available</div>
         )}
       </div>
-      <div className="mt-auto px-1 pt-4">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">
+
+      <div className={`border-t border-zinc-100 ${active ? "p-5 sm:p-7" : "p-4 sm:p-5"}`}>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
           {getProjectCategory(project)}
         </p>
-        <p className="mt-2 line-clamp-2 text-base font-medium tracking-tight text-zinc-700">
+        <h3 className={`mt-2 font-medium tracking-tight text-zinc-950 ${active ? "text-2xl sm:text-3xl" : "text-lg sm:text-xl"}`}>
           {project.title}
-        </p>
+        </h3>
+        {active && (
+          <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-zinc-500 sm:text-base">
+            {project.description}
+          </p>
+        )}
       </div>
     </div>
   );
@@ -55,7 +66,6 @@ function ProjectPreview({ project }: { project: Project }) {
 
 export default function ProjectsList() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const [isPointerOver, setIsPointerOver] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const shouldReduceMotion = useReducedMotion();
@@ -67,13 +77,7 @@ export default function ProjectsList() {
   const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.length];
 
   useEffect(() => {
-    if (
-      featuredProjects.length < 2 ||
-      shouldReduceMotion ||
-      isPaused ||
-      isPointerOver ||
-      isFocused
-    ) {
+    if (featuredProjects.length < 2 || shouldReduceMotion || isPointerOver || isFocused) {
       return;
     }
 
@@ -82,7 +86,7 @@ export default function ProjectsList() {
     }, 6500);
 
     return () => window.clearInterval(interval);
-  }, [isFocused, isPaused, isPointerOver, shouldReduceMotion]);
+  }, [isFocused, isPointerOver, shouldReduceMotion]);
 
   const showNext = () => {
     setCurrentIndex((previousIndex) => (previousIndex + 1) % featuredProjects.length);
@@ -97,40 +101,21 @@ export default function ProjectsList() {
   if (!activeProject) return null;
 
   return (
-    <section
-      id="projects"
-      className="relative flex w-full flex-col justify-center overflow-hidden border-t border-zinc-100 bg-white py-24"
-    >
-      {/* Decorative background for Projects */}
-      <svg
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.03]"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        <defs>
-          <pattern id="plus-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M30 25 V35 M25 30 H35" stroke="black" strokeWidth="2" strokeLinecap="round" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#plus-pattern)" />
-      </svg>
-
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 md:px-12">
-        <FadeIn className="mb-10 flex flex-col gap-4 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
+    <section id="projects" className="flex w-full flex-col justify-center overflow-hidden bg-white py-24 md:py-28">
+      <div className="mx-auto w-full max-w-6xl px-6 md:px-12">
+        <FadeIn className="mb-8 flex items-end justify-between gap-5 sm:mb-10">
           <div>
             <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
-              A few things I&apos;ve built
+              Selected work
             </p>
-            <h2 className="text-4xl font-medium tracking-tight text-neutral-900 md:text-5xl">
-              Work Gallery
-            </h2>
+            <h2 className="text-4xl font-medium tracking-tight text-zinc-950 md:text-5xl">Work Gallery</h2>
           </div>
-          <p className="text-sm text-zinc-400 sm:pb-1">
+          <p className="pb-1 text-xs font-medium text-zinc-400 sm:text-sm">
             {String(currentIndex + 1).padStart(2, "0")} / {String(featuredProjects.length).padStart(2, "0")}
           </p>
         </FadeIn>
 
-        <FadeIn delay={0.2}>
+        <FadeIn delay={0.15}>
           <div
             role="region"
             aria-roledescription="carousel"
@@ -155,154 +140,65 @@ export default function ProjectsList() {
                 setIsFocused(false);
               }
             }}
-            className="relative overflow-hidden rounded-[2rem] border border-zinc-200 bg-white outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
+            className="relative h-[430px] outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 sm:h-[535px] lg:h-[590px]"
           >
-            <div className="relative flex min-h-[470px] items-center justify-center px-4 py-6 sm:min-h-[520px] sm:px-8 sm:py-10">
-              <button
-                type="button"
-                onClick={showPrevious}
-                aria-label={`Show previous project: ${previousProject.title}`}
-                className="group absolute left-[-12%] top-1/2 hidden h-[72%] w-[28%] -translate-y-1/2 text-left opacity-60 transition-opacity hover:opacity-80 focus-visible:z-20 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:flex lg:left-[-4%] lg:w-[24%]"
-              >
-                <ProjectPreview project={previousProject} />
-              </button>
-
-              <Link
-                href={getProjectHref(activeProject)}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Open ${activeProject.title} ${activeProject.demoUrl ? "live demo" : "repository"}`}
-                className="group relative z-10 flex w-full max-w-[700px] flex-col overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-[0_18px_60px_rgba(24,24,27,0.1)] transition-shadow duration-500 hover:shadow-[0_22px_70px_rgba(24,24,27,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 sm:w-[76%] lg:w-[58%]"
-              >
-                <div className="relative aspect-[4/3] w-full overflow-hidden border-b border-zinc-100 bg-zinc-50 sm:aspect-[16/10]">
-                  {activeProject.images?.[0] ? (
-                    <Image
-                      src={activeProject.images[0]}
-                      alt={activeProject.title}
-                      fill
-                      sizes="(min-width: 1024px) 700px, 92vw"
-                      className="object-contain p-4 transition-transform duration-700 ease-out group-hover:scale-[1.02] sm:p-8"
-                      priority={currentIndex === 0}
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center text-sm text-zinc-400">
-                      No image available
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex flex-col p-5 sm:p-8">
-                  <div className="mb-3 flex items-center justify-between gap-4">
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
-                      {getProjectCategory(activeProject)}
-                    </span>
-                    <span className="shrink-0 text-xs font-medium text-zinc-400">
-                      {activeProject.demoUrl ? "Live demo" : "Repository"}
-                      <span className="ml-1 inline-block transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">
-                        ↗
-                      </span>
-                    </span>
-                  </div>
-                  <h3 className="text-2xl font-medium tracking-tight text-neutral-900 sm:text-3xl">
-                    {activeProject.title}
-                  </h3>
-                  <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-zinc-500 sm:text-base">
-                    {activeProject.description}
-                  </p>
-                </div>
-              </Link>
-
-              <button
-                type="button"
-                onClick={showNext}
-                aria-label={`Show next project: ${nextProject.title}`}
-                className="group absolute right-[-12%] top-1/2 hidden h-[72%] w-[28%] -translate-y-1/2 text-left opacity-60 transition-opacity hover:opacity-80 focus-visible:z-20 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:flex lg:right-[-4%] lg:w-[24%]"
-              >
-                <ProjectPreview project={nextProject} />
-              </button>
-            </div>
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={0.3} className="mt-6 flex items-center gap-3">
-          <div className="flex min-w-0 flex-1 items-center gap-0.5 sm:gap-1" aria-label="Choose a project">
-            {featuredProjects.map((project, index) => (
-              <button
-                key={project.id}
-                type="button"
-                onClick={() => setCurrentIndex(index)}
-                aria-label={`Show ${project.title}`}
-                aria-current={currentIndex === index ? "true" : undefined}
-                className="flex h-11 min-w-7 flex-1 items-center justify-center rounded-md px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
-              >
-                <span
-                  className={`block h-1.5 w-full max-w-12 rounded-full transition-colors duration-300 ${
-                    currentIndex === index
-                      ? "bg-zinc-900"
-                      : "bg-zinc-200 hover:bg-zinc-400"
-                  }`}
-                />
-              </button>
-            ))}
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setIsPaused((paused) => !paused)}
-            disabled={Boolean(shouldReduceMotion)}
-            aria-pressed={Boolean(shouldReduceMotion) || isPaused}
-            aria-label={
-              shouldReduceMotion
-                ? "Autoplay disabled because reduced motion is enabled"
-                : isPaused
-                  ? "Resume autoplay"
-                  : "Pause autoplay"
-            }
-            title={
-              shouldReduceMotion
-                ? "Autoplay disabled because reduced motion is enabled"
-                : isPaused
-                  ? "Resume autoplay"
-                  : "Pause autoplay"
-            }
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-700 transition-colors hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:w-auto sm:gap-2 sm:px-3"
-          >
-            {isPaused || shouldReduceMotion ? (
-              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M4 2.75L10 7L4 11.25V2.75Z" fill="currentColor" />
-              </svg>
-            ) : (
-              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M4 3V11M10 3V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            )}
-            <span className="hidden text-xs font-medium sm:inline">
-              {shouldReduceMotion ? "Motion off" : isPaused ? "Play" : "Pause"}
-            </span>
-          </button>
-
-          <div className="flex shrink-0 items-center gap-2">
             <button
               type="button"
               onClick={showPrevious}
-              aria-label="Previous project"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 transition-colors hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+              aria-label={`Show previous project: ${previousProject.title}`}
+              className="absolute left-1/2 top-1/2 z-0 h-[350px] w-[88%] text-left opacity-55 transition-opacity hover:opacity-75 focus-visible:z-30 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:h-[455px] sm:w-[72%] lg:h-[505px] lg:w-[64%]"
+              style={{ transform: "translate(-76%, -50%) rotate(-3deg) scale(0.91)" }}
             >
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M10 3L6 8L10 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <GalleryCard project={previousProject} />
             </button>
+
             <button
               type="button"
               onClick={showNext}
-              aria-label="Next project"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-900 bg-zinc-900 text-white transition-colors hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+              aria-label={`Show next project: ${nextProject.title}`}
+              className="absolute left-1/2 top-1/2 z-0 h-[350px] w-[88%] text-left opacity-55 transition-opacity hover:opacity-75 focus-visible:z-30 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:h-[455px] sm:w-[72%] lg:h-[505px] lg:w-[64%]"
+              style={{ transform: "translate(-24%, -50%) rotate(3deg) scale(0.91)" }}
             >
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M6 3L10 8L6 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <GalleryCard project={nextProject} />
             </button>
+
+            <Link
+              href={getProjectHref(activeProject)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open ${activeProject.title} ${activeProject.demoUrl ? "live demo" : "repository"}`}
+              className="group absolute left-1/2 top-1/2 z-20 h-[370px] w-[88%] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 sm:h-[480px] sm:w-[72%] lg:h-[530px] lg:w-[64%]"
+              style={{ transform: "translate(-50%, -50%)" }}
+            >
+              <GalleryCard project={activeProject} active />
+              <span className="pointer-events-none absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full bg-zinc-950 text-sm text-white shadow-lg transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:right-6 sm:top-6" aria-hidden="true">
+                ↗
+              </span>
+            </Link>
           </div>
+        </FadeIn>
+
+        <FadeIn delay={0.25} className="mt-1 flex items-center justify-center gap-3 sm:mt-3">
+          <button
+            type="button"
+            onClick={showPrevious}
+            aria-label="Previous project"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 transition-colors hover:border-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+          >
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M10 3L6 8L10 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={showNext}
+            aria-label="Next project"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-950 text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+          >
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 3L10 8L6 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
         </FadeIn>
       </div>
     </section>

@@ -1,14 +1,31 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const siteTitle = "Tisee — Developer Portfolio";
+const siteDescription =
+  "Backend-focused developer building dependable software, automation, and practical AI tools.";
+
 export const metadata: Metadata = {
-  title: "Tisee | Portfolio",
-  description: "Backend engineering. Applied AI.",
+  metadataBase: new URL("https://tisee-portfolio-v2.vercel.app"),
+  title: siteTitle,
+  description: siteDescription,
+  openGraph: {
+    title: siteTitle,
+    description: siteDescription,
+    url: "/",
+    siteName: "Tisee",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
+  },
 };
 
 export default function RootLayout({
@@ -18,9 +35,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.className}>
-      <body className="min-h-screen flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900 bg-white">
+      <body className="flex min-h-screen flex-col bg-white antialiased selection:bg-blue-100 selection:text-blue-900">
         <Navbar />
-        <main className="flex-grow flex flex-col w-full">{children}</main>
+        <main className="flex w-full flex-grow flex-col bg-white">{children}</main>
         <Footer />
       </body>
     </html>

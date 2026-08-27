@@ -1,7 +1,8 @@
 "use client";
 
+/* eslint-disable @next/next/no-img-element */
+
 import { motion, useReducedMotion } from "framer-motion";
-import Image from "next/image";
 
 const techStack = [
   { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
@@ -23,45 +24,35 @@ const techStack = [
 ];
 
 export default function CapabilitiesSection() {
-  // Duplicate array to create a seamless loop
   const marqueeItems = [...techStack, ...techStack];
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="w-full bg-white py-6 md:py-8 flex flex-col items-center justify-center overflow-hidden border-y border-zinc-100">
-      <div className="w-full relative flex items-center h-16 md:h-20">
-        {/* Left & Right Gradients for smooth fade */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-        
-        <motion.div
-          className="flex gap-6 md:gap-10 w-max"
-          animate={shouldReduceMotion ? { x: 0 } : { x: ["0%", "-50%"] }}
-          transition={shouldReduceMotion ? { duration: 0 } : { ease: "linear", duration: 35, repeat: Infinity }}
-        >
-          {marqueeItems.map((tech, idx) => {
-            // Slight vertical wave offset based on index to make it look like the reference image
-            const yOffset = Math.sin((idx * Math.PI) / (techStack.length / 2)) * 12;
+    <section className="flex w-full flex-col items-center justify-center overflow-hidden bg-white py-8 md:py-10">
+      <div className="relative flex h-16 w-full items-center md:h-20">
+        <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-16 bg-gradient-to-r from-white to-transparent md:w-32" />
+        <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-16 bg-gradient-to-l from-white to-transparent md:w-32" />
 
-            return (
-              <div
-                key={idx}
-                className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-slate-50 border border-zinc-100 flex items-center justify-center shadow-sm shrink-0 transition-all hover:scale-110 hover:shadow-md hover:border-zinc-200 group relative"
-                style={{ transform: `translateY(${yOffset}px)` }}
-                title={tech.name}
-              >
-                <div className="w-6 h-6 md:w-8 md:h-8 relative opacity-80 group-hover:opacity-100 transition-opacity">
-                  <Image 
-                    src={tech.icon}
-                    alt={tech.name}
-                    fill
-                    sizes="64px"
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-            );
-          })}
+        <motion.div
+          className="flex w-max items-center gap-10 md:gap-14"
+          animate={shouldReduceMotion ? { x: 0 } : { x: ["0%", "-50%"] }}
+          transition={shouldReduceMotion ? { duration: 0 } : { ease: "linear", duration: 38, repeat: Infinity }}
+        >
+          {marqueeItems.map((tech, index) => (
+            <div
+              key={`${tech.name}-${index}`}
+              className="flex shrink-0 items-center justify-center px-1 opacity-55 transition-opacity duration-200 hover:opacity-90"
+              title={tech.name}
+            >
+              <img
+                src={tech.icon}
+                alt={tech.name}
+                loading="lazy"
+                draggable={false}
+                className="h-8 w-8 object-contain grayscale brightness-0 md:h-10 md:w-10"
+              />
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>
