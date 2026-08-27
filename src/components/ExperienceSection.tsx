@@ -77,13 +77,17 @@ export default function ExperienceSection() {
                   </div>
 
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[1.4rem] bg-zinc-100 md:aspect-[4/3]">
-                    <Image
-                      src={experience.image}
-                      alt={`${copy.title} at ${experience.company}`}
-                      fill
-                      sizes="(min-width: 1024px) 280px, (min-width: 768px) 250px, 100vw"
-                      className="object-cover"
-                    />
+                    {experience.image ? (
+                      <Image
+                        src={experience.image}
+                        alt={`${copy.title} at ${experience.company}`}
+                        fill
+                        sizes="(min-width: 1024px) 280px, (min-width: 768px) 250px, 100vw"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center text-xs text-zinc-400">No image</div>
+                    )}
                   </div>
                 </article>
               </FadeIn>
