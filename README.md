@@ -1,39 +1,36 @@
-# Tisee portfolio — V2
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Next.js portfolio for Tisee, focused on Backend Engineering and Applied AI.
+## Getting Started
 
-## Project continuity
-
-This repository is the canonical source for continuing the project across long ChatGPT/Codex conversations.
-
-Before substantial work, read in this order:
-
-1. [`TISEE_CV_PROJECT_PROTOCOL.md`](./TISEE_CV_PROJECT_PROTOCOL.md) — durable architecture, constraints, workflow, safety boundaries, and cross-chat protocol.
-2. [`TISEE_CV_CURRENT_STATE.md`](./TISEE_CV_CURRENT_STATE.md) — replaceable handoff containing the current objective, implementation state, blockers, and next steps.
-3. Inspect the actual current GitHub source/commit and any relevant runtime/external system before acting.
-
-Do not treat the handoff as stronger evidence than the repository or runtime.
-
-When moving to a new chat after meaningful work, update `TISEE_CV_CURRENT_STATE.md` in place instead of creating another one-off handoff file.
-
-## Current application
-
-The active implementation is a Next.js App Router application under `app/` using React, TypeScript, Tailwind CSS, and Motion.
-
-Useful commands:
+First, run the development server:
 
 ```bash
 npm run dev
-npm run build
-npm run start
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-GitHub Actions validates the production build on pushes and pull requests to `main`.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Local/runtime agents
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-[`AG_HANDOFF.md`](./AG_HANDOFF.md) defines the narrow Antigravity role for local/runtime QA. ChatGPT remains the normal source/design author.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Protected production
+## Learn More
 
-The original `Tisee747/web-tisee` repository and its Vercel project are protected. Read the project protocol before any deployment or infrastructure action.
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
