@@ -75,9 +75,9 @@ export default function Navbar() {
 
             <Link
               href="/#contact"
-              className="ml-0.5 inline-flex min-h-11 items-center whitespace-nowrap rounded-full bg-zinc-950 px-4 text-xs font-medium text-white shadow-[0_8px_24px_rgba(9,9,11,0.12)] transition-[background-color,box-shadow] duration-200 hover:bg-zinc-800 hover:shadow-[0_10px_28px_rgba(9,9,11,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:ml-1 sm:px-5 sm:text-sm"
+              className="group relative isolate ml-0.5 inline-flex min-h-11 items-center overflow-hidden whitespace-nowrap rounded-full border border-zinc-800 bg-zinc-950 px-4 text-xs font-semibold tracking-[0.015em] text-white shadow-[0_10px_30px_rgba(9,9,11,0.20),inset_0_1px_0_rgba(255,255,255,0.12)] transition-[transform,border-color,box-shadow] duration-300 ease-out before:absolute before:inset-0 before:-translate-x-[125%] before:content-[''] before:bg-[linear-gradient(110deg,transparent_22%,rgba(255,255,255,0.20)_48%,transparent_74%)] before:transition-transform before:duration-700 hover:-translate-y-0.5 hover:border-zinc-600 hover:shadow-[0_14px_34px_rgba(9,9,11,0.26),inset_0_1px_0_rgba(255,255,255,0.16)] hover:before:translate-x-[125%] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:before:transition-none motion-reduce:hover:before:-translate-x-[125%] sm:ml-1 sm:px-5 sm:text-sm"
             >
-              Hire me
+              <span className="relative z-10">Hire me</span>
             </Link>
           </div>
         </div>
