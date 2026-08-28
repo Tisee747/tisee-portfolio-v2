@@ -5,6 +5,28 @@ import ExperienceSection from "@/components/ExperienceSection";
 import { FadeIn } from "@/components/FadeIn";
 import ProjectsList from "@/components/ProjectsList";
 
+function ExternalArrowIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+    >
+      <path
+        d="M4 10L10 4M10 4H5.5M10 4V8.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export default function Home() {
   return (
     <main className="relative w-full overflow-x-hidden bg-white selection:bg-blue-100 selection:text-blue-900">
@@ -55,9 +77,7 @@ export default function Home() {
                   className="group inline-flex min-h-12 items-center gap-2 rounded-full border border-zinc-200 bg-white px-7 text-sm font-medium text-zinc-900 transition-colors hover:border-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
                 >
                   View Work
-                  <span className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
-                    ↗
-                  </span>
+                  <ExternalArrowIcon />
                 </Link>
               </div>
             </FadeIn>
@@ -118,9 +138,7 @@ export default function Home() {
             className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-zinc-950 px-7 text-sm font-medium text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
           >
             See all work
-            <span className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
-              ↗
-            </span>
+            <ExternalArrowIcon />
           </Link>
         </FadeIn>
       </section>
