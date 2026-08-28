@@ -101,7 +101,7 @@ export default function ProjectsList() {
   if (!activeProject) return null;
 
   return (
-    <section id="projects" className="flex w-full flex-col justify-center overflow-hidden bg-white py-24 md:py-28">
+    <section id="projects" className="flex w-full flex-col justify-center overflow-hidden bg-white pb-10 pt-24 md:pb-12 md:pt-28">
       <div className="mx-auto w-full max-w-6xl px-6 md:px-12">
         <FadeIn className="mb-8 flex items-end justify-between gap-5 sm:mb-10">
           <div>
