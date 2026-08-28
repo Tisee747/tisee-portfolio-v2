@@ -167,38 +167,12 @@ export default function ProjectsList() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Open ${activeProject.title} ${activeProject.demoUrl ? "live demo" : "repository"}`}
-              className="group absolute left-1/2 top-1/2 z-20 h-[370px] w-[88%] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 sm:h-[480px] sm:w-[72%] lg:h-[530px] lg:w-[64%]"
+              className="absolute left-1/2 top-1/2 z-20 h-[370px] w-[88%] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 sm:h-[480px] sm:w-[72%] lg:h-[530px] lg:w-[64%]"
               style={{ transform: "translate(-50%, -50%)" }}
             >
               <GalleryCard project={activeProject} active />
-              <span className="pointer-events-none absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full bg-zinc-950 text-sm text-white shadow-lg transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:right-6 sm:top-6" aria-hidden="true">
-                ↗
-              </span>
             </Link>
           </div>
-        </FadeIn>
-
-        <FadeIn delay={0.25} className="mt-1 flex items-center justify-center gap-3 sm:mt-3">
-          <button
-            type="button"
-            onClick={showPrevious}
-            aria-label="Previous project"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 transition-colors hover:border-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
-          >
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M10 3L6 8L10 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            onClick={showNext}
-            aria-label="Next project"
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-950 text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
-          >
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M6 3L10 8L6 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
         </FadeIn>
       </div>
     </section>
