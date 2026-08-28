@@ -24,6 +24,26 @@ html {
   scroll-behavior: smooth;
 }
 
+@keyframes tisee-flow {
+  from {
+    transform: translate3d(-1.5%, -0.5%, 0);
+  }
+
+  to {
+    transform: translate3d(1.5%, 0.75%, 0);
+  }
+}
+
+.tisee-flow-canvas {
+  animation: tisee-flow 28s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.tisee-flow-canvas-secondary {
+  animation-delay: -9s;
+  animation-duration: 34s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -36,5 +56,10 @@ html {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .tisee-flow-canvas,
+  .tisee-flow-canvas-secondary {
+    animation: none !important;
   }
 }

@@ -101,7 +101,7 @@ export default function Footer() {
 
         <div className="mt-20 flex flex-col gap-3 border-t border-zinc-100 pt-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
           <span>&copy; 2026 Tisee. All rights reserved.</span>
-          <span>Building practical software and learning along the way.</span>
+          <span>Building practical stuff and learning along the way.</span>
         </div>
       </div>
     </footer>

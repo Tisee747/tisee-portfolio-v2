@@ -48,7 +48,11 @@ export function BrandMark({
       <circle cx="9" cy="32" r="3.7" fill={cutout} stroke={color} strokeWidth="2.25" />
       <circle cx="55" cy="32" r="3.7" fill={color} />
       <path
-        d="M20.5 17.5L43.5 14.5L44.4 21.1L36.8 22.1L35.2 42.1L31.4 47L27.8 43.7L29.3 23L21.1 24.1L20.5 17.5Z"
+        d="M20.5 18.5L43.5 15.5L44.3 22L21.2 25L20.5 18.5Z"
+        fill={color}
+      />
+      <path
+        d="M29.9 23.8L36.8 22.9L35.3 42.2L32 47L28.7 43.4L29.9 23.8Z"
         fill={color}
       />
     </svg>

@@ -14,10 +14,16 @@ const experienceCopy: Record<string, { title: string; description: string }> = {
       "Worked with Python, RegEx, and web scraping to collect and process data, while also contributing automation scripts and internal tooling.",
   },
   "smp-lensza": {
-    title: "Digital Marketing Intern",
+    title: "Digital Marketing Freelance",
     description:
       "Created promotional content and newsletters, scheduled product and content uploads, and supported day-to-day e-commerce customer interactions.",
   },
+};
+
+const stageLabels: Record<"SMP" | "SMK" | "University", string> = {
+  SMP: "Junior Highschool",
+  SMK: "Senior Highschool",
+  University: "University",
 };
 
 const experiences = [...journeyData].reverse();
@@ -53,7 +59,7 @@ export default function ExperienceSection() {
                   <div className="flex items-center justify-between gap-4 md:block">
                     <span className="text-xs font-medium text-zinc-400">0{index + 1}</span>
                     <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-400 md:mt-3 md:block">
-                      {experience.stage}
+                      {stageLabels[experience.stage]}
                     </span>
                   </div>
 

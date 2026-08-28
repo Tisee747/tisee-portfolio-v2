@@ -9,17 +9,34 @@ export default function Home() {
   return (
     <main className="relative w-full overflow-x-hidden bg-white selection:bg-blue-100 selection:text-blue-900">
       <section className="relative z-10 flex w-full justify-center bg-white px-6 pb-20 pt-28 md:px-12 md:pb-24 md:pt-32">
-        <div className="grid w-full max-w-6xl items-center gap-14 md:grid-cols-[minmax(0,1fr)_420px] md:gap-16">
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[42rem] overflow-hidden" aria-hidden="true">
+          <div className="tisee-flow-canvas absolute -left-[8%] top-8 h-[32rem] w-[116%]">
+            <svg viewBox="0 0 1200 520" className="h-full w-full" fill="none" preserveAspectRatio="none">
+              <path d="M-120 128C112 34 286 50 452 132S790 250 1320 84" stroke="#E4E4E7" strokeWidth="1.4" strokeLinecap="round" />
+              <path d="M-120 196C112 102 286 118 452 200S790 318 1320 152" stroke="#F0F0F1" strokeWidth="1.2" strokeLinecap="round" />
+              <path d="M-120 264C112 170 286 186 452 268S790 386 1320 220" stroke="#E4E4E7" strokeWidth="1.4" strokeLinecap="round" />
+            </svg>
+          </div>
+          <div className="tisee-flow-canvas tisee-flow-canvas-secondary absolute -left-[12%] top-24 h-[32rem] w-[116%]">
+            <svg viewBox="0 0 1200 520" className="h-full w-full" fill="none" preserveAspectRatio="none">
+              <path d="M-120 310C132 232 300 246 470 324S830 430 1320 276" stroke="#F0F0F1" strokeWidth="1.2" strokeLinecap="round" />
+              <path d="M-120 378C132 300 300 314 470 392S830 498 1320 344" stroke="#E4E4E7" strokeWidth="1.4" strokeLinecap="round" />
+            </svg>
+          </div>
+        </div>
+
+        <div className="relative z-10 grid w-full max-w-6xl items-center gap-14 md:grid-cols-[minmax(0,1fr)_420px] md:gap-16">
           <div className="flex flex-col justify-center text-center md:text-left">
             <FadeIn delay={0.1}>
               <h1 className="mx-auto max-w-3xl text-5xl font-semibold leading-[1.03] tracking-[-0.045em] text-zinc-950 sm:text-6xl md:mx-0 md:text-7xl">
-                I turn ideas into working software.
+                Hi!I&apos;m Tisee
               </h1>
             </FadeIn>
 
             <FadeIn delay={0.2}>
               <p className="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-zinc-500 sm:text-lg md:mx-0 md:mt-8 md:text-xl">
-                Focused on backend development, automation, and AI.
+                <span className="block">I turn ideas into working software.</span>
+                <span className="mt-2 block">Focused on backend development, automation, and AI.</span>
               </p>
             </FadeIn>
 

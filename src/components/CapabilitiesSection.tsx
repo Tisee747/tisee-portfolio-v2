@@ -5,22 +5,22 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 const techStack = [
-  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
-  { name: "Go", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg" },
-  { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
-  { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
-  { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" },
-  { name: "Tailwind", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
-  { name: "Laravel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" },
-  { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" },
-  { name: "Flutter", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg" },
-  { name: "Dart", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg" },
-  { name: "PostgreSQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
-  { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
-  { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" },
-  { name: "Redis", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg" },
-  { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
-  { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
+  { name: "Python", icon: "https://cdn.simpleicons.org/python/09090B" },
+  { name: "Go", icon: "https://cdn.simpleicons.org/go/09090B" },
+  { name: "Node.js", icon: "https://cdn.simpleicons.org/nodedotjs/09090B" },
+  { name: "React", icon: "https://cdn.simpleicons.org/react/09090B" },
+  { name: "Next.js", icon: "https://cdn.simpleicons.org/nextdotjs/09090B" },
+  { name: "Tailwind", icon: "https://cdn.simpleicons.org/tailwindcss/09090B" },
+  { name: "Laravel", icon: "https://cdn.simpleicons.org/laravel/09090B" },
+  { name: "PHP", icon: "https://cdn.simpleicons.org/php/09090B" },
+  { name: "Flutter", icon: "https://cdn.simpleicons.org/flutter/09090B" },
+  { name: "Dart", icon: "https://cdn.simpleicons.org/dart/09090B" },
+  { name: "PostgreSQL", icon: "https://cdn.simpleicons.org/postgresql/09090B" },
+  { name: "MySQL", icon: "https://cdn.simpleicons.org/mysql/09090B" },
+  { name: "MongoDB", icon: "https://cdn.simpleicons.org/mongodb/09090B" },
+  { name: "Redis", icon: "https://cdn.simpleicons.org/redis/09090B" },
+  { name: "AWS", icon: "/images/tech/aws.svg" },
+  { name: "Docker", icon: "https://cdn.simpleicons.org/docker/09090B" },
 ];
 
 export default function CapabilitiesSection() {
@@ -41,7 +41,7 @@ export default function CapabilitiesSection() {
           {marqueeItems.map((tech, index) => (
             <div
               key={`${tech.name}-${index}`}
-              className="flex shrink-0 items-center justify-center px-1 opacity-55 transition-opacity duration-200 hover:opacity-90"
+              className="flex shrink-0 items-center justify-center px-1 transition-opacity duration-200 hover:opacity-75"
               title={tech.name}
             >
               <img
@@ -49,7 +49,7 @@ export default function CapabilitiesSection() {
                 alt={tech.name}
                 loading="lazy"
                 draggable={false}
-                className="h-8 w-8 object-contain grayscale brightness-0 md:h-10 md:w-10"
+                className="h-8 w-8 object-contain md:h-10 md:w-10"
               />
             </div>
           ))}

@@ -33,13 +33,13 @@ export default function Navbar() {
   });
 
   return (
-    <div className="fixed inset-x-0 top-0 z-50 flex w-full justify-center bg-white">
-      <motion.nav
-        initial={false}
-        animate={{ y: hidden ? -100 : 0, opacity: hidden ? 0 : 1 }}
-        transition={{ duration: shouldReduceMotion ? 0 : 0.3, ease: "easeInOut" }}
-        className="w-full bg-white"
-      >
+    <motion.div
+      initial={false}
+      animate={{ y: hidden ? -100 : 0, opacity: hidden ? 0 : 1 }}
+      transition={{ duration: shouldReduceMotion ? 0 : 0.3, ease: "easeInOut" }}
+      className="fixed inset-x-0 top-0 z-50 flex w-full justify-center bg-white"
+    >
+      <nav className="w-full bg-white">
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link
             href="/"
@@ -75,16 +75,13 @@ export default function Navbar() {
 
             <Link
               href="/#contact"
-              className="group ml-0.5 inline-flex min-h-11 items-center gap-2 whitespace-nowrap rounded-full bg-zinc-950 py-1 pl-3.5 pr-1 text-xs font-medium text-white transition-colors duration-200 hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:ml-1 sm:pl-4 sm:text-sm"
+              className="ml-0.5 inline-flex min-h-11 items-center whitespace-nowrap rounded-full bg-zinc-950 px-4 text-xs font-medium text-white shadow-[0_8px_24px_rgba(9,9,11,0.12)] transition-[background-color,box-shadow] duration-200 hover:bg-zinc-800 hover:shadow-[0_10px_28px_rgba(9,9,11,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:ml-1 sm:px-5 sm:text-sm"
             >
-              <span>Hire me</span>
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-zinc-950 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
-                ↗
-              </span>
+              Hire me
             </Link>
           </div>
         </div>
-      </motion.nav>
-    </div>
+      </nav>
+    </motion.div>
   );
 }
