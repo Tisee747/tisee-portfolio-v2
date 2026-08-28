@@ -2,7 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 
-import { motion, useReducedMotion } from "framer-motion";
+import SectionArtwork from "@/components/SectionArtwork";
 
 const techStack = [
   { name: "Python", icon: "https://cdn.simpleicons.org/python/09090B" },
@@ -25,19 +25,16 @@ const techStack = [
 
 export default function CapabilitiesSection() {
   const marqueeItems = [...techStack, ...techStack];
-  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="flex w-full flex-col items-center justify-center overflow-hidden bg-white py-8 md:py-10">
-      <div className="relative flex h-16 w-full items-center md:h-20">
+    <section className="relative flex w-full flex-col items-center justify-center overflow-hidden bg-white py-8 md:py-10">
+      <SectionArtwork variant="capabilities" />
+
+      <div className="relative z-10 flex h-16 w-full items-center overflow-hidden md:h-20">
         <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-16 bg-gradient-to-r from-white to-transparent md:w-32" />
         <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-16 bg-gradient-to-l from-white to-transparent md:w-32" />
 
-        <motion.div
-          className="flex w-max items-center gap-10 md:gap-14"
-          animate={shouldReduceMotion ? { x: 0 } : { x: ["0%", "-50%"] }}
-          transition={shouldReduceMotion ? { duration: 0 } : { ease: "linear", duration: 38, repeat: Infinity }}
-        >
+        <div className="tisee-tech-marquee flex w-max items-center gap-10 md:gap-14">
           {marqueeItems.map((tech, index) => (
             <div
               key={`${tech.name}-${index}`}
@@ -48,12 +45,13 @@ export default function CapabilitiesSection() {
                 src={tech.icon}
                 alt={tech.name}
                 loading="lazy"
+                decoding="async"
                 draggable={false}
                 className="h-8 w-8 object-contain md:h-10 md:w-10"
               />
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
