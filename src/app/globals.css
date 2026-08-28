@@ -75,6 +75,22 @@ html {
   animation-duration: 34s;
 }
 
+@keyframes tisee-tech-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.tisee-tech-marquee {
+  animation: tisee-tech-marquee 38s linear infinite;
+  contain: layout paint;
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -90,7 +106,8 @@ html {
   }
 
   .tisee-flow-canvas,
-  .tisee-flow-canvas-secondary {
+  .tisee-flow-canvas-secondary,
+  .tisee-tech-marquee {
     animation: none !important;
   }
 }
