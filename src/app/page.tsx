@@ -13,13 +13,13 @@ export default function Home() {
           <div className="flex flex-col justify-center text-center md:text-left">
             <FadeIn delay={0.1}>
               <h1 className="mx-auto max-w-3xl text-5xl font-semibold leading-[1.03] tracking-[-0.045em] text-zinc-950 sm:text-6xl md:mx-0 md:text-7xl">
-                Hi, I&apos;m Tisee. I build useful software for real workflows.
+                I turn ideas into working software.
               </h1>
             </FadeIn>
 
             <FadeIn delay={0.2}>
               <p className="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-zinc-500 sm:text-lg md:mx-0 md:mt-8 md:text-xl">
-                I work across backend development, automation, and practical AI — turning ideas and messy processes into reliable tools that are clear, useful, and ready to ship.
+                Focused on backend development, automation, and AI.
               </p>
             </FadeIn>
 

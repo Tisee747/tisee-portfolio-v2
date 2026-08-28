@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { BrandMark } from "@/components/BrandMark";
 
 export const alt = "Tisee developer portfolio";
 export const size = {
@@ -24,11 +25,7 @@ export default function Image() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <div style={{ display: "flex", alignItems: "baseline", gap: 4, fontSize: 40, fontWeight: 800, letterSpacing: -2 }}>
-            <span>T</span>
-            <span style={{ fontSize: 28, fontWeight: 600 }}>/</span>
-            <span style={{ fontSize: 18 }}>•</span>
-          </div>
+          <BrandMark size={52} color="#09090B" cutout="#FFFFFF" />
           <div style={{ fontSize: 24, fontWeight: 700, letterSpacing: 4 }}>TISEE</div>
         </div>
 

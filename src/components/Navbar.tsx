@@ -4,30 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
 import { useRef, useState } from "react";
+import { BrandMark } from "@/components/BrandMark";
 
 const navItems = [
   { name: "Work", shortName: "Work", path: "/projects" },
   { name: "Experience", shortName: "Exp.", path: "/#experience" },
 ];
-
-function BrandMark() {
-  return (
-    <svg
-      aria-hidden="true"
-      width="34"
-      height="34"
-      viewBox="0 0 36 36"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="shrink-0 text-zinc-950"
-    >
-      <path d="M5 9.5H23.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M14.25 9.5V27" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M22 25.5L30.5 13" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-      <circle cx="28.5" cy="27" r="2.25" fill="currentColor" />
-    </svg>
-  );
-}
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -64,7 +46,7 @@ export default function Navbar() {
             aria-label="Tisee home"
             className="group inline-flex min-h-11 shrink-0 items-center gap-2 text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
           >
-            <BrandMark />
+            <BrandMark size={34} className="shrink-0 text-zinc-950" />
             <span className="text-[12px] font-semibold uppercase tracking-[0.18em] transition-[letter-spacing] duration-200 group-hover:tracking-[0.24em] sm:text-[13px]">
               Tisee
             </span>
