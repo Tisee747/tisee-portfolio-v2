@@ -25,23 +25,23 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative z-10 grid w-full max-w-6xl items-center gap-14 md:grid-cols-[minmax(0,1fr)_420px] md:gap-16">
+        <div className="relative z-10 grid w-full max-w-6xl items-center gap-10 md:grid-cols-[minmax(0,1fr)_420px] md:gap-14">
           <div className="flex flex-col justify-center text-center md:text-left">
             <FadeIn delay={0.1}>
-              <h1 className="mx-auto max-w-3xl text-5xl font-semibold leading-[1.03] tracking-[-0.045em] text-zinc-950 sm:text-6xl md:mx-0 md:text-7xl">
-                Hi!I&apos;m Tisee
+              <h1 className="mx-auto max-w-3xl text-balance text-5xl font-semibold leading-[1.02] tracking-[-0.045em] text-zinc-950 sm:text-6xl md:mx-0 md:text-7xl">
+                Hi! I&apos;m Tisee
               </h1>
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <p className="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-zinc-500 sm:text-lg md:mx-0 md:mt-8 md:text-xl">
+              <p className="mx-auto mt-5 max-w-xl text-base leading-[1.65] text-zinc-500 sm:text-lg md:mx-0 md:mt-6 md:text-xl">
                 <span className="block">I turn ideas into working software.</span>
-                <span className="mt-2 block">Focused on backend development, automation, and AI.</span>
+                <span className="mt-1.5 block">Focused on backend development, automation, and AI.</span>
               </p>
             </FadeIn>
 
             <FadeIn delay={0.3}>
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-3 md:justify-start">
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
                 <Link
                   href="/resume.pdf"
                   target="_blank"
@@ -63,10 +63,10 @@ export default function Home() {
             </FadeIn>
 
             <FadeIn delay={0.4}>
-              <div className="mt-14 border-t border-zinc-100 pt-7 md:mt-16 md:pt-8">
+              <div className="mt-12 border-t border-zinc-100 pt-7 md:mt-14 md:pt-8">
                 <div className="grid grid-cols-2 gap-x-8 gap-y-6 text-left sm:grid-cols-4 sm:gap-8">
                   <div>
-                    <div className="text-2xl font-semibold tracking-tight text-zinc-950 md:text-3xl">3.66</div>
+                    <div className="text-2xl font-semibold tracking-tight text-zinc-950 md:text-3xl">3.4</div>
                     <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">GPA</div>
                   </div>
                   <div>
@@ -111,7 +111,7 @@ export default function Home() {
       <CapabilitiesSection />
       <ProjectsList />
 
-      <section className="flex w-full justify-center bg-white pb-28 pt-4 md:pb-32">
+      <section className="flex w-full justify-center bg-white pb-8 pt-0 md:pb-10">
         <FadeIn>
           <Link
             href="/projects"
