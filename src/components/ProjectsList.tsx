@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, type PanInfo } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { FadeIn } from "@/components/FadeIn";
 import { projectsData } from "@/data/portfolioData";
 import type { Project } from "@/types";
@@ -22,69 +22,32 @@ function getProjectCategory(project: Project) {
   return "Web";
 }
 
-function getRelativePosition(index: number, currentIndex: number, total: number) {
-  let position = index - currentIndex;
-
-  if (position > total / 2) position -= total;
-  if (position < -total / 2) position += total;
-
-  return position;
-}
-
-function getCardMotion(position: number) {
-  if (position === -1) {
-    return { x: "-76%", scale: 0.91, rotate: -3, opacity: 0.55 };
-  }
-
-  if (position === 0) {
-    return { x: "-50%", scale: 1, rotate: 0, opacity: 1 };
-  }
-
-  if (position === 1) {
-    return { x: "-24%", scale: 0.91, rotate: 3, opacity: 0.55 };
-  }
-
-  return { x: "-50%", scale: 0.86, rotate: 0, opacity: 0 };
-}
-
-function GalleryCard({ project, active = false }: { project: Project; active?: boolean }) {
+function GalleryCard({ project, priority = false }: { project: Project; priority?: boolean }) {
   return (
-    <div
-      className={`flex h-full w-full flex-col overflow-hidden rounded-[1.8rem] border bg-white text-left transition-[border-color,box-shadow] duration-300 ${
-        active
-          ? "border-zinc-200 shadow-[0_26px_80px_rgba(24,24,27,0.14)]"
-          : "border-zinc-200/80 shadow-[0_12px_40px_rgba(24,24,27,0.08)]"
-      }`}
-    >
+    <div className="flex h-full w-full flex-col overflow-hidden rounded-[1.65rem] border border-zinc-200 bg-white text-left shadow-[0_16px_48px_rgba(24,24,27,0.10)]">
       <div className="relative min-h-0 flex-1 overflow-hidden bg-white">
         {project.images?.[0] ? (
           <Image
             src={project.images[0]}
-            alt={active ? project.title : ""}
+            alt={project.title}
             fill
-            sizes="(min-width: 1024px) 720px, 88vw"
-            className={`object-contain p-4 transition-[opacity,filter] duration-300 sm:p-7 ${
-              active ? "opacity-100 grayscale-0" : "opacity-60 grayscale-[20%]"
-            }`}
-            priority={project.id === featuredProjects[0]?.id}
+            sizes="(min-width: 1024px) 720px, (min-width: 640px) 72vw, 84vw"
+            className="object-contain p-4 sm:p-7"
+            priority={priority}
           />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-zinc-400">No image available</div>
         )}
       </div>
 
-      <div className={`border-t border-zinc-100 transition-[padding] duration-300 ${active ? "p-5 sm:p-7" : "p-4 sm:p-5"}`}>
+      <div className="border-t border-zinc-100 p-5 sm:p-7">
         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
           {getProjectCategory(project)}
         </p>
-        <h3 className={`mt-2 font-medium tracking-tight text-zinc-950 ${active ? "text-2xl sm:text-3xl" : "text-lg sm:text-xl"}`}>
+        <h3 className="mt-2 text-2xl font-medium tracking-tight text-zinc-950 sm:text-3xl">
           {project.title}
         </h3>
-        <p
-          className={`overflow-hidden text-sm leading-relaxed text-zinc-500 transition-[max-height,opacity,margin] duration-300 sm:text-base ${
-            active ? "mt-3 max-h-20 opacity-100" : "mt-0 max-h-0 opacity-0"
-          }`}
-        >
+        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-zinc-500 sm:text-base">
           {project.description}
         </p>
       </div>
@@ -94,77 +57,86 @@ function GalleryCard({ project, active = false }: { project: Project; active?: b
 
 export default function ProjectsList() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPointerOver, setIsPointerOver] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
   const shouldReduceMotion = useReducedMotion();
-  const didDrag = useRef(false);
-  const dragResetTimer = useRef<number | null>(null);
-
-  const activeProject = featuredProjects[currentIndex];
-
-  useEffect(() => {
-    if (featuredProjects.length < 2 || shouldReduceMotion || isPointerOver || isFocused) {
-      return;
-    }
-
-    const interval = window.setInterval(() => {
-      setCurrentIndex((previousIndex) => (previousIndex + 1) % featuredProjects.length);
-    }, 6500);
-
-    return () => window.clearInterval(interval);
-  }, [isFocused, isPointerOver, shouldReduceMotion]);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const settleTimer = useRef<number | null>(null);
+  const clickResetTimer = useRef<number | null>(null);
+  const interactionStartLeft = useRef(0);
+  const didScroll = useRef(false);
 
   useEffect(() => {
     return () => {
-      if (dragResetTimer.current !== null) {
-        window.clearTimeout(dragResetTimer.current);
-      }
+      if (settleTimer.current !== null) window.clearTimeout(settleTimer.current);
+      if (clickResetTimer.current !== null) window.clearTimeout(clickResetTimer.current);
     };
   }, []);
 
-  const showNext = () => {
-    setCurrentIndex((previousIndex) => (previousIndex + 1) % featuredProjects.length);
+  const scrollToIndex = (index: number) => {
+    const scroller = scrollerRef.current;
+    const card = cardRefs.current[index];
+    if (!scroller || !card) return;
+
+    const left = card.offsetLeft - (scroller.clientWidth - card.offsetWidth) / 2;
+    setCurrentIndex(index);
+    scroller.scrollTo({
+      left,
+      behavior: shouldReduceMotion ? "auto" : "smooth",
+    });
+  };
+
+  const syncIndexFromScroll = () => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+
+    const viewportCenter = scroller.scrollLeft + scroller.clientWidth / 2;
+    let closestIndex = 0;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    cardRefs.current.forEach((card, index) => {
+      if (!card) return;
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(cardCenter - viewportCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    setCurrentIndex(closestIndex);
+
+    if (clickResetTimer.current !== null) {
+      window.clearTimeout(clickResetTimer.current);
+    }
+    clickResetTimer.current = window.setTimeout(() => {
+      didScroll.current = false;
+    }, 90);
+  };
+
+  const handleScroll = () => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+
+    if (Math.abs(scroller.scrollLeft - interactionStartLeft.current) > 6) {
+      didScroll.current = true;
+    }
+
+    if (settleTimer.current !== null) {
+      window.clearTimeout(settleTimer.current);
+    }
+
+    settleTimer.current = window.setTimeout(syncIndexFromScroll, 90);
   };
 
   const showPrevious = () => {
-    setCurrentIndex(
-      (previousIndex) => (previousIndex - 1 + featuredProjects.length) % featuredProjects.length,
-    );
+    scrollToIndex((currentIndex - 1 + featuredProjects.length) % featuredProjects.length);
   };
 
-  const handleDragStart = () => {
-    didDrag.current = true;
+  const showNext = () => {
+    scrollToIndex((currentIndex + 1) % featuredProjects.length);
   };
 
-  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    const intent = Math.abs(info.offset.x) >= 42 || Math.abs(info.velocity.x) >= 420;
-
-    if (intent) {
-      if (info.offset.x < 0 || info.velocity.x < -420) {
-        showNext();
-      } else if (info.offset.x > 0 || info.velocity.x > 420) {
-        showPrevious();
-      }
-    }
-
-    if (dragResetTimer.current !== null) {
-      window.clearTimeout(dragResetTimer.current);
-    }
-
-    dragResetTimer.current = window.setTimeout(() => {
-      didDrag.current = false;
-    }, 120);
-  };
-
-  const activateProject = (project: Project) => {
-    window.open(getProjectHref(project), "_blank", "noopener,noreferrer");
-  };
-
-  if (!activeProject) return null;
-
-  const cardTransition = shouldReduceMotion
-    ? { duration: 0 }
-    : { duration: 0.38, ease: [0.22, 1, 0.36, 1] as const };
+  if (!featuredProjects.length) return null;
 
   return (
     <section id="projects" className="flex w-full flex-col justify-center overflow-hidden bg-white pb-10 pt-24 md:pb-12 md:pt-28">
@@ -172,21 +144,29 @@ export default function ProjectsList() {
         <FadeIn className="mb-8 flex items-end justify-between gap-5 sm:mb-10">
           <div>
             <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
-              Selected work
+              Featured projects
             </p>
-            <h2 className="text-4xl font-medium tracking-tight text-zinc-950 md:text-5xl">Work Gallery</h2>
+            <h2 className="text-4xl font-medium tracking-tight text-zinc-950 md:text-5xl">
+              A few things I&apos;ve built.
+            </h2>
           </div>
-          <p className="pb-1 text-xs font-medium text-zinc-400 sm:text-sm">
+          <p className="shrink-0 pb-1 text-xs font-medium text-zinc-400 sm:text-sm">
             {String(currentIndex + 1).padStart(2, "0")} / {String(featuredProjects.length).padStart(2, "0")}
           </p>
         </FadeIn>
 
         <FadeIn delay={0.15}>
           <div
+            ref={scrollerRef}
             role="region"
             aria-roledescription="carousel"
-            aria-label="Featured work gallery"
+            aria-label="Featured projects carousel"
             tabIndex={0}
+            onPointerDown={() => {
+              interactionStartLeft.current = scrollerRef.current?.scrollLeft ?? 0;
+              didScroll.current = false;
+            }}
+            onScroll={handleScroll}
             onKeyDown={(event) => {
               if (event.key === "ArrowLeft") {
                 event.preventDefault();
@@ -197,97 +177,51 @@ export default function ProjectsList() {
                 showNext();
               }
             }}
-            onPointerEnter={() => setIsPointerOver(true)}
-            onPointerLeave={() => setIsPointerOver(false)}
-            onFocusCapture={() => setIsFocused(true)}
-            onBlurCapture={(event) => {
-              const nextTarget = event.relatedTarget as Node | null;
-              if (!nextTarget || !event.currentTarget.contains(nextTarget)) {
-                setIsFocused(false);
-              }
-            }}
-            className="relative h-[430px] touch-pan-y select-none outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 sm:h-[535px] lg:h-[590px]"
+            className="-mx-6 flex snap-x snap-mandatory gap-[2%] overflow-x-auto overscroll-x-contain px-[8%] pb-7 pt-2 outline-none [scrollbar-width:none] focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 [&::-webkit-scrollbar]:hidden md:-mx-12 sm:px-[14%] lg:px-[18%]"
           >
-            <motion.div
-              className="absolute inset-0"
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={shouldReduceMotion ? 0 : 0.16}
-              dragMomentum={false}
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
-            >
-              {featuredProjects.map((project, index) => {
-                const position = getRelativePosition(index, currentIndex, featuredProjects.length);
-                const isActive = position === 0;
-                const isPrevious = position === -1;
-                const isNext = position === 1;
-                const isVisible = isActive || isPrevious || isNext;
-                const motionTarget = getCardMotion(position);
-                const actionLabel = isActive
-                  ? `Open ${project.title} ${project.demoUrl ? "live demo" : "repository"}`
-                  : isPrevious
-                    ? `Show previous project: ${project.title}`
-                    : `Show next project: ${project.title}`;
+            {featuredProjects.map((project, index) => {
+              const isActive = index === currentIndex;
 
-                return (
-                  <motion.div
-                    key={project.id}
-                    initial={false}
-                    animate={{
-                      x: motionTarget.x,
-                      y: "-50%",
-                      scale: motionTarget.scale,
-                      rotate: motionTarget.rotate,
-                      opacity: motionTarget.opacity,
+              return (
+                <div
+                  key={project.id}
+                  ref={(node) => {
+                    cardRefs.current[index] = node;
+                  }}
+                  className="h-[400px] w-[84%] shrink-0 snap-center snap-always sm:h-[480px] sm:w-[72%] lg:h-[530px] lg:w-[64%]"
+                >
+                  <button
+                    type="button"
+                    aria-label={
+                      isActive
+                        ? `Open ${project.title} ${project.demoUrl ? "live demo" : "repository"}`
+                        : `Show ${project.title}`
+                    }
+                    aria-current={isActive ? "true" : undefined}
+                    onClick={(event) => {
+                      if (didScroll.current) {
+                        event.preventDefault();
+                        return;
+                      }
+
+                      if (!isActive) {
+                        scrollToIndex(index);
+                        return;
+                      }
+
+                      window.open(getProjectHref(project), "_blank", "noopener,noreferrer");
                     }}
-                    transition={cardTransition}
-                    aria-hidden={!isVisible || undefined}
-                    className="absolute left-1/2 top-1/2 h-[370px] w-[88%] sm:h-[480px] sm:w-[72%] lg:h-[530px] lg:w-[64%]"
-                    style={{
-                      zIndex: isActive ? 20 : isVisible ? 10 : 0,
-                      pointerEvents: isVisible ? "auto" : "none",
-                      willChange: "transform, opacity",
-                    }}
+                    className="h-full w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
                   >
-                    <button
-                      type="button"
-                      tabIndex={isVisible ? 0 : -1}
-                      aria-label={actionLabel}
-                      onClick={(event) => {
-                        if (didDrag.current) {
-                          event.preventDefault();
-                          return;
-                        }
-
-                        if (isPrevious) {
-                          showPrevious();
-                          return;
-                        }
-
-                        if (isNext) {
-                          showNext();
-                          return;
-                        }
-
-                        if (isActive) {
-                          activateProject(project);
-                        }
-                      }}
-                      className={`h-full w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 ${
-                        isActive ? "cursor-pointer" : "cursor-pointer hover:opacity-80"
-                      }`}
-                    >
-                      <GalleryCard project={project} active={isActive} />
-                    </button>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
+                    <GalleryCard project={project} priority={index < 2} />
+                  </button>
+                </div>
+              );
+            })}
           </div>
 
-          <p className="mt-2 text-center text-[11px] font-medium text-zinc-400 sm:hidden">
-            Swipe left or right to browse
+          <p className="mt-1 text-center text-[11px] font-medium text-zinc-400 sm:hidden">
+            Swipe to browse
           </p>
         </FadeIn>
       </div>
