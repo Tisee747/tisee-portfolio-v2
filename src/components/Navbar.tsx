@@ -40,19 +40,19 @@ export default function Navbar() {
       className="fixed inset-x-0 top-0 z-50 flex w-full justify-center bg-white"
     >
       <nav className="w-full bg-white">
-        <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-3 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-3 sm:h-16 sm:px-6 lg:px-8">
           <Link
             href="/"
             aria-label="Tisee home"
-            className="group inline-flex min-h-11 shrink-0 items-center gap-1.5 text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 sm:gap-2"
+            className="group inline-flex min-h-9 shrink-0 items-center gap-1.5 text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-3 sm:min-h-11 sm:gap-2"
           >
-            <BrandMark size={30} className="shrink-0 text-zinc-950" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] transition-[letter-spacing] duration-200 group-hover:tracking-[0.2em] sm:text-[13px] sm:tracking-[0.18em] sm:group-hover:tracking-[0.24em]">
+            <BrandMark size={30} className="h-[27px] w-[27px] shrink-0 text-zinc-950 sm:h-[30px] sm:w-[30px]" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.13em] transition-[letter-spacing] duration-200 group-hover:tracking-[0.18em] sm:text-[13px] sm:tracking-[0.18em] sm:group-hover:tracking-[0.24em]">
               Tisee
             </span>
           </Link>
 
-          <div className="flex min-w-0 items-center gap-0 sm:gap-2">
+          <div className="flex min-w-0 items-center gap-1 sm:gap-2">
             {navItems.map((item) => {
               const isActive = item.path === "/projects" && pathname === "/projects";
 
@@ -61,7 +61,7 @@ export default function Navbar() {
                   key={item.path}
                   href={item.path}
                   aria-current={isActive ? "page" : undefined}
-                  className={`relative inline-flex min-h-11 items-center whitespace-nowrap px-1 text-[11px] font-medium transition-colors duration-200 after:absolute after:bottom-1.5 after:left-1 after:right-1 after:h-px after:origin-left after:bg-zinc-900 after:transition-transform after:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:px-3 sm:text-sm sm:after:left-1.5 sm:after:right-1.5 ${
+                  className={`relative inline-flex min-h-9 items-center whitespace-nowrap px-1.5 text-[11px] font-medium leading-none transition-colors duration-200 after:absolute after:bottom-1 after:left-1.5 after:right-1.5 after:h-px after:origin-left after:bg-zinc-900 after:transition-transform after:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:min-h-11 sm:px-3 sm:text-[13px] sm:after:bottom-1.5 ${
                     isActive
                       ? "text-zinc-900 after:scale-x-100"
                       : "text-zinc-500 after:scale-x-0 hover:text-zinc-900 hover:after:scale-x-100 focus-visible:after:scale-x-100"
@@ -74,7 +74,7 @@ export default function Navbar() {
 
             <Link
               href="/#contact"
-              className="group relative ml-0.5 inline-flex h-8.5 min-h-8.5 items-center justify-center overflow-hidden rounded-[9px] border border-zinc-950 bg-white px-2.5 text-[10px] font-semibold tracking-[0.015em] text-zinc-950 shadow-[0_2px_0_#18181b,0_5px_12px_rgba(9,9,11,0.08)] transition-[transform,background-color,color,box-shadow] duration-200 ease-out before:pointer-events-none before:absolute before:inset-[2px] before:rounded-[6px] before:border before:border-zinc-200 before:content-[''] hover:-translate-y-px hover:bg-zinc-950 hover:text-white hover:shadow-[0_1px_0_#18181b,0_7px_16px_rgba(9,9,11,0.12)] active:translate-y-px active:shadow-[0_1px_0_#18181b,0_4px_10px_rgba(9,9,11,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 motion-reduce:transform-none sm:ml-1 sm:min-h-11 sm:h-auto sm:rounded-[14px] sm:px-5 sm:text-[13px] sm:tracking-[0.045em] sm:shadow-[0_4px_0_#18181b,0_10px_24px_rgba(9,9,11,0.10)] sm:before:inset-[3px] sm:before:rounded-[10px]"
+              className="group relative ml-0.5 inline-flex h-9 min-h-9 items-center justify-center overflow-hidden rounded-[10px] border border-zinc-950 bg-white px-3 text-[10.5px] font-semibold leading-none tracking-[0.015em] text-zinc-950 shadow-[0_2px_0_#18181b,0_5px_12px_rgba(9,9,11,0.08)] transition-[transform,background-color,color,box-shadow] duration-200 ease-out before:pointer-events-none before:absolute before:inset-[2px] before:rounded-[7px] before:border before:border-zinc-200 before:content-[''] hover:-translate-y-px hover:bg-zinc-950 hover:text-white hover:shadow-[0_1px_0_#18181b,0_7px_16px_rgba(9,9,11,0.12)] active:translate-y-px active:shadow-[0_1px_0_#18181b,0_4px_10px_rgba(9,9,11,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 motion-reduce:transform-none sm:ml-1 sm:h-11 sm:min-h-11 sm:rounded-[13px] sm:px-4 sm:text-[12px] sm:tracking-[0.035em] sm:shadow-[0_3px_0_#18181b,0_8px_20px_rgba(9,9,11,0.10)] sm:before:inset-[3px] sm:before:rounded-[9px]"
             >
               <span className="relative z-10">Hire me</span>
             </Link>
