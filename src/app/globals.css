@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  --color-white: #FFFFFF;
   --color-background: #FFFFFF;
   --color-foreground: #09090B;
 }
@@ -8,20 +9,50 @@
 :root {
   --background: #FFFFFF;
   --foreground: #09090B;
+  color-scheme: light;
 }
 
 html,
 body {
-  background: #FFFFFF;
+  margin: 0;
+  background-color: #FFFFFF !important;
+  background-image: none !important;
 }
 
 body {
-  background-color: var(--background);
+  min-height: 100vh;
+  background-color: var(--background) !important;
   color: var(--foreground);
+}
+
+main,
+section,
+footer,
+nav {
+  background-color: #FFFFFF;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Keep secondary copy readable without flattening the hierarchy. */
+.text-zinc-500 {
+  color: #52525B !important;
+}
+
+.text-zinc-400 {
+  color: #71717A !important;
+}
+
+/* The hero motion sits on a literal white canvas; only the strokes carry tone. */
+.tisee-flow-canvas path {
+  stroke: #D4D4D8 !important;
+  stroke-opacity: 0.3;
+}
+
+.tisee-flow-canvas-secondary path {
+  stroke-opacity: 0.2;
 }
 
 @keyframes tisee-flow {
