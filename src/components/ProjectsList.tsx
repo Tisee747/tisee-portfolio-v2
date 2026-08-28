@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
 import { FadeIn } from "@/components/FadeIn";
+import SectionArtwork from "@/components/SectionArtwork";
 import { projectsData } from "@/data/portfolioData";
 import type { Project } from "@/types";
 
@@ -24,7 +24,7 @@ function getProjectCategory(project: Project) {
 
 function GalleryCard({ project, priority = false }: { project: Project; priority?: boolean }) {
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden rounded-[1.65rem] border border-zinc-200 bg-white text-left shadow-[0_16px_48px_rgba(24,24,27,0.10)]">
+    <div className="flex h-full w-full flex-col overflow-hidden rounded-[1.65rem] border border-zinc-100 bg-white text-left shadow-[0_14px_42px_rgba(24,24,27,0.075)]">
       <div className="relative min-h-0 flex-1 overflow-hidden bg-white">
         {project.images?.[0] ? (
           <Image
@@ -57,7 +57,6 @@ function GalleryCard({ project, priority = false }: { project: Project; priority
 
 export default function ProjectsList() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const shouldReduceMotion = useReducedMotion();
   const scrollerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
   const settleTimer = useRef<number | null>(null);
@@ -78,10 +77,12 @@ export default function ProjectsList() {
     if (!scroller || !card) return;
 
     const left = card.offsetLeft - (scroller.clientWidth - card.offsetWidth) / 2;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     setCurrentIndex(index);
     scroller.scrollTo({
       left,
-      behavior: shouldReduceMotion ? "auto" : "smooth",
+      behavior: reduceMotion ? "auto" : "smooth",
     });
   };
 
@@ -139,8 +140,10 @@ export default function ProjectsList() {
   if (!featuredProjects.length) return null;
 
   return (
-    <section id="projects" className="flex w-full flex-col justify-center overflow-hidden bg-white pb-10 pt-24 md:pb-12 md:pt-28">
-      <div className="mx-auto w-full max-w-6xl px-6 md:px-12">
+    <section id="projects" className="relative flex w-full flex-col justify-center overflow-hidden bg-white pb-10 pt-24 md:pb-12 md:pt-28">
+      <SectionArtwork variant="projects" />
+
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 md:px-12">
         <FadeIn className="mb-8 flex items-end justify-between gap-5 sm:mb-10">
           <div>
             <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
