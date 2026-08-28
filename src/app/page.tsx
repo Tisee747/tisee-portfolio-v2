@@ -4,6 +4,7 @@ import CapabilitiesSection from "@/components/CapabilitiesSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import { FadeIn } from "@/components/FadeIn";
 import ProjectsList from "@/components/ProjectsList";
+import SectionArtwork from "@/components/SectionArtwork";
 
 function ExternalArrowIcon() {
   return (
@@ -131,8 +132,9 @@ export default function Home() {
       <CapabilitiesSection />
       <ProjectsList />
 
-      <section className="flex w-full justify-center bg-white pb-8 pt-0 md:pb-10">
-        <FadeIn>
+      <section className="relative flex w-full justify-center overflow-hidden bg-white pb-8 pt-0 md:pb-10">
+        <SectionArtwork variant="cta" />
+        <FadeIn className="relative z-10">
           <Link
             href="/projects"
             className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-zinc-950 px-7 text-sm font-medium text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
