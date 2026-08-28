@@ -46,49 +46,38 @@ const contacts = [
 
 export default function Footer() {
   return (
-    <footer className="mt-auto w-full bg-white pb-10 pt-10 md:pt-12" id="contact">
+    <footer className="mt-auto w-full bg-white pb-10 pt-8 md:pt-10" id="contact">
       <div className="mx-auto w-full max-w-6xl px-6 md:px-12">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.75fr)] lg:gap-20">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.75fr)] lg:items-end lg:gap-16">
           <div className="max-w-2xl">
             <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">Get in touch</p>
             <h2 className="text-5xl font-medium leading-[1.04] tracking-tighter text-zinc-950 sm:text-6xl md:text-7xl">
               Let&apos;s build something useful.
             </h2>
-            <p className="mt-7 max-w-xl text-base leading-relaxed text-zinc-600 md:text-lg">
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-zinc-600 md:text-lg">
               Have a role, project, or collaboration in mind? Reach out through whichever channel works best for you.
             </p>
-            <Link
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-7 inline-flex min-h-12 items-center justify-center rounded-xl bg-zinc-950 px-5 text-sm font-medium text-white transition-colors hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
-            >
-              View Resume
-            </Link>
           </div>
 
-          <div className="flex flex-col lg:pt-2">
-            <p className="mb-4 text-sm font-medium text-zinc-900">Contact</p>
-            <div className="grid grid-cols-2 gap-2.5">
-              {contacts.map((contact) => (
-                <Link
-                  key={contact.name}
-                  href={contact.url}
-                  target={contact.external ? "_blank" : undefined}
-                  rel={contact.external ? "noopener noreferrer" : undefined}
-                  className="group inline-flex min-h-12 w-full items-center gap-2.5 rounded-xl border border-zinc-200 bg-white px-3.5 text-sm font-medium text-zinc-700 transition-[border-color,background-color,color] hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
-                >
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center text-zinc-600 transition-colors group-hover:text-zinc-950">
-                    {contact.icon}
-                  </span>
-                  <span className="truncate">{contact.name}</span>
-                </Link>
-              ))}
-            </div>
+          <div className="grid grid-cols-2 gap-2.5 lg:pb-1">
+            {contacts.map((contact) => (
+              <Link
+                key={contact.name}
+                href={contact.url}
+                target={contact.external ? "_blank" : undefined}
+                rel={contact.external ? "noopener noreferrer" : undefined}
+                className="group inline-flex min-h-12 w-full items-center gap-2.5 rounded-xl border border-zinc-200 bg-white px-3.5 text-sm font-medium text-zinc-700 transition-[border-color,background-color,color] hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+              >
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center text-zinc-600 transition-colors group-hover:text-zinc-950">
+                  {contact.icon}
+                </span>
+                <span className="truncate">{contact.name}</span>
+              </Link>
+            ))}
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-zinc-100 pt-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-3 border-t border-zinc-100 pt-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
           <span>&copy; 2026 Tisee. All rights reserved.</span>
           <span>Building practical stuff and learning along the way.</span>
         </div>
