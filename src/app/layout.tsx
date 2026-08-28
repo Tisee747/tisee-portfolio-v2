@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist } from "next/font/google";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const geist = Geist({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const siteTitle = "Tisee — Developer Portfolio";
 const siteDescription =
@@ -34,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en" className={geist.className}>
       <body className="flex min-h-screen flex-col bg-white antialiased selection:bg-blue-100 selection:text-blue-900">
         <Navbar />
         <main className="flex w-full flex-grow flex-col bg-white">{children}</main>
