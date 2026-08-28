@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SectionArtwork from "@/components/SectionArtwork";
 
 const contacts = [
   {
@@ -46,8 +47,10 @@ const contacts = [
 
 export default function Footer() {
   return (
-    <footer className="mt-auto w-full bg-white pb-10 pt-8 md:pt-10" id="contact">
-      <div className="mx-auto w-full max-w-6xl px-6 md:px-12">
+    <footer className="relative mt-auto w-full overflow-hidden bg-white pb-10 pt-8 md:pt-10" id="contact">
+      <SectionArtwork variant="contact" />
+
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 md:px-12">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.75fr)] lg:items-end lg:gap-16">
           <div className="max-w-2xl">
             <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">Get in touch</p>
@@ -66,7 +69,7 @@ export default function Footer() {
                 href={contact.url}
                 target={contact.external ? "_blank" : undefined}
                 rel={contact.external ? "noopener noreferrer" : undefined}
-                className="group inline-flex min-h-12 w-full items-center gap-2.5 rounded-xl border border-zinc-200 bg-white px-3.5 text-sm font-medium text-zinc-700 transition-[border-color,background-color,color] hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+                className="group inline-flex min-h-12 w-full items-center gap-2.5 rounded-xl border border-zinc-100 bg-white px-3.5 text-sm font-medium text-zinc-700 transition-[border-color,color] hover:border-zinc-300 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
               >
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center text-zinc-600 transition-colors group-hover:text-zinc-950">
                   {contact.icon}
