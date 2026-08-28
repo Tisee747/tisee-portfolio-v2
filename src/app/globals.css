@@ -15,14 +15,6 @@ body {
   color: var(--foreground);
 }
 
-/* Temporary isolation test: force page-level surfaces to black. */
-body,
-body > main,
-body > main > main,
-body > main > main > section {
-  background-color: #000 !important;
-}
-
 html {
   scroll-behavior: smooth;
 }
