@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { FadeIn } from "@/components/FadeIn";
+import SectionArtwork from "@/components/SectionArtwork";
 import { cn } from "@/lib/utils";
 import { projectsData } from "@/data/portfolioData";
 
@@ -111,9 +112,11 @@ export default function ProjectsPage() {
   });
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-white px-6 pb-24 pt-28 selection:bg-blue-100 selection:text-blue-900 sm:pt-32 md:px-12">
-      <div className="mx-auto flex w-full max-w-6xl flex-col">
-        <FadeIn className="flex flex-col gap-8 border-b border-zinc-200 pb-12 sm:pb-16 md:flex-row md:items-end md:justify-between">
+    <main className="relative min-h-screen overflow-x-hidden bg-white px-6 pb-24 pt-28 selection:bg-blue-100 selection:text-blue-900 sm:pt-32 md:px-12">
+      <SectionArtwork variant="archive" />
+
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col">
+        <FadeIn className="flex flex-col gap-8 border-b border-zinc-100 pb-12 sm:pb-16 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
               All time work
@@ -137,7 +140,7 @@ export default function ProjectsPage() {
                   "min-h-11 rounded-full px-4 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:px-5",
                   activeFilter === filter
                     ? "bg-zinc-900 text-white"
-                    : "border border-zinc-200 bg-white text-zinc-600 hover:border-zinc-400 hover:text-zinc-900",
+                    : "border border-zinc-100 bg-white text-zinc-600 hover:border-zinc-300 hover:text-zinc-900",
                 )}
               >
                 {filter}
@@ -151,7 +154,7 @@ export default function ProjectsPage() {
             <FadeIn
               key={project.id}
               delay={0.05}
-              className="grid gap-5 border-b border-zinc-200 py-7 md:grid-cols-[3rem_minmax(0,1fr)_auto] md:gap-x-8 md:py-8"
+              className="grid gap-5 border-b border-zinc-100 py-7 md:grid-cols-[3rem_minmax(0,1fr)_auto] md:gap-x-8 md:py-8"
             >
               <div className="text-sm font-medium tabular-nums text-zinc-400">
                 {String(index + 1).padStart(2, "0")}
@@ -173,7 +176,7 @@ export default function ProjectsPage() {
                   {(project.technologies ?? []).map((technology) => (
                     <span
                       key={technology}
-                      className="inline-flex min-h-8 items-center gap-2 whitespace-nowrap rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-600 shadow-[0_1px_0_rgba(24,24,27,0.03)]"
+                      className="inline-flex min-h-8 items-center gap-2 whitespace-nowrap rounded-lg border border-zinc-100 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-600"
                     >
                       <TechnologyIcon technology={technology} />
                       {technology}
@@ -188,7 +191,7 @@ export default function ProjectsPage() {
                     href={project.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-800 transition-colors hover:border-zinc-400 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-zinc-100 bg-white px-4 text-sm font-medium text-zinc-800 transition-colors hover:border-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
                   >
                     Repository
                     <ExternalArrowIcon />
