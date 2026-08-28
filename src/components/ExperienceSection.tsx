@@ -76,10 +76,6 @@ export default function ExperienceSection() {
                     <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-600 md:text-base">
                       {copy.description}
                     </p>
-
-                    <p className="mt-5 text-xs leading-6 text-zinc-400">
-                      {experience.technologies.join("  •  ")}
-                    </p>
                   </div>
 
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[1.4rem] bg-zinc-100 md:aspect-[4/3]">
