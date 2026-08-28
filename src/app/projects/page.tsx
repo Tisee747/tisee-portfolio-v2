@@ -7,6 +7,23 @@ import { projectsData } from "@/data/portfolioData";
 
 const FILTERS = ["All", "Web", "Mobile", "AI/ML", "Backend"];
 
+const TECHNOLOGY_ICONS: Record<string, string> = {
+  "Next.js": "nextdotjs",
+  React: "react",
+  TypeScript: "typescript",
+  TailwindCSS: "tailwindcss",
+  Laravel: "laravel",
+  Flutter: "flutter",
+  PHP: "php",
+  Dart: "dart",
+  Java: "openjdk",
+  "Spring Boot": "springboot",
+  Python: "python",
+  Streamlit: "streamlit",
+  OpenCV: "opencv",
+  LangChain: "langchain",
+};
+
 function getProjectCategory(project: (typeof projectsData)[number]) {
   if (project.projectLayout === "none") return "Backend";
   if (project.projectLayout === "mobile") return "Mobile";
@@ -33,6 +50,47 @@ function ExternalArrowIcon() {
         strokeLinejoin="round"
       />
     </svg>
+  );
+}
+
+function FallbackTechnologyIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      width="15"
+      height="15"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="shrink-0"
+    >
+      <path
+        d="M5.5 4.5L2.5 8L5.5 11.5M10.5 4.5L13.5 8L10.5 11.5M9 3.5L7 12.5"
+        stroke="currentColor"
+        strokeWidth="1.35"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function TechnologyIcon({ technology }: { technology: string }) {
+  const slug = TECHNOLOGY_ICONS[technology];
+
+  if (!slug) {
+    return <FallbackTechnologyIcon />;
+  }
+
+  return (
+    <img
+      src={`https://cdn.simpleicons.org/${slug}/52525B`}
+      alt=""
+      aria-hidden="true"
+      loading="lazy"
+      decoding="async"
+      className="h-[15px] w-[15px] shrink-0 object-contain"
+    />
   );
 }
 
@@ -120,8 +178,9 @@ export default function ProjectsPage() {
                   {(project.technologies ?? []).map((technology) => (
                     <span
                       key={technology}
-                      className="whitespace-nowrap rounded-md border border-zinc-200 bg-zinc-50 px-2.5 py-1.5 text-xs font-medium text-zinc-600"
+                      className="inline-flex min-h-8 items-center gap-2 whitespace-nowrap rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-600 shadow-[0_1px_0_rgba(24,24,27,0.03)]"
                     >
+                      <TechnologyIcon technology={technology} />
                       {technology}
                     </span>
                   ))}
