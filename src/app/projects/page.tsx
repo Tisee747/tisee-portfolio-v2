@@ -113,10 +113,10 @@ export default function ProjectsPage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-white px-6 pb-24 pt-28 selection:bg-blue-100 selection:text-blue-900 sm:pt-32 md:px-12">
       <div className="mx-auto flex w-full max-w-6xl flex-col">
-        <FadeIn className="mb-12 flex flex-col gap-8 border-b border-zinc-200 pb-12 sm:mb-16 sm:pb-16 md:flex-row md:items-end md:justify-between">
+        <FadeIn className="flex flex-col gap-8 border-b border-zinc-200 pb-12 sm:pb-16 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
-              Selected work
+              All time work
             </p>
             <h1 className="text-5xl font-medium tracking-tighter text-zinc-900 md:text-7xl">
               Project Archive
@@ -146,12 +146,7 @@ export default function ProjectsPage() {
           </div>
         </FadeIn>
 
-        <div className="mb-5 flex items-center justify-between gap-4 text-xs font-medium uppercase tracking-[0.16em] text-zinc-400">
-          <span>Work</span>
-          <span>{filteredProjects.length} projects</span>
-        </div>
-
-        <div className="border-t border-zinc-200">
+        <div>
           {filteredProjects.map((project, index) => (
             <FadeIn
               key={project.id}
