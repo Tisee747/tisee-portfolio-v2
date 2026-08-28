@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import BackToTop from "@/components/BackToTop";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
@@ -42,6 +43,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex w-full flex-grow flex-col bg-white">{children}</main>
         <Footer />
+        <BackToTop />
       </body>
     </html>
   );
