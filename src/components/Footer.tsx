@@ -56,7 +56,7 @@ const contacts = [
 
 export default function Footer() {
   return (
-    <footer className="mt-auto w-full bg-white pb-10 pt-20 md:pt-28" id="contact">
+    <footer className="mt-auto w-full bg-white pb-10 pt-10 md:pt-12" id="contact">
       <div className="mx-auto w-full max-w-6xl px-6 md:px-12">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.75fr)] lg:gap-24">
           <div className="max-w-2xl">
@@ -99,7 +99,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-20 flex flex-col gap-3 border-t border-zinc-100 pt-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-16 flex flex-col gap-3 border-t border-zinc-100 pt-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
           <span>&copy; 2026 Tisee. All rights reserved.</span>
           <span>Building practical stuff and learning along the way.</span>
         </div>
