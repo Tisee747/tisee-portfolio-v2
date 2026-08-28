@@ -42,16 +42,6 @@ const contacts = [
       </svg>
     ),
   },
-  {
-    name: "Telegram",
-    url: "https://t.me/NotBul77",
-    external: true,
-    icon: (
-      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 11.944 0zm5.836 8.354-2.023 9.54c-.15.659-.541.821-1.092.51l-3.02-2.227-1.457 1.405c-.161.161-.297.297-.61.297l.216-3.086 5.617-5.076c.244-.216-.054-.336-.379-.119l-6.942 4.368-2.991-.937c-.65-.203-.663-.65.136-.964l11.684-4.502c.54-.196 1.018.121.862 1.101l-.001-.31z" />
-      </svg>
-    ),
-  },
 ];
 
 export default function Footer() {
@@ -79,7 +69,7 @@ export default function Footer() {
 
           <div className="flex flex-col lg:pt-2">
             <p className="mb-4 text-sm font-medium text-zinc-900">Contact</p>
-            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-2">
+            <div className="grid grid-cols-2 gap-2.5">
               {contacts.map((contact) => (
                 <Link
                   key={contact.name}
