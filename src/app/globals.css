@@ -2,12 +2,12 @@
 
 @theme {
   --color-white: #FFFFFF;
-  --color-background: #000000;
+  --color-background: #FFFFFF;
   --color-foreground: #09090B;
 }
 
 :root {
-  --background: #000000;
+  --background: #FFFFFF;
   --foreground: #09090B;
   color-scheme: light;
 }
@@ -15,7 +15,7 @@
 html,
 body {
   margin: 0;
-  background-color: #000000 !important;
+  background-color: #FFFFFF !important;
   background-image: none !important;
 }
 
@@ -29,7 +29,7 @@ main,
 section,
 footer,
 nav {
-  background-color: #000000 !important;
+  background-color: #FFFFFF;
 }
 
 html {
