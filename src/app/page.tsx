@@ -66,7 +66,7 @@ export default function Home() {
               <div className="mt-12 border-t border-zinc-100 pt-7 md:mt-14 md:pt-8">
                 <div className="grid grid-cols-2 gap-x-8 gap-y-6 text-left sm:grid-cols-4 sm:gap-8">
                   <div>
-                    <div className="text-2xl font-semibold tracking-tight text-zinc-950 md:text-3xl">3.4</div>
+                    <div className="text-2xl font-semibold tracking-tight text-zinc-950 md:text-3xl">3.64</div>
                     <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">GPA</div>
                   </div>
                   <div>
