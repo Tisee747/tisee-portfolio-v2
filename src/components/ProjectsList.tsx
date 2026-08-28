@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { FadeIn } from "@/components/FadeIn";
 import { projectsData } from "@/data/portfolioData";
@@ -69,6 +69,8 @@ export default function ProjectsList() {
   const [isPointerOver, setIsPointerOver] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const suppressSwipeClick = useRef(false);
 
   const activeProject = featuredProjects[currentIndex];
   const previousProject = featuredProjects[
@@ -96,6 +98,46 @@ export default function ProjectsList() {
     setCurrentIndex(
       (previousIndex) => (previousIndex - 1 + featuredProjects.length) % featuredProjects.length,
     );
+  };
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+    suppressSwipeClick.current = false;
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    const start = touchStart.current;
+    const touch = event.changedTouches[0];
+    touchStart.current = null;
+
+    if (!start || !touch) return;
+
+    const deltaX = touch.clientX - start.x;
+    const deltaY = touch.clientY - start.y;
+    const isHorizontalSwipe = Math.abs(deltaX) >= 44 && Math.abs(deltaX) > Math.abs(deltaY) * 1.15;
+
+    if (!isHorizontalSwipe) return;
+
+    suppressSwipeClick.current = true;
+    if (deltaX < 0) {
+      showNext();
+    } else {
+      showPrevious();
+    }
+  };
+
+  const handleTouchCancel = () => {
+    touchStart.current = null;
+    suppressSwipeClick.current = false;
+  };
+
+  const consumeSwipeClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (!suppressSwipeClick.current) return false;
+    event.preventDefault();
+    event.stopPropagation();
+    suppressSwipeClick.current = false;
+    return true;
   };
 
   if (!activeProject) return null;
@@ -131,6 +173,9 @@ export default function ProjectsList() {
                 showNext();
               }
             }}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchCancel}
             onPointerEnter={() => setIsPointerOver(true)}
             onPointerLeave={() => setIsPointerOver(false)}
             onFocusCapture={() => setIsFocused(true)}
@@ -140,11 +185,14 @@ export default function ProjectsList() {
                 setIsFocused(false);
               }
             }}
-            className="relative h-[430px] outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 sm:h-[535px] lg:h-[590px]"
+            className="relative h-[430px] touch-pan-y select-none outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 sm:h-[535px] lg:h-[590px]"
           >
             <button
               type="button"
-              onClick={showPrevious}
+              onClick={(event) => {
+                if (consumeSwipeClick(event)) return;
+                showPrevious();
+              }}
               aria-label={`Show previous project: ${previousProject.title}`}
               className="absolute left-1/2 top-1/2 z-0 h-[350px] w-[88%] text-left opacity-55 transition-opacity hover:opacity-75 focus-visible:z-30 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:h-[455px] sm:w-[72%] lg:h-[505px] lg:w-[64%]"
               style={{ transform: "translate(-76%, -50%) rotate(-3deg) scale(0.91)" }}
@@ -154,7 +202,10 @@ export default function ProjectsList() {
 
             <button
               type="button"
-              onClick={showNext}
+              onClick={(event) => {
+                if (consumeSwipeClick(event)) return;
+                showNext();
+              }}
               aria-label={`Show next project: ${nextProject.title}`}
               className="absolute left-1/2 top-1/2 z-0 h-[350px] w-[88%] text-left opacity-55 transition-opacity hover:opacity-75 focus-visible:z-30 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:h-[455px] sm:w-[72%] lg:h-[505px] lg:w-[64%]"
               style={{ transform: "translate(-24%, -50%) rotate(3deg) scale(0.91)" }}
@@ -167,12 +218,19 @@ export default function ProjectsList() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Open ${activeProject.title} ${activeProject.demoUrl ? "live demo" : "repository"}`}
+              onClick={(event) => {
+                consumeSwipeClick(event);
+              }}
               className="absolute left-1/2 top-1/2 z-20 h-[370px] w-[88%] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 sm:h-[480px] sm:w-[72%] lg:h-[530px] lg:w-[64%]"
               style={{ transform: "translate(-50%, -50%)" }}
             >
               <GalleryCard project={activeProject} active />
             </Link>
           </div>
+
+          <p className="mt-2 text-center text-[11px] font-medium text-zinc-400 sm:hidden">
+            Swipe left or right to browse
+          </p>
         </FadeIn>
       </div>
     </section>
