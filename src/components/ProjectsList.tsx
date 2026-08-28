@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { FadeIn } from "@/components/FadeIn";
 import { projectsData } from "@/data/portfolioData";
 import type { Project } from "@/types";
@@ -11,6 +11,27 @@ import type { Project } from "@/types";
 const featuredProjects = projectsData
   .filter((project) => project.demoUrl || project.repoUrl)
   .slice(0, 4);
+
+const activeCardVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "12%" : "-12%",
+    opacity: 0,
+    scale: 0.96,
+    rotate: direction > 0 ? 1.2 : -1.2,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? "-12%" : "12%",
+    opacity: 0,
+    scale: 0.96,
+    rotate: direction > 0 ? -1.2 : 1.2,
+  }),
+};
 
 function getProjectHref(project: Project) {
   return project.demoUrl ?? project.repoUrl ?? "/projects";
@@ -66,6 +87,7 @@ function GalleryCard({ project, active = false }: { project: Project; active?: b
 
 export default function ProjectsList() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
   const [isPointerOver, setIsPointerOver] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const shouldReduceMotion = useReducedMotion();
@@ -78,27 +100,30 @@ export default function ProjectsList() {
   ];
   const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.length];
 
+  const showNext = () => {
+    setDirection(1);
+    setCurrentIndex((previousIndex) => (previousIndex + 1) % featuredProjects.length);
+  };
+
+  const showPrevious = () => {
+    setDirection(-1);
+    setCurrentIndex(
+      (previousIndex) => (previousIndex - 1 + featuredProjects.length) % featuredProjects.length,
+    );
+  };
+
   useEffect(() => {
     if (featuredProjects.length < 2 || shouldReduceMotion || isPointerOver || isFocused) {
       return;
     }
 
     const interval = window.setInterval(() => {
+      setDirection(1);
       setCurrentIndex((previousIndex) => (previousIndex + 1) % featuredProjects.length);
     }, 6500);
 
     return () => window.clearInterval(interval);
   }, [isFocused, isPointerOver, shouldReduceMotion]);
-
-  const showNext = () => {
-    setCurrentIndex((previousIndex) => (previousIndex + 1) % featuredProjects.length);
-  };
-
-  const showPrevious = () => {
-    setCurrentIndex(
-      (previousIndex) => (previousIndex - 1 + featuredProjects.length) % featuredProjects.length,
-    );
-  };
 
   const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
     const touch = event.touches[0];
@@ -141,6 +166,10 @@ export default function ProjectsList() {
   };
 
   if (!activeProject) return null;
+
+  const cardTransition = shouldReduceMotion
+    ? { duration: 0 }
+    : { type: "spring" as const, stiffness: 360, damping: 34, mass: 0.72 };
 
   return (
     <section id="projects" className="flex w-full flex-col justify-center overflow-hidden bg-white pb-10 pt-24 md:pb-12 md:pt-28">
@@ -194,7 +223,7 @@ export default function ProjectsList() {
                 showPrevious();
               }}
               aria-label={`Show previous project: ${previousProject.title}`}
-              className="absolute left-1/2 top-1/2 z-0 h-[350px] w-[88%] text-left opacity-55 transition-opacity hover:opacity-75 focus-visible:z-30 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:h-[455px] sm:w-[72%] lg:h-[505px] lg:w-[64%]"
+              className="absolute left-1/2 top-1/2 z-0 h-[350px] w-[88%] text-left opacity-55 transition-[opacity,filter] duration-300 hover:opacity-75 focus-visible:z-30 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:h-[455px] sm:w-[72%] lg:h-[505px] lg:w-[64%]"
               style={{ transform: "translate(-76%, -50%) rotate(-3deg) scale(0.91)" }}
             >
               <GalleryCard project={previousProject} />
@@ -207,25 +236,39 @@ export default function ProjectsList() {
                 showNext();
               }}
               aria-label={`Show next project: ${nextProject.title}`}
-              className="absolute left-1/2 top-1/2 z-0 h-[350px] w-[88%] text-left opacity-55 transition-opacity hover:opacity-75 focus-visible:z-30 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:h-[455px] sm:w-[72%] lg:h-[505px] lg:w-[64%]"
+              className="absolute left-1/2 top-1/2 z-0 h-[350px] w-[88%] text-left opacity-55 transition-[opacity,filter] duration-300 hover:opacity-75 focus-visible:z-30 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:h-[455px] sm:w-[72%] lg:h-[505px] lg:w-[64%]"
               style={{ transform: "translate(-24%, -50%) rotate(3deg) scale(0.91)" }}
             >
               <GalleryCard project={nextProject} />
             </button>
 
-            <Link
-              href={getProjectHref(activeProject)}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Open ${activeProject.title} ${activeProject.demoUrl ? "live demo" : "repository"}`}
-              onClick={(event) => {
-                consumeSwipeClick(event);
-              }}
-              className="absolute left-1/2 top-1/2 z-20 h-[370px] w-[88%] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 sm:h-[480px] sm:w-[72%] lg:h-[530px] lg:w-[64%]"
-              style={{ transform: "translate(-50%, -50%)" }}
-            >
-              <GalleryCard project={activeProject} active />
-            </Link>
+            <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+              <AnimatePresence initial={false} custom={direction}>
+                <motion.div
+                  key={activeProject.id}
+                  custom={direction}
+                  variants={activeCardVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={cardTransition}
+                  className="pointer-events-auto h-[370px] w-[88%] sm:h-[480px] sm:w-[72%] lg:h-[530px] lg:w-[64%]"
+                >
+                  <Link
+                    href={getProjectHref(activeProject)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Open ${activeProject.title} ${activeProject.demoUrl ? "live demo" : "repository"}`}
+                    onClick={(event) => {
+                      consumeSwipeClick(event);
+                    }}
+                    className="block h-full w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
+                  >
+                    <GalleryCard project={activeProject} active />
+                  </Link>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
 
           <p className="mt-2 text-center text-[11px] font-medium text-zinc-400 sm:hidden">
