@@ -14,6 +14,28 @@ function getProjectCategory(project: (typeof projectsData)[number]) {
   return "Web";
 }
 
+function ExternalArrowIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="shrink-0"
+    >
+      <path
+        d="M4 10L10 4M10 4H5.5M10 4V8.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export default function ProjectsPage() {
   const [activeFilter, setActiveFilter] = useState("All");
 
@@ -115,7 +137,7 @@ export default function ProjectsPage() {
                     className="inline-flex min-h-11 items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-800 transition-colors hover:border-zinc-400 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
                   >
                     Repository
-                    <span aria-hidden="true">↗</span>
+                    <ExternalArrowIcon />
                   </a>
                 )}
                 {project.demoUrl && (
@@ -126,7 +148,7 @@ export default function ProjectsPage() {
                     className="inline-flex min-h-11 items-center gap-2 rounded-full bg-zinc-900 px-4 text-sm font-medium text-white transition-colors hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
                   >
                     Live demo
-                    <span aria-hidden="true">↗</span>
+                    <ExternalArrowIcon />
                   </a>
                 )}
                 {!project.repoUrl && !project.demoUrl && (
