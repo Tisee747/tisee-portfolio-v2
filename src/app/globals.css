@@ -91,6 +91,148 @@ html {
   will-change: transform;
 }
 
+@keyframes tisee-pet-travel {
+  0% {
+    transform: translate3d(-76px, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(calc(100vw + 12px), 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-76px, 0, 0);
+  }
+}
+
+@keyframes tisee-pet-facing {
+  0%,
+  49.9% {
+    transform: scaleX(1);
+  }
+
+  50%,
+  99.9% {
+    transform: scaleX(-1);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes tisee-pet-bob {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+@keyframes tisee-pet-leg-a {
+  from {
+    transform: rotate(7deg) translateY(0);
+  }
+
+  to {
+    transform: rotate(-8deg) translateY(1px);
+  }
+}
+
+@keyframes tisee-pet-leg-b {
+  from {
+    transform: rotate(-7deg) translateY(1px);
+  }
+
+  to {
+    transform: rotate(8deg) translateY(0);
+  }
+}
+
+@keyframes tisee-pet-tail {
+  from {
+    transform: rotate(-3deg);
+  }
+
+  to {
+    transform: rotate(5deg);
+  }
+}
+
+.tisee-pet-runner {
+  --tisee-pet-trip: 22s;
+  position: fixed;
+  left: 0;
+  bottom: max(5px, env(safe-area-inset-bottom));
+  z-index: 40;
+  width: 66px;
+  height: 44px;
+  pointer-events: none;
+  user-select: none;
+  animation: tisee-pet-travel var(--tisee-pet-trip) linear infinite;
+  will-change: transform;
+  contain: layout paint;
+}
+
+.tisee-pet-direction {
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  animation: tisee-pet-facing var(--tisee-pet-trip) steps(1, end) infinite;
+}
+
+.tisee-pet-bob {
+  width: 100%;
+  height: 100%;
+  animation: tisee-pet-bob 420ms steps(2, end) infinite;
+}
+
+.tisee-pet-bob svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 1px 0 rgba(9, 9, 11, 0.08));
+}
+
+.tisee-pet-leg,
+.tisee-pet-tail {
+  transform-box: fill-box;
+}
+
+.tisee-pet-leg {
+  transform-origin: 50% 12%;
+}
+
+.tisee-pet-leg-a {
+  animation: tisee-pet-leg-a 420ms steps(2, end) infinite alternate;
+}
+
+.tisee-pet-leg-b {
+  animation: tisee-pet-leg-b 420ms steps(2, end) infinite alternate;
+}
+
+.tisee-pet-leg-rear {
+  animation-delay: -210ms;
+}
+
+.tisee-pet-tail {
+  transform-origin: 90% 72%;
+  animation: tisee-pet-tail 760ms ease-in-out infinite alternate;
+}
+
+@media (max-width: 640px) {
+  .tisee-pet-runner {
+    --tisee-pet-trip: 18s;
+    width: 56px;
+    height: 38px;
+    bottom: max(4px, env(safe-area-inset-bottom));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -109,5 +251,18 @@ html {
   .tisee-flow-canvas-secondary,
   .tisee-tech-marquee {
     animation: none !important;
+  }
+
+  .tisee-pet-runner {
+    animation: none !important;
+    transform: translate3d(18px, 0, 0);
+  }
+
+  .tisee-pet-direction,
+  .tisee-pet-bob,
+  .tisee-pet-leg,
+  .tisee-pet-tail {
+    animation: none !important;
+    transform: none !important;
   }
 }
