@@ -1,6 +1,7 @@
 export default function PetWalker() {
   return (
     <div className="tisee-pet-runner" aria-hidden="true">
+      <div className="tisee-pet-shadow" />
       <div className="tisee-pet-roll">
         <div className="tisee-pet-squish">
           <svg
@@ -9,8 +10,6 @@ export default function PetWalker() {
             focusable="false"
             shapeRendering="geometricPrecision"
           >
-            <ellipse cx="46" cy="68" rx="24" ry="3.5" fill="#09090B" opacity="0.08" />
-
             <g className="tisee-panda">
               <circle cx="27" cy="20" r="10" fill="#18181B" />
               <circle cx="65" cy="20" r="10" fill="#18181B" />
