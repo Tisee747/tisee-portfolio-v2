@@ -24,15 +24,15 @@ function getProjectCategory(project: Project) {
 
 function GalleryCard({ project, priority = false }: { project: Project; priority?: boolean }) {
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden rounded-[1.65rem] border border-zinc-100 bg-white text-left shadow-[0_14px_42px_rgba(24,24,27,0.075)]">
+    <div className="flex h-full w-full flex-col overflow-hidden rounded-[1.65rem] border border-zinc-100 bg-white text-left shadow-[0_12px_36px_rgba(24,24,27,0.065)]">
       <div className="relative min-h-0 flex-1 overflow-hidden bg-white">
         {project.images?.[0] ? (
           <Image
             src={project.images[0]}
             alt={project.title}
             fill
-            sizes="(min-width: 1024px) 720px, (min-width: 640px) 72vw, 84vw"
-            className="object-contain p-4 sm:p-7"
+            sizes="(min-width: 1280px) 720px, (min-width: 1024px) 680px, (min-width: 640px) 72vw, 84vw"
+            className="object-contain p-4 sm:p-7 lg:p-6"
             priority={priority}
           />
         ) : (
@@ -40,14 +40,14 @@ function GalleryCard({ project, priority = false }: { project: Project; priority
         )}
       </div>
 
-      <div className="border-t border-zinc-100 p-5 sm:p-7">
+      <div className="border-t border-zinc-100 p-5 sm:p-7 lg:p-6">
         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
           {getProjectCategory(project)}
         </p>
         <h3 className="mt-2 text-2xl font-medium tracking-tight text-zinc-950 sm:text-3xl">
           {project.title}
         </h3>
-        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-zinc-500 sm:text-base">
+        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-zinc-500 sm:text-base lg:line-clamp-2">
           {project.description}
         </p>
       </div>
@@ -140,16 +140,16 @@ export default function ProjectsList() {
   if (!featuredProjects.length) return null;
 
   return (
-    <section id="projects" className="relative flex w-full flex-col justify-center overflow-hidden bg-white pb-10 pt-24 md:pb-12 md:pt-28">
+    <section id="projects" className="relative flex w-full flex-col justify-center overflow-hidden bg-white pb-10 pt-20 md:pb-12 md:pt-24 lg:pt-28">
       <SectionArtwork variant="projects" />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 md:px-12">
-        <FadeIn className="mb-8 flex items-end justify-between gap-5 sm:mb-10">
-          <div>
+        <FadeIn className="mb-8 flex items-end justify-between gap-5 sm:mb-10 lg:mb-12">
+          <div className="min-w-0">
             <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
               Featured projects
             </p>
-            <h2 className="text-4xl font-medium tracking-tight text-zinc-950 md:text-5xl">
+            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-zinc-950 md:text-5xl">
               A few things I&apos;ve built.
             </h2>
           </div>
@@ -180,7 +180,7 @@ export default function ProjectsList() {
                 showNext();
               }
             }}
-            className="-mx-6 flex snap-x snap-mandatory gap-[2%] overflow-x-auto overscroll-x-contain px-[8%] pb-7 pt-2 outline-none [scrollbar-width:none] focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 [&::-webkit-scrollbar]:hidden md:-mx-12 sm:px-[14%] lg:px-[18%]"
+            className="-mx-6 flex snap-x snap-mandatory gap-[2%] overflow-x-auto overscroll-x-contain px-[8%] pb-7 pt-2 outline-none [scrollbar-width:none] focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 [&::-webkit-scrollbar]:hidden sm:px-[14%] md:-mx-12 lg:mx-0 lg:gap-6 lg:px-[18%]"
           >
             {featuredProjects.map((project, index) => {
               const isActive = index === currentIndex;
@@ -191,7 +191,7 @@ export default function ProjectsList() {
                   ref={(node) => {
                     cardRefs.current[index] = node;
                   }}
-                  className="h-[400px] w-[84%] shrink-0 snap-center snap-always sm:h-[480px] sm:w-[72%] lg:h-[530px] lg:w-[64%]"
+                  className="h-[400px] w-[84%] shrink-0 snap-center snap-always sm:h-[480px] sm:w-[72%] lg:h-[500px] lg:w-[64%] xl:h-[520px] xl:w-[62%]"
                 >
                   <button
                     type="button"
