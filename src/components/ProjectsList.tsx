@@ -30,19 +30,16 @@ function getProjectCategory(project: Project) {
 }
 
 function GalleryCard({ project, priority = false }: { project: Project; priority?: boolean }) {
-  const isMedusaScreenshot = project.id.startsWith("medusa-");
-
   return (
     <div className="flex h-full w-full flex-col overflow-hidden rounded-[1.65rem] border border-zinc-100 bg-white text-left shadow-[0_12px_36px_rgba(24,24,27,0.065)]">
-      <div className="relative min-h-0 flex-1 overflow-hidden bg-zinc-100">
+      <div className="relative min-h-0 flex-1 overflow-hidden bg-zinc-50">
         {project.images?.[0] ? (
           <Image
             src={project.images[0]}
             alt={`${project.title} project screenshot`}
             fill
-            unoptimized
             sizes="(min-width: 1280px) 760px, (min-width: 1024px) 720px, (min-width: 640px) 72vw, 84vw"
-            className={isMedusaScreenshot ? "object-cover" : "object-contain p-4 sm:p-7 lg:p-6"}
+            className="object-contain p-2 sm:p-3 lg:p-4"
             priority={priority}
           />
         ) : (
