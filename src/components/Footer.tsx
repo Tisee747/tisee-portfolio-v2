@@ -47,29 +47,29 @@ const contacts = [
 
 export default function Footer() {
   return (
-    <footer className="relative mt-auto w-full overflow-hidden bg-white pb-10 pt-8 md:pt-10" id="contact">
-      <SectionArtwork variant="contact" />
+    <footer className="relative mt-auto w-full overflow-hidden bg-white pb-10 pt-10 md:pt-12 lg:pt-14" id="contact">
+      <SectionArtwork variant="contact" className="opacity-70 lg:opacity-55" />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 md:px-12">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.75fr)] lg:items-end lg:gap-16">
-          <div className="max-w-2xl">
-            <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">Get in touch</p>
-            <h2 className="text-5xl font-medium leading-[1.04] tracking-tighter text-zinc-950 sm:text-6xl md:text-7xl">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)] lg:items-center lg:gap-12 xl:gap-16">
+          <div className="max-w-[640px]">
+            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">Get in touch</p>
+            <h2 className="text-5xl font-medium leading-[1.04] tracking-tighter text-zinc-950 sm:text-6xl lg:text-[60px] lg:leading-[1.02] xl:text-[64px]">
               Let&apos;s build something useful.
             </h2>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-zinc-600 md:text-lg">
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-zinc-600 md:text-lg lg:max-w-[540px]">
               Have a role, project, or collaboration in mind? Reach out through whichever channel works best for you.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-2.5 lg:pb-1">
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:w-full lg:max-w-[440px] lg:justify-self-end">
             {contacts.map((contact) => (
               <Link
                 key={contact.name}
                 href={contact.url}
                 target={contact.external ? "_blank" : undefined}
                 rel={contact.external ? "noopener noreferrer" : undefined}
-                className="group inline-flex min-h-12 w-full items-center gap-2.5 rounded-xl border border-zinc-100 bg-white px-3.5 text-sm font-medium text-zinc-700 transition-[border-color,color] hover:border-zinc-300 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+                className="group inline-flex min-h-12 w-full items-center gap-2.5 rounded-xl border border-zinc-100 bg-white px-3.5 text-sm font-medium text-zinc-700 transition-[border-color,color] hover:border-zinc-300 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:px-4"
               >
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center text-zinc-600 transition-colors group-hover:text-zinc-950">
                   {contact.icon}
@@ -80,7 +80,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-zinc-100 pt-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-3 border-t border-zinc-100 pt-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between lg:mt-12">
           <span>&copy; 2026 Tisee. All rights reserved.</span>
           <span>Building practical stuff and learning along the way.</span>
         </div>
