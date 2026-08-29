@@ -7,15 +7,22 @@ import SectionArtwork from "@/components/SectionArtwork";
 import { projectsData } from "@/data/portfolioData";
 import type { Project } from "@/types";
 
-const featuredProjects = projectsData
-  .filter((project) => project.demoUrl || project.repoUrl)
-  .slice(0, 4);
+const SELECTED_PROJECT_IDS = [
+  "medusa-npc",
+  "medusa-algorithm-simulator",
+  "posyandu-pintar",
+] as const;
+
+const featuredProjects = SELECTED_PROJECT_IDS
+  .map((id) => projectsData.find((project) => project.id === id))
+  .filter((project): project is Project => Boolean(project));
 
 function getProjectHref(project: Project) {
   return project.demoUrl ?? project.repoUrl ?? "/projects";
 }
 
 function getProjectCategory(project: Project) {
+  if (project.category) return project.category;
   if (project.projectLayout === "none") return "Backend";
   if (project.projectLayout === "mobile") return "Mobile";
   if (project.projectLayout === "hybrid") return "Fullstack";
@@ -147,7 +154,7 @@ export default function ProjectsList() {
         <FadeIn className="mb-8 flex items-end justify-between gap-5 sm:mb-10 lg:mb-12">
           <div className="min-w-0">
             <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
-              Featured projects
+              Selected projects
             </p>
             <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-zinc-950 md:text-5xl">
               A few things I&apos;ve built.
@@ -163,7 +170,7 @@ export default function ProjectsList() {
             ref={scrollerRef}
             role="region"
             aria-roledescription="carousel"
-            aria-label="Featured projects carousel"
+            aria-label="Selected projects carousel"
             tabIndex={0}
             onPointerDown={() => {
               interactionStartLeft.current = scrollerRef.current?.scrollLeft ?? 0;
@@ -195,11 +202,7 @@ export default function ProjectsList() {
                 >
                   <button
                     type="button"
-                    aria-label={
-                      isActive
-                        ? `Open ${project.title} ${project.demoUrl ? "live demo" : "repository"}`
-                        : `Show ${project.title}`
-                    }
+                    aria-label={isActive ? `Open ${project.title}` : `Show ${project.title}`}
                     aria-current={isActive ? "true" : undefined}
                     onClick={(event) => {
                       if (didScroll.current) {
@@ -212,7 +215,12 @@ export default function ProjectsList() {
                         return;
                       }
 
-                      window.open(getProjectHref(project), "_blank", "noopener,noreferrer");
+                      const href = getProjectHref(project);
+                      if (href.startsWith("/")) {
+                        window.location.href = href;
+                      } else {
+                        window.open(href, "_blank", "noopener,noreferrer");
+                      }
                     }}
                     className="h-full w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
                   >
