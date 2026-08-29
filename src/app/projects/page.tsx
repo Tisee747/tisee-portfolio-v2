@@ -85,7 +85,7 @@ function TechnologyIcon({ technology }: { technology: string }) {
 
   return (
     <img
-      src={`https://cdn.simpleicons.org/${slug}/52525B`}
+      src={`https://cdn.simpleicons.org/${slug}`}
       alt=""
       aria-hidden="true"
       loading="lazy"
