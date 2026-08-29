@@ -34,7 +34,11 @@ export default function SectionArtwork({ variant, className = "" }: SectionArtwo
   if (variant === "projects") {
     return (
       <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">
-        <svg viewBox="0 0 360 300" className="absolute -left-28 top-14 h-72 w-80 sm:-left-10" fill="none">
+        <svg
+          viewBox="0 0 360 300"
+          className="absolute -left-28 top-16 h-64 w-72 opacity-70 sm:-left-12 sm:h-72 sm:w-80 lg:-left-6 lg:top-24 lg:h-56 lg:w-64 lg:opacity-55"
+          fill="none"
+        >
           <circle cx="120" cy="142" r="76" stroke="#E4E4E7" strokeWidth="1" />
           <circle cx="120" cy="142" r="104" stroke="#F0F0F1" strokeWidth="1" />
           <path d="M218 56H310M264 18V110" stroke="#E4E4E7" strokeWidth="1" />
@@ -47,7 +51,11 @@ export default function SectionArtwork({ variant, className = "" }: SectionArtwo
   if (variant === "contact") {
     return (
       <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">
-        <svg viewBox="0 0 420 260" className="absolute -right-24 bottom-8 h-64 w-[26rem] sm:-right-4" fill="none">
+        <svg
+          viewBox="0 0 420 260"
+          className="absolute -right-28 bottom-0 h-56 w-[22rem] sm:-right-8 sm:h-60 sm:w-[24rem] lg:-bottom-4 lg:-right-6 lg:h-56 lg:w-[22rem]"
+          fill="none"
+        >
           <path d="M88 242C116 126 198 54 342 30" stroke="#E4E4E7" strokeWidth="1" />
           <path d="M138 252C164 156 230 96 362 70" stroke="#F0F0F1" strokeWidth="1" />
           <circle cx="342" cy="30" r="5" fill="#FFFFFF" stroke="#D4D4D8" strokeWidth="1" />
