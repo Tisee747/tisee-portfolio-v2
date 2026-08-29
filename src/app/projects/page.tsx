@@ -121,10 +121,10 @@ export default function ProjectsPage() {
             <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
               All time work
             </p>
-            <h1 className="text-5xl font-medium tracking-tighter text-zinc-900 md:text-7xl">
+            <h1 className="text-5xl font-medium tracking-tighter text-zinc-950 md:text-7xl">
               Project Archive
             </h1>
-            <p className="mt-6 text-base leading-relaxed text-zinc-500 md:text-lg">
+            <p className="mt-6 text-base leading-relaxed text-zinc-950 md:text-lg">
               A concise look at the products, experiments, and systems I&apos;ve worked on.
             </p>
           </div>
@@ -140,7 +140,7 @@ export default function ProjectsPage() {
                   "min-h-11 rounded-full px-4 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:px-5",
                   activeFilter === filter
                     ? "bg-zinc-900 text-white"
-                    : "border border-zinc-100 bg-white text-zinc-600 hover:border-zinc-300 hover:text-zinc-900",
+                    : "border border-zinc-100 bg-white text-zinc-950 hover:border-zinc-300",
                 )}
               >
                 {filter}
@@ -156,27 +156,27 @@ export default function ProjectsPage() {
               delay={0.05}
               className="grid gap-5 border-b border-zinc-100 py-7 md:grid-cols-[3rem_minmax(0,1fr)_auto] md:gap-x-8 md:py-8"
             >
-              <div className="text-sm font-medium tabular-nums text-zinc-400">
+              <div className="text-sm font-medium tabular-nums text-zinc-950">
                 {String(index + 1).padStart(2, "0")}
               </div>
 
               <div className="min-w-0">
                 <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-2">
-                  <h2 className="min-w-0 text-2xl font-medium tracking-tight text-zinc-900 md:text-3xl">
+                  <h2 className="min-w-0 text-2xl font-medium tracking-tight text-zinc-950 md:text-3xl">
                     {project.title}
                   </h2>
                   <span className="whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-600">
                     {getProjectCategory(project)}
                   </span>
                 </div>
-                <p className="max-w-3xl text-sm leading-relaxed text-zinc-500 md:text-base">
+                <p className="max-w-3xl text-sm leading-relaxed text-zinc-950 md:text-base">
                   {project.description}
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {(project.technologies ?? []).map((technology) => (
                     <span
                       key={technology}
-                      className="inline-flex min-h-8 items-center gap-2 whitespace-nowrap rounded-lg border border-zinc-100 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-600"
+                      className="inline-flex min-h-8 items-center gap-2 whitespace-nowrap rounded-lg border border-zinc-100 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-950"
                     >
                       <TechnologyIcon technology={technology} />
                       {technology}
@@ -191,7 +191,7 @@ export default function ProjectsPage() {
                     href={project.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-zinc-100 bg-white px-4 text-sm font-medium text-zinc-800 transition-colors hover:border-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-zinc-100 bg-white px-4 text-sm font-medium text-zinc-950 transition-colors hover:border-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
                   >
                     Repository
                     <ExternalArrowIcon />
@@ -209,7 +209,7 @@ export default function ProjectsPage() {
                   </a>
                 )}
                 {!project.repoUrl && !project.demoUrl && (
-                  <span className="inline-flex min-h-11 items-center text-sm text-zinc-400">
+                  <span className="inline-flex min-h-11 items-center text-sm text-zinc-950">
                     No public link
                   </span>
                 )}
