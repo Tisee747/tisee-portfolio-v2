@@ -72,76 +72,75 @@ export default function PetWalker() {
       onTransitionEnd={handleTravelEnd}
       onAnimationEnd={handleReturnEnd}
       aria-label="Roll the panda"
-      title="Roll the panda"
+      title="Click the panda to roll"
     >
       <span className="tisee-pet-shadow" aria-hidden="true" />
       <span className="tisee-pet-roll" aria-hidden="true">
         <span className="tisee-pet-squish">
           <svg
-            viewBox="0 0 104 78"
+            viewBox="0 0 128 96"
             role="presentation"
             focusable="false"
-            shapeRendering="geometricPrecision"
+            shapeRendering="crispEdges"
           >
             <g className="tisee-panda-bamboo">
-              <path d="M79 12L72 66" stroke="#15803D" strokeWidth="5" strokeLinecap="round" />
-              <path d="M75 28L88 20" stroke="#22C55E" strokeWidth="4" strokeLinecap="round" />
-              <path d="M74 39L89 45" stroke="#22C55E" strokeWidth="4" strokeLinecap="round" />
-              <path d="M77 22L69 16" stroke="#4ADE80" strokeWidth="3.5" strokeLinecap="round" />
+              <rect x="91" y="20" width="7" height="61" fill="#166534" />
+              <rect x="92" y="22" width="3" height="57" fill="#22C55E" />
+              <rect x="90" y="35" width="9" height="3" fill="#14532D" />
+              <rect x="90" y="54" width="9" height="3" fill="#14532D" />
+              <path d="M94 28L108 17L112 21L99 32Z" fill="#22C55E" />
+              <path d="M95 47L111 39L114 44L98 51Z" fill="#4ADE80" />
+              <path d="M94 63L106 69L103 74L96 68Z" fill="#22C55E" />
             </g>
 
             <g className="tisee-panda-body">
-              <circle cx="28" cy="19" r="10" fill="#18181B" />
-              <circle cx="66" cy="19" r="10" fill="#18181B" />
-
-              <ellipse
-                cx="47"
-                cy="42"
-                rx="31"
-                ry="28"
-                fill="#FFFFFF"
-                stroke="#18181B"
-                strokeWidth="3.5"
-              />
-
-              <ellipse cx="24" cy="51" rx="8" ry="13" fill="#18181B" transform="rotate(28 24 51)" />
-              <ellipse cx="69" cy="50" rx="8" ry="13" fill="#18181B" transform="rotate(-28 69 50)" />
-              <ellipse cx="34" cy="63" rx="8" ry="6" fill="#18181B" transform="rotate(-18 34 63)" />
-              <ellipse cx="60" cy="63" rx="8" ry="6" fill="#18181B" transform="rotate(18 60 63)" />
-
-              <ellipse cx="35" cy="36" rx="8" ry="10" fill="#18181B" transform="rotate(28 35 36)" />
-              <ellipse cx="59" cy="36" rx="8" ry="10" fill="#18181B" transform="rotate(-28 59 36)" />
-              <circle cx="36" cy="36" r="2.6" fill="#FFFFFF" />
-              <circle cx="58" cy="36" r="2.6" fill="#FFFFFF" />
-              <circle cx="36.7" cy="35.4" r="1" fill="#60A5FA" />
-              <circle cx="58.7" cy="35.4" r="1" fill="#60A5FA" />
-
-              <path
-                d="M43 45C45 43 49 43 51 45C51 48 49 50 47 50C45 50 43 48 43 45Z"
-                fill="#18181B"
-              />
-              <path
-                className="tisee-panda-mouth"
-                d="M47 50C47 53 44 54 42 53M47 50C47 53 50 54 52 53"
-                fill="none"
-                stroke="#18181B"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-              />
-
-              <g className="tisee-panda-paws">
-                <ellipse cx="74" cy="46" rx="6.5" ry="8" fill="#18181B" transform="rotate(16 74 46)" />
-                <ellipse cx="71" cy="58" rx="6" ry="8" fill="#18181B" transform="rotate(-12 71 58)" />
+              <g className="tisee-panda-voxel-body">
+                <path d="M31 52H73L84 60V82H41L31 74Z" fill="#E5E7EB" />
+                <rect x="31" y="48" width="43" height="31" fill="#F8FAFC" />
+                <path d="M74 48L86 56V78L74 79Z" fill="#C7CBD1" />
+                <path d="M31 48L41 41H83L74 48Z" fill="#FFFFFF" />
+                <rect x="27" y="58" width="11" height="22" fill="#111827" />
+                <rect x="69" y="61" width="13" height="19" fill="#111827" />
+                <rect x="36" y="76" width="18" height="10" fill="#111827" />
+                <rect x="64" y="75" width="18" height="11" fill="#111827" />
+                <rect x="40" y="80" width="11" height="3" fill="#374151" />
+                <rect x="68" y="79" width="11" height="3" fill="#374151" />
               </g>
 
-              <path
-                d="M68 29C73 31 76 35 77 40"
-                fill="none"
-                stroke="#2563EB"
-                strokeWidth="4"
-                strokeLinecap="round"
-              />
-              <circle cx="77" cy="41" r="3" fill="#2563EB" stroke="#18181B" strokeWidth="1.5" />
+              <g className="tisee-panda-head">
+                <rect x="32" y="13" width="15" height="15" fill="#0F172A" />
+                <rect x="70" y="13" width="15" height="15" fill="#0F172A" />
+                <rect x="35" y="17" width="45" height="40" fill="#F8FAFC" />
+                <path d="M80 17L92 25V58L80 57Z" fill="#C7CBD1" />
+                <path d="M35 17L45 10H82L92 17H80L75 14H47L42 17Z" fill="#FFFFFF" />
+                <rect x="41" y="29" width="13" height="15" fill="#111827" />
+                <rect x="63" y="29" width="13" height="15" fill="#111827" />
+                <rect x="45" y="33" width="4" height="5" fill="#F8FAFC" />
+                <rect x="67" y="33" width="4" height="5" fill="#F8FAFC" />
+                <rect x="46" y="33" width="2" height="2" fill="#60A5FA" />
+                <rect x="68" y="33" width="2" height="2" fill="#60A5FA" />
+                <rect x="54" y="43" width="8" height="6" fill="#111827" />
+                <rect className="tisee-panda-mouth" x="56" y="50" width="4" height="3" fill="#111827" />
+                <rect x="38" y="22" width="4" height="8" fill="#FFFFFF" opacity="0.8" />
+                <rect x="80" y="27" width="5" height="18" fill="#AEB4BD" />
+              </g>
+
+              <g className="tisee-panda-scarf">
+                <rect x="38" y="54" width="36" height="5" fill="#2563EB" />
+                <rect x="72" y="57" width="7" height="12" fill="#1D4ED8" />
+                <rect x="75" y="66" width="5" height="4" fill="#60A5FA" />
+              </g>
+
+              <g className="tisee-panda-paws">
+                <rect x="77" y="50" width="11" height="13" fill="#111827" />
+                <rect x="80" y="60" width="10" height="12" fill="#111827" />
+                <rect x="86" y="55" width="7" height="5" fill="#374151" />
+              </g>
+
+              <g opacity="0.7">
+                <rect x="39" y="51" width="6" height="2" fill="#FFFFFF" />
+                <rect x="48" y="51" width="15" height="2" fill="#E5E7EB" />
+              </g>
             </g>
           </svg>
         </span>
