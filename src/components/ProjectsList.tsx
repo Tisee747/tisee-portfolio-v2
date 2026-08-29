@@ -31,12 +31,12 @@ function GalleryCard({ project, priority = false }: { project: Project; priority
             src={project.images[0]}
             alt={project.title}
             fill
-            sizes="(min-width: 1280px) 720px, (min-width: 1024px) 680px, (min-width: 640px) 72vw, 84vw"
+            sizes="(min-width: 1280px) 760px, (min-width: 1024px) 720px, (min-width: 640px) 72vw, 84vw"
             className="object-contain p-4 sm:p-7 lg:p-6"
             priority={priority}
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-zinc-400">No image available</div>
+          <div className="flex h-full items-center justify-center text-sm text-zinc-950">No image available</div>
         )}
       </div>
 
@@ -47,7 +47,7 @@ function GalleryCard({ project, priority = false }: { project: Project; priority
         <h3 className="mt-2 text-2xl font-medium tracking-tight text-zinc-950 sm:text-3xl">
           {project.title}
         </h3>
-        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-zinc-500 sm:text-base lg:line-clamp-2">
+        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-zinc-950 sm:text-base lg:line-clamp-2">
           {project.description}
         </p>
       </div>
@@ -153,7 +153,7 @@ export default function ProjectsList() {
               A few things I&apos;ve built.
             </h2>
           </div>
-          <p className="shrink-0 pb-1 text-xs font-medium text-zinc-400 sm:text-sm">
+          <p className="shrink-0 pb-1 text-xs font-medium text-zinc-950 sm:text-sm">
             {String(currentIndex + 1).padStart(2, "0")} / {String(featuredProjects.length).padStart(2, "0")}
           </p>
         </FadeIn>
@@ -180,7 +180,7 @@ export default function ProjectsList() {
                 showNext();
               }
             }}
-            className="-mx-6 flex snap-x snap-mandatory gap-[2%] overflow-x-auto overscroll-x-contain px-[8%] pb-7 pt-2 outline-none [scrollbar-width:none] focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 [&::-webkit-scrollbar]:hidden sm:px-[14%] md:-mx-12 lg:mx-0 lg:gap-6 lg:px-[18%]"
+            className="-mx-6 flex snap-x snap-mandatory gap-[2%] overflow-x-auto overscroll-x-contain px-[8%] pb-7 pt-2 outline-none [scrollbar-width:none] focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 [&::-webkit-scrollbar]:hidden sm:px-[14%] md:-mx-12 lg:mx-0 lg:gap-6 lg:px-0"
           >
             {featuredProjects.map((project, index) => {
               const isActive = index === currentIndex;
@@ -191,7 +191,7 @@ export default function ProjectsList() {
                   ref={(node) => {
                     cardRefs.current[index] = node;
                   }}
-                  className="h-[400px] w-[84%] shrink-0 snap-center snap-always sm:h-[480px] sm:w-[72%] lg:h-[500px] lg:w-[64%] xl:h-[520px] xl:w-[62%]"
+                  className="h-[400px] w-[84%] shrink-0 snap-center snap-always sm:h-[480px] sm:w-[72%] lg:h-[500px] lg:w-[72%] xl:h-[520px] xl:w-[70%]"
                 >
                   <button
                     type="button"
@@ -223,7 +223,7 @@ export default function ProjectsList() {
             })}
           </div>
 
-          <p className="mt-1 text-center text-[11px] font-medium text-zinc-400 sm:hidden">
+          <p className="mt-1 text-center text-[11px] font-medium text-zinc-950 sm:hidden">
             Swipe to browse
           </p>
         </FadeIn>
