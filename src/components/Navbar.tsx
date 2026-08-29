@@ -61,10 +61,8 @@ export default function Navbar() {
                   key={item.path}
                   href={item.path}
                   aria-current={isActive ? "page" : undefined}
-                  className={`relative inline-flex min-h-9 items-center whitespace-nowrap px-1.5 text-[11px] font-medium leading-none transition-colors duration-200 after:absolute after:bottom-1 after:left-1.5 after:right-1.5 after:h-px after:origin-left after:bg-zinc-900 after:transition-transform after:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:min-h-11 sm:px-3 sm:text-[13px] sm:after:bottom-1.5 ${
-                    isActive
-                      ? "text-zinc-900 after:scale-x-100"
-                      : "text-zinc-500 after:scale-x-0 hover:text-zinc-900 hover:after:scale-x-100 focus-visible:after:scale-x-100"
+                  className={`relative inline-flex min-h-9 items-center whitespace-nowrap px-1.5 text-[11px] font-medium leading-none text-zinc-950 transition-colors duration-200 after:absolute after:bottom-1 after:left-1.5 after:right-1.5 after:h-px after:origin-left after:bg-zinc-900 after:transition-transform after:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:min-h-11 sm:px-3 sm:text-[13px] sm:after:bottom-1.5 ${
+                    isActive ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100 focus-visible:after:scale-x-100"
                   }`}
                 >
                   {item.name}
