@@ -1,12 +1,14 @@
 export type ProjectTag = 'Backend' | 'AI' | 'Fullstack';
 
 export type ProjectLayout = 'web' | 'mobile' | 'hybrid' | 'none';
+export type ProjectCategory = 'Web' | 'Mobile' | 'Fullstack' | 'AI/ML' | 'Backend' | 'Simulation';
 
 export interface Project {
   id: string;
   title: string;
   description: string;
   tags: ProjectTag[];
+  category?: ProjectCategory;
   technologies?: string[];
   repoUrl?: string;
   demoUrl?: string;
