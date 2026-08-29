@@ -164,7 +164,7 @@ export default function ProjectsPage() {
                     alt={`${project.title} project screenshot`}
                     fill
                     sizes="(min-width: 768px) 190px, 92vw"
-                    className="object-cover"
+                    className="object-contain p-1.5 sm:p-2"
                   />
                 ) : (
                   <div className="flex h-full items-center justify-center px-4 text-center text-xs text-zinc-500">
