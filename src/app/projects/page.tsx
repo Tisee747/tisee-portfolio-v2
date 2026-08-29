@@ -1,18 +1,20 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { FadeIn } from "@/components/FadeIn";
 import SectionArtwork from "@/components/SectionArtwork";
 import { cn } from "@/lib/utils";
 import { projectsData } from "@/data/portfolioData";
 
-const FILTERS = ["All", "Web", "Mobile", "AI/ML", "Backend"];
+const FILTERS = ["All", "Web", "Mobile", "Fullstack", "AI/ML", "Backend", "Simulation"];
 
 const TECHNOLOGY_ICONS: Record<string, string> = {
   "Next.js": "nextdotjs",
   React: "react",
   TypeScript: "typescript",
   TailwindCSS: "tailwindcss",
+  "Tailwind CSS": "tailwindcss",
   Laravel: "laravel",
   Flutter: "flutter",
   PHP: "php",
@@ -23,9 +25,14 @@ const TECHNOLOGY_ICONS: Record<string, string> = {
   Streamlit: "streamlit",
   OpenCV: "opencv",
   LangChain: "langchain",
+  PostgreSQL: "postgresql",
+  FastAPI: "fastapi",
+  Groq: "groq",
+  "Groq AI": "groq",
 };
 
 function getProjectCategory(project: (typeof projectsData)[number]) {
+  if (project.category) return project.category;
   if (project.projectLayout === "none") return "Backend";
   if (project.projectLayout === "mobile") return "Mobile";
   if (project.projectLayout === "hybrid") return "Fullstack";
@@ -79,9 +86,7 @@ function FallbackTechnologyIcon() {
 function TechnologyIcon({ technology }: { technology: string }) {
   const slug = TECHNOLOGY_ICONS[technology];
 
-  if (!slug) {
-    return <FallbackTechnologyIcon />;
-  }
+  if (!slug) return <FallbackTechnologyIcon />;
 
   return (
     <img
@@ -100,15 +105,7 @@ export default function ProjectsPage() {
 
   const filteredProjects = projectsData.filter((project) => {
     if (activeFilter === "All") return true;
-    if (activeFilter === "Backend" && project.projectLayout === "none") return true;
-    if (activeFilter === "Web" && project.projectLayout === "web") return true;
-    if (activeFilter === "Mobile" && project.projectLayout === "mobile") return true;
-    if (activeFilter === "AI/ML") {
-      return project.technologies?.some((technology) =>
-        ["Python", "OpenCV", "TensorFlow", "LLM", "AI", "ML"].includes(technology),
-      );
-    }
-    return false;
+    return getProjectCategory(project) === activeFilter;
   });
 
   return (
@@ -129,7 +126,7 @@ export default function ProjectsPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-2 md:max-w-[430px] md:justify-end" role="group" aria-label="Filter projects">
+          <div className="flex flex-wrap gap-2 md:max-w-[520px] md:justify-end" role="group" aria-label="Filter projects">
             {FILTERS.map((filter) => (
               <button
                 key={filter}
@@ -153,11 +150,27 @@ export default function ProjectsPage() {
           {filteredProjects.map((project, index) => (
             <FadeIn
               key={project.id}
-              delay={0.05}
-              className="grid gap-5 border-b border-zinc-100 py-7 md:grid-cols-[3rem_minmax(0,1fr)_auto] md:gap-x-8 md:py-8"
+              delay={0.04}
+              className="grid gap-5 border-b border-zinc-100 py-7 md:grid-cols-[3rem_190px_minmax(0,1fr)_auto] md:gap-x-7 md:py-8"
             >
               <div className="text-sm font-medium tabular-nums text-zinc-950">
                 {String(index + 1).padStart(2, "0")}
+              </div>
+
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-zinc-100 bg-zinc-50 md:aspect-[4/3]">
+                {project.images?.[0] ? (
+                  <Image
+                    src={project.images[0]}
+                    alt={`${project.title} project screenshot`}
+                    fill
+                    sizes="(min-width: 768px) 190px, 92vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center px-4 text-center text-xs text-zinc-500">
+                    No project image
+                  </div>
+                )}
               </div>
 
               <div className="min-w-0">
