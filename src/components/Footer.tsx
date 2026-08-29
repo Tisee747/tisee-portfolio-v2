@@ -57,7 +57,7 @@ export default function Footer() {
             <h2 className="text-5xl font-medium leading-[1.04] tracking-tighter text-zinc-950 sm:text-6xl lg:text-[60px] lg:leading-[1.02] xl:text-[64px]">
               Let&apos;s build something useful.
             </h2>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-zinc-600 md:text-lg lg:max-w-[540px]">
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-zinc-950 md:text-lg lg:max-w-[540px]">
               Have a role, project, or collaboration in mind? Reach out through whichever channel works best for you.
             </p>
           </div>
@@ -69,9 +69,9 @@ export default function Footer() {
                 href={contact.url}
                 target={contact.external ? "_blank" : undefined}
                 rel={contact.external ? "noopener noreferrer" : undefined}
-                className="group inline-flex min-h-12 w-full items-center gap-2.5 rounded-xl border border-zinc-100 bg-white px-3.5 text-sm font-medium text-zinc-700 transition-[border-color,color] hover:border-zinc-300 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:px-4"
+                className="group inline-flex min-h-12 w-full items-center gap-2.5 rounded-xl border border-zinc-100 bg-white px-3.5 text-sm font-medium text-zinc-950 transition-[border-color,color] hover:border-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:px-4"
               >
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center text-zinc-600 transition-colors group-hover:text-zinc-950">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center text-zinc-950">
                   {contact.icon}
                 </span>
                 <span className="truncate">{contact.name}</span>
@@ -80,7 +80,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-zinc-100 pt-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between lg:mt-12">
+        <div className="mt-10 flex flex-col gap-3 border-t border-zinc-100 pt-6 text-xs text-zinc-950 sm:flex-row sm:items-center sm:justify-between lg:mt-12">
           <span>&copy; 2026 Tisee. All rights reserved.</span>
           <span>Building practical stuff and learning along the way.</span>
         </div>
