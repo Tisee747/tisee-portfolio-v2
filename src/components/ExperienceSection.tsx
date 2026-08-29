@@ -43,7 +43,7 @@ export default function ExperienceSection() {
             <h2 className="text-4xl font-medium tracking-tight text-zinc-950 md:text-5xl">
               Work that shaped how I build.
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-zinc-500 md:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-zinc-950 md:text-lg">
               A few roles where I learned by shipping, debugging, automating, and working with real teams.
             </p>
           </div>
@@ -60,8 +60,8 @@ export default function ExperienceSection() {
               <FadeIn key={experience.id} delay={index * 0.08}>
                 <article className="grid gap-7 border-t border-zinc-100 py-9 md:grid-cols-[110px_minmax(0,1fr)_250px] md:items-start md:gap-10 md:py-11 lg:grid-cols-[130px_minmax(0,1fr)_280px]">
                   <div className="flex items-center justify-between gap-4 md:block">
-                    <span className="text-xs font-medium text-zinc-400">0{index + 1}</span>
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-400 md:mt-3 md:block">
+                    <span className="text-xs font-medium text-zinc-950">0{index + 1}</span>
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-950 md:mt-3 md:block">
                       {stageLabels[experience.stage]}
                     </span>
                   </div>
@@ -70,13 +70,13 @@ export default function ExperienceSection() {
                     <h3 className="text-2xl font-medium tracking-tight text-zinc-950 md:text-3xl">
                       {copy.title}
                     </h3>
-                    <div className="mt-2 flex flex-col gap-1 text-sm text-zinc-500 sm:flex-row sm:items-center sm:gap-3 md:text-base">
+                    <div className="mt-2 flex flex-col gap-1 text-sm text-zinc-950 sm:flex-row sm:items-center sm:gap-3 md:text-base">
                       <span>{experience.company}</span>
                       <span className="hidden h-1 w-1 rounded-full bg-zinc-200 sm:block" aria-hidden="true" />
                       <span>{experience.period}</span>
                     </div>
 
-                    <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-600 md:text-base">
+                    <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-950 md:text-base">
                       {copy.description}
                     </p>
                   </div>
@@ -91,7 +91,7 @@ export default function ExperienceSection() {
                         className="object-cover"
                       />
                     ) : (
-                      <div className="flex h-full items-center justify-center text-xs text-zinc-400">No image</div>
+                      <div className="flex h-full items-center justify-center text-xs text-zinc-950">No image</div>
                     )}
                   </div>
                 </article>
