@@ -93,83 +93,72 @@ html {
 
 @keyframes tisee-pet-travel {
   0% {
-    transform: translate3d(-76px, 0, 0);
+    transform: translate3d(-84px, 0, 0);
   }
 
   50% {
-    transform: translate3d(calc(100vw + 12px), 0, 0);
+    transform: translate3d(calc(100vw + 10px), 0, 0);
   }
 
   100% {
-    transform: translate3d(-76px, 0, 0);
+    transform: translate3d(-84px, 0, 0);
   }
 }
 
-@keyframes tisee-pet-facing {
-  0%,
-  49.9% {
-    transform: scaleX(1);
-  }
-
-  50%,
-  99.9% {
-    transform: scaleX(-1);
-  }
-
-  100% {
-    transform: scaleX(1);
-  }
-}
-
-@keyframes tisee-pet-bob {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
+@keyframes tisee-pet-roll {
+  0% {
+    transform: rotate(0deg);
   }
 
   50% {
-    transform: translate3d(0, -2px, 0);
+    transform: rotate(1080deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
   }
 }
 
-@keyframes tisee-pet-leg-a {
-  from {
-    transform: rotate(7deg) translateY(0);
+@keyframes tisee-pet-squish {
+  0%,
+  100% {
+    transform: scale3d(1, 1, 1);
   }
 
-  to {
-    transform: rotate(-8deg) translateY(1px);
+  25% {
+    transform: scale3d(1.035, 0.965, 1);
+  }
+
+  50% {
+    transform: scale3d(0.985, 1.015, 1);
+  }
+
+  75% {
+    transform: scale3d(1.02, 0.98, 1);
   }
 }
 
-@keyframes tisee-pet-leg-b {
-  from {
-    transform: rotate(-7deg) translateY(1px);
+@keyframes tisee-pet-shadow {
+  0%,
+  100% {
+    transform: translateX(-50%) scaleX(1);
+    opacity: 0.08;
   }
 
-  to {
-    transform: rotate(8deg) translateY(0);
-  }
-}
-
-@keyframes tisee-pet-tail {
-  from {
-    transform: rotate(-3deg);
-  }
-
-  to {
-    transform: rotate(5deg);
+  50% {
+    transform: translateX(-50%) scaleX(0.82);
+    opacity: 0.05;
   }
 }
 
 .tisee-pet-runner {
-  --tisee-pet-trip: 22s;
+  --tisee-pet-trip: 20s;
   position: fixed;
   left: 0;
   bottom: max(5px, env(safe-area-inset-bottom));
   z-index: 40;
-  width: 66px;
-  height: 44px;
+  width: 62px;
+  height: 54px;
   pointer-events: none;
   user-select: none;
   animation: tisee-pet-travel var(--tisee-pet-trip) linear infinite;
@@ -177,59 +166,53 @@ html {
   contain: layout paint;
 }
 
-.tisee-pet-direction {
+.tisee-pet-roll,
+.tisee-pet-squish {
   width: 100%;
   height: 100%;
-  transform-origin: center;
-  animation: tisee-pet-facing var(--tisee-pet-trip) steps(1, end) infinite;
+  transform-origin: 50% 55%;
 }
 
-.tisee-pet-bob {
-  width: 100%;
-  height: 100%;
-  animation: tisee-pet-bob 420ms steps(2, end) infinite;
+.tisee-pet-roll {
+  animation: tisee-pet-roll var(--tisee-pet-trip) linear infinite;
+  will-change: transform;
 }
 
-.tisee-pet-bob svg {
+.tisee-pet-squish {
+  animation: tisee-pet-squish 640ms ease-in-out infinite;
+}
+
+.tisee-pet-squish svg {
   display: block;
   width: 100%;
   height: 100%;
   overflow: visible;
-  filter: drop-shadow(0 1px 0 rgba(9, 9, 11, 0.08));
+  filter: drop-shadow(0 1px 0 rgba(9, 9, 11, 0.06));
 }
 
-.tisee-pet-leg,
-.tisee-pet-tail {
-  transform-box: fill-box;
-}
-
-.tisee-pet-leg {
-  transform-origin: 50% 12%;
-}
-
-.tisee-pet-leg-a {
-  animation: tisee-pet-leg-a 420ms steps(2, end) infinite alternate;
-}
-
-.tisee-pet-leg-b {
-  animation: tisee-pet-leg-b 420ms steps(2, end) infinite alternate;
-}
-
-.tisee-pet-leg-rear {
-  animation-delay: -210ms;
-}
-
-.tisee-pet-tail {
-  transform-origin: 90% 72%;
-  animation: tisee-pet-tail 760ms ease-in-out infinite alternate;
+.tisee-pet-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 30px;
+  height: 4px;
+  border-radius: 999px;
+  background: #09090B;
+  opacity: 0.08;
+  transform: translateX(-50%);
+  animation: tisee-pet-shadow 640ms ease-in-out infinite;
 }
 
 @media (max-width: 640px) {
   .tisee-pet-runner {
-    --tisee-pet-trip: 18s;
-    width: 56px;
-    height: 38px;
+    --tisee-pet-trip: 17s;
+    width: 54px;
+    height: 48px;
     bottom: max(4px, env(safe-area-inset-bottom));
+  }
+
+  .tisee-pet-shadow {
+    width: 25px;
   }
 }
 
@@ -258,11 +241,14 @@ html {
     transform: translate3d(18px, 0, 0);
   }
 
-  .tisee-pet-direction,
-  .tisee-pet-bob,
-  .tisee-pet-leg,
-  .tisee-pet-tail {
+  .tisee-pet-roll,
+  .tisee-pet-squish,
+  .tisee-pet-shadow {
     animation: none !important;
+  }
+
+  .tisee-pet-roll,
+  .tisee-pet-squish {
     transform: none !important;
   }
 }
