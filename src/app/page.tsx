@@ -57,7 +57,7 @@ export default function Home() {
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <p className="mx-auto mt-5 max-w-xl text-base leading-[1.65] text-zinc-500 sm:text-lg md:mx-0 md:mt-6 md:text-xl">
+              <p className="mx-auto mt-5 max-w-xl text-base leading-[1.65] text-zinc-950 sm:text-lg md:mx-0 md:mt-6 md:text-xl">
                 <span className="block">I turn ideas into working software.</span>
                 <span className="mt-1.5 block">Focused on backend development, automation, and AI.</span>
               </p>
@@ -88,19 +88,19 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-x-8 gap-y-6 text-left sm:grid-cols-4 sm:gap-8">
                   <div>
                     <div className="text-2xl font-semibold tracking-tight text-zinc-950 md:text-3xl">3.64</div>
-                    <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">GPA</div>
+                    <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-950">GPA</div>
                   </div>
                   <div>
                     <div className="text-2xl font-semibold tracking-tight text-zinc-950 md:text-3xl">10+</div>
-                    <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">Projects</div>
+                    <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-950">Projects</div>
                   </div>
                   <div>
                     <div className="text-2xl font-semibold tracking-tight text-zinc-950 md:text-3xl">3</div>
-                    <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">Internships</div>
+                    <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-950">Internships</div>
                   </div>
                   <div>
                     <div className="text-2xl font-semibold tracking-tight text-zinc-950 md:text-3xl">2</div>
-                    <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">Certificates</div>
+                    <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-950">Certificates</div>
                   </div>
                 </div>
               </div>
