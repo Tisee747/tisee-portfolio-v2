@@ -1,124 +1,63 @@
 export default function PetWalker() {
   return (
     <div className="tisee-pet-runner" aria-hidden="true">
-      <div className="tisee-pet-direction">
-        <div className="tisee-pet-bob">
+      <div className="tisee-pet-roll">
+        <div className="tisee-pet-squish">
           <svg
-            viewBox="0 0 112 72"
+            viewBox="0 0 92 76"
             role="presentation"
             focusable="false"
             shapeRendering="geometricPrecision"
           >
-            <g className="tisee-pet-tail">
+            <ellipse cx="46" cy="68" rx="24" ry="3.5" fill="#09090B" opacity="0.08" />
+
+            <g className="tisee-panda">
+              <circle cx="27" cy="20" r="10" fill="#18181B" />
+              <circle cx="65" cy="20" r="10" fill="#18181B" />
+
+              <ellipse
+                cx="46"
+                cy="41"
+                rx="31"
+                ry="28"
+                fill="#FFFFFF"
+                stroke="#18181B"
+                strokeWidth="3.5"
+              />
+
+              <ellipse cx="24" cy="49" rx="8" ry="13" fill="#18181B" transform="rotate(28 24 49)" />
+              <ellipse cx="68" cy="49" rx="8" ry="13" fill="#18181B" transform="rotate(-28 68 49)" />
+              <ellipse cx="33" cy="62" rx="8" ry="6" fill="#18181B" transform="rotate(-18 33 62)" />
+              <ellipse cx="59" cy="62" rx="8" ry="6" fill="#18181B" transform="rotate(18 59 62)" />
+
+              <ellipse cx="34" cy="36" rx="8" ry="10" fill="#18181B" transform="rotate(28 34 36)" />
+              <ellipse cx="58" cy="36" rx="8" ry="10" fill="#18181B" transform="rotate(-28 58 36)" />
+              <circle cx="35" cy="36" r="2.6" fill="#FFFFFF" />
+              <circle cx="57" cy="36" r="2.6" fill="#FFFFFF" />
+              <circle cx="35.7" cy="35.4" r="1" fill="#60A5FA" />
+              <circle cx="57.7" cy="35.4" r="1" fill="#60A5FA" />
+
               <path
-                d="M30 39C16 39 10 30 13 19C15 11 23 9 27 14C30 18 26 23 22 22C19 21 18 25 20 29C22 33 27 34 33 33"
+                d="M42 45C44 43 48 43 50 45C50 48 48 50 46 50C44 50 42 48 42 45Z"
+                fill="#18181B"
+              />
+              <path
+                d="M46 50C46 53 43 54 41 53M46 50C46 53 49 54 51 53"
                 fill="none"
                 stroke="#18181B"
-                strokeWidth="11"
+                strokeWidth="1.8"
                 strokeLinecap="round"
               />
+
               <path
-                d="M30 39C16 39 10 30 13 19C15 11 23 9 27 14C30 18 26 23 22 22C19 21 18 25 20 29C22 33 27 34 33 33"
+                d="M67 28C72 30 75 34 76 39"
                 fill="none"
-                stroke="#FFFDF8"
-                strokeWidth="6"
+                stroke="#2563EB"
+                strokeWidth="4"
                 strokeLinecap="round"
               />
+              <circle cx="76" cy="40" r="3" fill="#2563EB" stroke="#18181B" strokeWidth="1.5" />
             </g>
-
-            <path
-              d="M31 28C36 23 45 21 57 22C70 22 79 26 82 35C84 42 81 50 74 54C65 59 45 58 34 52C28 49 25 43 26 37C26 33 28 30 31 28Z"
-              fill="#FFFDF8"
-              stroke="#18181B"
-              strokeWidth="3.5"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M39 28C45 25 57 25 66 27"
-              fill="none"
-              stroke="#E4E4E7"
-              strokeWidth="3"
-              strokeLinecap="round"
-            />
-
-            <g className="tisee-pet-leg tisee-pet-leg-a">
-              <path
-                d="M38 45L36 61C36 64 38 66 41 66H48C50 66 51 63 49 61L46 58L48 47Z"
-                fill="#FFFDF8"
-                stroke="#18181B"
-                strokeWidth="3.5"
-                strokeLinejoin="round"
-              />
-            </g>
-            <g className="tisee-pet-leg tisee-pet-leg-b">
-              <path
-                d="M57 47L57 61C57 64 59 66 62 66H69C71 66 72 63 70 61L67 58L67 47Z"
-                fill="#F4F4F5"
-                stroke="#18181B"
-                strokeWidth="3.5"
-                strokeLinejoin="round"
-              />
-            </g>
-            <g className="tisee-pet-leg tisee-pet-leg-b tisee-pet-leg-rear">
-              <path
-                d="M31 44L27 58L22 62C20 64 22 67 25 67H33C35 67 36 66 37 64L41 49Z"
-                fill="#F4F4F5"
-                stroke="#18181B"
-                strokeWidth="3.5"
-                strokeLinejoin="round"
-              />
-            </g>
-
-            <path
-              d="M75 24L80 12L87 21C93 22 99 27 101 34C104 44 97 53 87 54C77 55 70 49 70 40C69 33 71 28 75 24Z"
-              fill="#FFFDF8"
-              stroke="#18181B"
-              strokeWidth="3.5"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M83 20L86 15L88 21"
-              fill="#FDA4AF"
-              stroke="#FDA4AF"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M75 24L78 15L82 22"
-              fill="#FFFDF8"
-              stroke="#18181B"
-              strokeWidth="3.5"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M77.5 21L79 17.5L80.5 22"
-              fill="none"
-              stroke="#FDA4AF"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-
-            <ellipse cx="91" cy="34" rx="3.6" ry="4.8" fill="#18181B" />
-            <ellipse cx="92" cy="32.6" rx="1.2" ry="1.5" fill="#60A5FA" />
-            <path
-              d="M99 39L103 40L100 43"
-              fill="#FDA4AF"
-              stroke="#18181B"
-              strokeWidth="1.5"
-              strokeLinejoin="round"
-            />
-            <path d="M99 44L106 44M99 47L105 49" stroke="#18181B" strokeWidth="1.4" strokeLinecap="round" />
-
-            <path
-              d="M72 31C77 33 82 34 87 33"
-              fill="none"
-              stroke="#2563EB"
-              strokeWidth="4.5"
-              strokeLinecap="round"
-            />
-            <circle cx="78" cy="36" r="3.4" fill="#FBBF24" stroke="#18181B" strokeWidth="1.7" />
-            <circle cx="79" cy="35" r="0.8" fill="#FFF7CC" />
           </svg>
         </div>
       </div>
