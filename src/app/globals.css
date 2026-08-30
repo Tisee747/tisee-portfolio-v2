@@ -170,63 +170,35 @@ html {
 
 @keyframes tisee-panda-idle-a {
   0%,
-  40% {
+  49% {
     opacity: 1;
   }
 
-  50% {
-    opacity: 0.78;
-  }
-
-  58%,
-  82% {
-    opacity: 0.08;
-  }
-
-  90% {
-    opacity: 0.8;
-  }
-
+  50%,
   100% {
-    opacity: 1;
+    opacity: 0;
   }
 }
 
 @keyframes tisee-panda-idle-b {
   0%,
-  40% {
+  49% {
     opacity: 0;
   }
 
-  50% {
-    opacity: 0.22;
-  }
-
-  58%,
-  82% {
-    opacity: 0.92;
-  }
-
-  90% {
-    opacity: 0.2;
-  }
-
+  50%,
   100% {
-    opacity: 0;
+    opacity: 1;
   }
 }
 
 @keyframes tisee-panda-roll-crouch {
   0%,
-  16% {
+  33% {
     opacity: 1;
   }
 
-  28% {
-    opacity: 0.92;
-  }
-
-  42%,
+  34%,
   100% {
     opacity: 0;
   }
@@ -234,20 +206,16 @@ html {
 
 @keyframes tisee-panda-roll-mid {
   0%,
-  22% {
+  33% {
     opacity: 0;
   }
 
-  34% {
-    opacity: 0.18;
+  34%,
+  66% {
+    opacity: 1;
   }
 
-  44%,
-  62% {
-    opacity: 0.96;
-  }
-
-  76%,
+  67%,
   100% {
     opacity: 0;
   }
@@ -255,17 +223,13 @@ html {
 
 @keyframes tisee-panda-roll-land {
   0%,
-  56% {
+  66% {
     opacity: 0;
   }
 
-  68% {
-    opacity: 0.14;
-  }
-
-  78%,
+  67%,
   100% {
-    opacity: 0.98;
+    opacity: 1;
   }
 }
 
@@ -335,28 +299,6 @@ html {
   100% {
     transform: translateX(-50%) scaleX(1);
     opacity: 0.12;
-  }
-}
-
-@keyframes tisee-panda-return-travel {
-  0% {
-    transform: translate3d(var(--tisee-pet-edge-travel), 0, 0);
-  }
-
-  26% {
-    transform: translate3d(calc(var(--tisee-pet-edge-travel) * 0.82), 0, 0);
-  }
-
-  54% {
-    transform: translate3d(calc(var(--tisee-pet-edge-travel) * 0.5), 0, 0);
-  }
-
-  78% {
-    transform: translate3d(calc(var(--tisee-pet-edge-travel) * 0.18), 0, 0);
-  }
-
-  100% {
-    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -456,11 +398,11 @@ html {
 }
 
 .tisee-pet-idle .tisee-pet-frame-idle-1 {
-  animation: tisee-panda-idle-a 3.8s ease-in-out infinite;
+  animation: tisee-panda-idle-a 3.8s steps(1, end) infinite;
 }
 
 .tisee-pet-idle .tisee-pet-frame-idle-2 {
-  animation: tisee-panda-idle-b 3.8s ease-in-out infinite;
+  animation: tisee-panda-idle-b 3.8s steps(1, end) infinite;
 }
 
 .tisee-pet-idle .tisee-pet-art {
@@ -479,7 +421,7 @@ html {
 .tisee-pet-rolling .tisee-pet-roll-frame {
   animation-duration: var(--tisee-pet-step-duration);
   animation-iteration-count: 1;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: steps(1, end);
   animation-fill-mode: both;
 }
 
@@ -496,8 +438,7 @@ html {
 }
 
 .tisee-pet-returning {
-  transition: none;
-  animation: tisee-panda-return-travel var(--tisee-pet-return-duration) cubic-bezier(0.24, 0.76, 0.22, 1) forwards;
+  transition: transform var(--tisee-pet-return-duration) cubic-bezier(0.24, 0.76, 0.22, 1);
 }
 
 .tisee-pet-returning .tisee-pet-art {

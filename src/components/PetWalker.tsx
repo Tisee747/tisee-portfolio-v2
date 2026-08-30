@@ -42,7 +42,6 @@ export default function PetWalker() {
   const [phase, setPhase] = useState<PetPhase>("idle");
   const [step, setStep] = useState(0);
   const [travelX, setTravelX] = useState(0);
-  const [maxTravel, setMaxTravel] = useState(0);
   const [rollToken, setRollToken] = useState(0);
 
   const getMaxTravel = useCallback(() => {
@@ -59,7 +58,6 @@ export default function PetWalker() {
 
   const petStyle = {
     transform: `translate3d(${travelX}px, 0, 0)`,
-    "--tisee-pet-edge-travel": `${maxTravel}px`,
   } as CSSProperties;
 
   const setMotion = useCallback((nextPhase: PetPhase, nextStep: number) => {
@@ -83,6 +81,7 @@ export default function PetWalker() {
     queuedRollsRef.current = 0;
     returnTokenRef.current += 1;
     setMotion("returning", MAX_ROLL_STEPS);
+    setTravelX(0);
   }, [setMotion]);
 
   const startRoll = useCallback((targetStep: number) => {
@@ -149,8 +148,11 @@ export default function PetWalker() {
   useEffect(() => {
     const updateTravel = () => {
       const nextMaxTravel = getMaxTravel();
-      setMaxTravel(nextMaxTravel);
-      setTravelX((stepRef.current / MAX_ROLL_STEPS) * nextMaxTravel);
+      setTravelX(
+        phaseRef.current === "returning"
+          ? 0
+          : (stepRef.current / MAX_ROLL_STEPS) * nextMaxTravel,
+      );
     };
     const handleResize = () => {
       if (resizeFrameRef.current !== null) return;
@@ -163,8 +165,10 @@ export default function PetWalker() {
 
     updateTravel();
     window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
       if (resizeFrameRef.current !== null) window.cancelAnimationFrame(resizeFrameRef.current);
     };
   }, [getMaxTravel]);
