@@ -3,12 +3,10 @@
 import Image from "next/image";
 import { type CSSProperties, useCallback, useEffect, useRef, useState } from "react";
 
-const MAX_ROLL_STEPS = 5;
 const EDGE_GUTTER = 8;
-const STEP_DURATION_MS = 560;
-const RETURN_DURATION_MS = 1120;
+const DRAG_THRESHOLD_PX = 4;
 
-type PetPhase = "idle" | "rolling" | "returning";
+type Point = { x: number; y: number };
 
 type PandaFrameProps = {
   className: string;
@@ -31,203 +29,151 @@ function PandaFrame({ className, src }: PandaFrameProps) {
 
 export default function PetWalker() {
   const runnerRef = useRef<HTMLButtonElement>(null);
-  const phaseRef = useRef<PetPhase>("idle");
-  const stepRef = useRef(0);
-  const queuedRollsRef = useRef(0);
-  const movementTokenRef = useRef(0);
-  const returnTokenRef = useRef(0);
+  const pointerIdRef = useRef<number | null>(null);
+  const dragOriginRef = useRef<Point>({ x: 0, y: 0 });
+  const pointerOriginRef = useRef<Point>({ x: 0, y: 0 });
+  const positionRef = useRef<Point>({ x: 0, y: 0 });
+  const draggingRef = useRef(false);
   const resizeFrameRef = useRef<number | null>(null);
-  const prefersReducedMotionRef = useRef(false);
 
-  const [phase, setPhase] = useState<PetPhase>("idle");
-  const [step, setStep] = useState(0);
-  const [travelX, setTravelX] = useState(0);
-  const [rollToken, setRollToken] = useState(0);
+  const [position, setPosition] = useState<Point>({ x: EDGE_GUTTER, y: EDGE_GUTTER });
+  const [dragging, setDragging] = useState(false);
 
-  const getMaxTravel = useCallback(() => {
-    if (typeof window === "undefined") return 0;
+  const getBounds = useCallback(() => {
+    if (typeof window === "undefined") {
+      return { maxX: 0, maxY: 0 };
+    }
 
     const runnerWidth = runnerRef.current?.offsetWidth ?? 0;
+    const runnerHeight = runnerRef.current?.offsetHeight ?? 0;
     const viewportWidth = document.documentElement.clientWidth || window.innerWidth;
-    return Math.max(0, viewportWidth - runnerWidth - EDGE_GUTTER * 2);
-  }, []);
+    const viewportHeight = document.documentElement.clientHeight || window.innerHeight;
 
-  const getTravelForStep = useCallback((targetStep: number) => {
-    return (targetStep / MAX_ROLL_STEPS) * getMaxTravel();
-  }, [getMaxTravel]);
-
-  const petStyle = {
-    transform: `translate3d(${travelX}px, 0, 0)`,
-  } as CSSProperties;
-
-  const setMotion = useCallback((nextPhase: PetPhase, nextStep: number) => {
-    phaseRef.current = nextPhase;
-    stepRef.current = nextStep;
-    setPhase(nextPhase);
-    setStep(nextStep);
-  }, []);
-
-  const finishReturn = useCallback((token: number) => {
-    if (phaseRef.current !== "returning" || returnTokenRef.current !== token) return;
-
-    queuedRollsRef.current = 0;
-    setMotion("idle", 0);
-    setTravelX(0);
-  }, [setMotion]);
-
-  const startReturn = useCallback(() => {
-    if (phaseRef.current !== "rolling") return;
-
-    queuedRollsRef.current = 0;
-    returnTokenRef.current += 1;
-    setMotion("returning", MAX_ROLL_STEPS);
-    setTravelX(0);
-  }, [setMotion]);
-
-  const startRoll = useCallback((targetStep: number) => {
-    const nextStep = Math.min(Math.max(targetStep, 1), MAX_ROLL_STEPS);
-
-    movementTokenRef.current += 1;
-    setMotion("rolling", nextStep);
-    setTravelX(getTravelForStep(nextStep));
-    setRollToken((token) => token + 1);
-  }, [getTravelForStep, setMotion]);
-
-  const advanceRollStep = useCallback(() => {
-    if (phaseRef.current !== "rolling") return;
-
-    const currentStep = stepRef.current;
-
-    if (currentStep >= MAX_ROLL_STEPS) {
-      startReturn();
-      return;
-    }
-
-    if (queuedRollsRef.current > 0) {
-      queuedRollsRef.current -= 1;
-      startRoll(currentStep + 1);
-      return;
-    }
-
-    setMotion("idle", currentStep);
-  }, [setMotion, startReturn, startRoll]);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateMotionPreference = () => {
-      prefersReducedMotionRef.current = mediaQuery.matches;
+    return {
+      maxX: Math.max(EDGE_GUTTER, viewportWidth - runnerWidth - EDGE_GUTTER),
+      maxY: Math.max(EDGE_GUTTER, viewportHeight - runnerHeight - EDGE_GUTTER),
     };
+  }, []);
 
-    updateMotionPreference();
-    mediaQuery.addEventListener("change", updateMotionPreference);
-    return () => mediaQuery.removeEventListener("change", updateMotionPreference);
+  const clampPoint = useCallback(
+    (point: Point) => {
+      const { maxX, maxY } = getBounds();
+      return {
+        x: Math.min(Math.max(point.x, EDGE_GUTTER), maxX),
+        y: Math.min(Math.max(point.y, EDGE_GUTTER), maxY),
+      };
+    },
+    [getBounds],
+  );
+
+  const commitPosition = useCallback((next: Point) => {
+    positionRef.current = next;
+    setPosition(next);
   }, []);
 
   useEffect(() => {
-    if (phase === "rolling") {
-      const movementToken = movementTokenRef.current;
-      const delay = prefersReducedMotionRef.current ? 0 : STEP_DURATION_MS;
-      const timer = window.setTimeout(() => {
-        if (movementTokenRef.current === movementToken) advanceRollStep();
-      }, delay);
-
-      return () => window.clearTimeout(timer);
-    }
-
-    if (phase === "returning") {
-      const returnToken = returnTokenRef.current;
-      const delay = prefersReducedMotionRef.current ? 0 : RETURN_DURATION_MS;
-      const timer = window.setTimeout(() => finishReturn(returnToken), delay);
-
-      return () => window.clearTimeout(timer);
-    }
-
-    return undefined;
-  }, [advanceRollStep, finishReturn, phase, step]);
+    const initial = clampPoint({ x: EDGE_GUTTER, y: EDGE_GUTTER });
+    commitPosition(initial);
+  }, [clampPoint, commitPosition]);
 
   useEffect(() => {
-    const updateTravel = () => {
-      const nextMaxTravel = getMaxTravel();
-      setTravelX(
-        phaseRef.current === "returning"
-          ? 0
-          : (stepRef.current / MAX_ROLL_STEPS) * nextMaxTravel,
-      );
-    };
     const handleResize = () => {
       if (resizeFrameRef.current !== null) return;
 
       resizeFrameRef.current = window.requestAnimationFrame(() => {
         resizeFrameRef.current = null;
-        updateTravel();
+        commitPosition(clampPoint(positionRef.current));
       });
     };
 
-    updateTravel();
     window.addEventListener("resize", handleResize);
     window.addEventListener("orientationchange", handleResize);
+
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("orientationchange", handleResize);
-      if (resizeFrameRef.current !== null) window.cancelAnimationFrame(resizeFrameRef.current);
+      if (resizeFrameRef.current !== null) {
+        window.cancelAnimationFrame(resizeFrameRef.current);
+      }
     };
-  }, [getMaxTravel]);
+  }, [clampPoint, commitPosition]);
 
-  function requestRoll() {
-    const currentPhase = phaseRef.current;
-    const currentStep = stepRef.current;
+  const finishDrag = useCallback((pointerId: number) => {
+    if (pointerIdRef.current !== pointerId) return;
 
-    if (currentPhase === "returning") return;
+    pointerIdRef.current = null;
+    draggingRef.current = false;
+    setDragging(false);
 
-    if (currentPhase === "rolling") {
-      const remainingSteps = Math.max(0, MAX_ROLL_STEPS - currentStep);
-      queuedRollsRef.current = Math.min(remainingSteps, queuedRollsRef.current + 1);
-      return;
+    try {
+      runnerRef.current?.releasePointerCapture(pointerId);
+    } catch {
+      // Pointer capture can already be released by the browser.
+    }
+  }, []);
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLButtonElement>) => {
+    if (pointerIdRef.current !== null) return;
+
+    pointerIdRef.current = event.pointerId;
+    pointerOriginRef.current = { x: event.clientX, y: event.clientY };
+    dragOriginRef.current = positionRef.current;
+    draggingRef.current = false;
+
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLButtonElement>) => {
+    if (pointerIdRef.current !== event.pointerId) return;
+
+    const dx = event.clientX - pointerOriginRef.current.x;
+    const dy = event.clientY - pointerOriginRef.current.y;
+
+    if (!draggingRef.current && Math.hypot(dx, dy) >= DRAG_THRESHOLD_PX) {
+      draggingRef.current = true;
+      setDragging(true);
     }
 
-    if (currentStep < MAX_ROLL_STEPS) {
-      queuedRollsRef.current = 0;
-      startRoll(currentStep + 1);
-    }
-  }
+    if (!draggingRef.current) return;
+
+    event.preventDefault();
+    commitPosition(
+      clampPoint({
+        x: dragOriginRef.current.x + dx,
+        y: dragOriginRef.current.y - dy,
+      }),
+    );
+  };
+
+  const petStyle = {
+    left: `${position.x}px`,
+    bottom: `${position.y}px`,
+  } as CSSProperties;
 
   return (
     <button
       ref={runnerRef}
       type="button"
-      className={`tisee-pet-runner tisee-pet-${phase}`}
+      className={`tisee-pet-runner${dragging ? " is-dragging" : ""}`}
       style={petStyle}
-      onClick={requestRoll}
-      aria-label={phase === "returning" ? "Panda is returning home" : "Roll the panda one step"}
-      aria-disabled={phase === "returning"}
-      data-panda-phase={phase}
-      data-panda-step={step}
-      title="Tap the panda to roll"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={(event) => finishDrag(event.pointerId)}
+      onPointerCancel={(event) => finishDrag(event.pointerId)}
+      aria-label="Drag the panda companion"
+      data-panda-dragging={dragging ? "true" : "false"}
+      title="Drag the panda"
     >
       <span className="tisee-pet-shadow" aria-hidden="true" />
-      <span className="tisee-pet-art" key={rollToken} aria-hidden="true">
+      <span className="tisee-pet-art" aria-hidden="true">
         <span className="tisee-pet-idle-frames">
           <PandaFrame
-            src="/images/panda/panda-idle-1.png"
-            className="tisee-pet-frame tisee-pet-frame-idle-1"
+            src="/images/panda/panda-roll-land.png"
+            className="tisee-pet-frame tisee-pet-frame-rest"
           />
-          <PandaFrame
-            src="/images/panda/panda-idle-2.png"
-            className="tisee-pet-frame tisee-pet-frame-idle-2"
-          />
-        </span>
-        <span className="tisee-pet-roll-frames">
           <PandaFrame
             src="/images/panda/panda-roll-crouch.png"
-            className="tisee-pet-frame tisee-pet-roll-frame tisee-pet-roll-frame-crouch"
-          />
-          <PandaFrame
-            src="/images/panda/panda-roll-mid.png"
-            className="tisee-pet-frame tisee-pet-roll-frame tisee-pet-roll-frame-mid"
-          />
-          <PandaFrame
-            src="/images/panda/panda-roll-land.png"
-            className="tisee-pet-frame tisee-pet-roll-frame tisee-pet-roll-frame-land"
+            className="tisee-pet-frame tisee-pet-frame-rest-alt"
           />
         </span>
       </span>
