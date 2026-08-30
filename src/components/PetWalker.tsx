@@ -1,38 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import { type CSSProperties, useCallback, useEffect, useRef, useState } from "react";
+import {
+  type CSSProperties,
+  type KeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 const EDGE_GUTTER = 8;
 const DRAG_THRESHOLD_PX = 4;
+const KEYBOARD_STEP_PX = 16;
 
 type Point = { x: number; y: number };
-
-type PandaFrameProps = {
-  className: string;
-  src: string;
-};
-
-function PandaFrame({ className, src }: PandaFrameProps) {
-  return (
-    <Image
-      src={src}
-      alt=""
-      fill
-      sizes="(max-width: 640px) 84px, 96px"
-      className={className}
-      loading="eager"
-      draggable={false}
-    />
-  );
-}
 
 export default function PetWalker() {
   const runnerRef = useRef<HTMLButtonElement>(null);
   const pointerIdRef = useRef<number | null>(null);
-  const dragOriginRef = useRef<Point>({ x: 0, y: 0 });
+  const dragOriginRef = useRef<Point>({ x: EDGE_GUTTER, y: EDGE_GUTTER });
   const pointerOriginRef = useRef<Point>({ x: 0, y: 0 });
-  const positionRef = useRef<Point>({ x: 0, y: 0 });
+  const positionRef = useRef<Point>({ x: EDGE_GUTTER, y: EDGE_GUTTER });
   const draggingRef = useRef(false);
   const resizeFrameRef = useRef<number | null>(null);
 
@@ -41,7 +31,7 @@ export default function PetWalker() {
 
   const getBounds = useCallback(() => {
     if (typeof window === "undefined") {
-      return { maxX: 0, maxY: 0 };
+      return { maxX: EDGE_GUTTER, maxY: EDGE_GUTTER };
     }
 
     const runnerWidth = runnerRef.current?.offsetWidth ?? 0;
@@ -72,8 +62,7 @@ export default function PetWalker() {
   }, []);
 
   useEffect(() => {
-    const initial = clampPoint({ x: EDGE_GUTTER, y: EDGE_GUTTER });
-    commitPosition(initial);
+    commitPosition(clampPoint(positionRef.current));
   }, [clampPoint, commitPosition]);
 
   useEffect(() => {
@@ -108,22 +97,21 @@ export default function PetWalker() {
     try {
       runnerRef.current?.releasePointerCapture(pointerId);
     } catch {
-      // Pointer capture can already be released by the browser.
+      // Pointer capture may already have been released by the browser.
     }
   }, []);
 
-  const handlePointerDown = (event: React.PointerEvent<HTMLButtonElement>) => {
+  function handlePointerDown(event: ReactPointerEvent<HTMLButtonElement>) {
     if (pointerIdRef.current !== null) return;
 
     pointerIdRef.current = event.pointerId;
     pointerOriginRef.current = { x: event.clientX, y: event.clientY };
     dragOriginRef.current = positionRef.current;
     draggingRef.current = false;
-
     event.currentTarget.setPointerCapture(event.pointerId);
-  };
+  }
 
-  const handlePointerMove = (event: React.PointerEvent<HTMLButtonElement>) => {
+  function handlePointerMove(event: ReactPointerEvent<HTMLButtonElement>) {
     if (pointerIdRef.current !== event.pointerId) return;
 
     const dx = event.clientX - pointerOriginRef.current.x;
@@ -143,7 +131,26 @@ export default function PetWalker() {
         y: dragOriginRef.current.y - dy,
       }),
     );
-  };
+  }
+
+  function handleKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
+    const movement: Record<string, Point> = {
+      ArrowLeft: { x: -KEYBOARD_STEP_PX, y: 0 },
+      ArrowRight: { x: KEYBOARD_STEP_PX, y: 0 },
+      ArrowUp: { x: 0, y: KEYBOARD_STEP_PX },
+      ArrowDown: { x: 0, y: -KEYBOARD_STEP_PX },
+    };
+    const delta = movement[event.key];
+    if (!delta) return;
+
+    event.preventDefault();
+    commitPosition(
+      clampPoint({
+        x: positionRef.current.x + delta.x,
+        y: positionRef.current.y + delta.y,
+      }),
+    );
+  }
 
   const petStyle = {
     left: `${position.x}px`,
@@ -160,22 +167,22 @@ export default function PetWalker() {
       onPointerMove={handlePointerMove}
       onPointerUp={(event) => finishDrag(event.pointerId)}
       onPointerCancel={(event) => finishDrag(event.pointerId)}
-      aria-label="Drag the panda companion"
+      onKeyDown={handleKeyDown}
+      aria-label="Drag the panda companion. Use arrow keys to move it with a keyboard."
       data-panda-dragging={dragging ? "true" : "false"}
       title="Drag the panda"
     >
       <span className="tisee-pet-shadow" aria-hidden="true" />
       <span className="tisee-pet-art" aria-hidden="true">
-        <span className="tisee-pet-idle-frames">
-          <PandaFrame
-            src="/images/panda/panda-roll-land.png"
-            className="tisee-pet-frame tisee-pet-frame-rest"
-          />
-          <PandaFrame
-            src="/images/panda/panda-roll-crouch.png"
-            className="tisee-pet-frame tisee-pet-frame-rest-alt"
-          />
-        </span>
+        <Image
+          src="/images/panda/panda-roll-land.png"
+          alt=""
+          fill
+          sizes="(max-width: 640px) 84px, 96px"
+          className="tisee-pet-frame"
+          loading="eager"
+          draggable={false}
+        />
       </span>
     </button>
   );
