@@ -108,12 +108,6 @@ export default function Home() {
           </div>
 
           <FadeIn delay={0.2} className="relative mx-auto w-full max-w-[320px] md:max-w-none">
-            <div className="pointer-events-none absolute -inset-8 z-0 md:-inset-16" aria-hidden="true">
-              <span className="absolute inset-[8%] rounded-full border border-zinc-200/75" />
-              <span className="absolute inset-[18%] rounded-full border border-zinc-200/50" />
-              <span className="absolute left-1/2 top-1/2 h-[28%] w-[118%] -translate-x-1/2 -translate-y-1/2 rotate-[-18deg] rounded-[50%] border border-zinc-200/65" />
-              <span className="absolute left-[13%] top-[24%] h-2 w-2 rounded-full bg-zinc-300" />
-            </div>
             <div className="relative z-10 mx-auto aspect-square w-full overflow-hidden rounded-[2.5rem] border border-zinc-200/60 bg-zinc-100 shadow-[0_24px_70px_rgba(24,24,27,0.12)] md:aspect-[4/5] md:rounded-[3rem]">
               <Image
                 src="/profile.png"

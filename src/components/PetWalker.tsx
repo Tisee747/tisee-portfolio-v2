@@ -201,7 +201,7 @@ export default function PetWalker() {
       title="Tap the panda to roll"
     >
       <span className="tisee-pet-shadow" aria-hidden="true" />
-      <span className="tisee-pet-art" aria-hidden="true">
+      <span className="tisee-pet-art" key={rollToken} aria-hidden="true">
         <span className="tisee-pet-idle-frames">
           <PandaFrame
             src="/images/panda/panda-idle-1.png"
@@ -212,7 +212,7 @@ export default function PetWalker() {
             className="tisee-pet-frame tisee-pet-frame-idle-2"
           />
         </span>
-        <span className="tisee-pet-roll-frames" key={rollToken}>
+        <span className="tisee-pet-roll-frames">
           <PandaFrame
             src="/images/panda/panda-roll-crouch.png"
             className="tisee-pet-frame tisee-pet-roll-frame tisee-pet-roll-frame-crouch"
