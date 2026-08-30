@@ -153,8 +153,7 @@ export default function PetWalker() {
   }
 
   const petStyle = {
-    left: `${position.x}px`,
-    bottom: `${position.y}px`,
+    transform: `translate3d(${position.x - EDGE_GUTTER}px, ${-(position.y - EDGE_GUTTER)}px, 0)`,
   } as CSSProperties;
 
   return (
