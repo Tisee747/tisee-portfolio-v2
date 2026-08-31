@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { BrandMark } from "@/components/BrandMark";
 
-export const alt = "Tisee developer portfolio";
+export const alt = "Tisee — Software, Automation & AI";
 export const size = {
   width: 1200,
   height: 630,
@@ -29,17 +29,17 @@ export default function Image() {
           <div style={{ fontSize: 24, fontWeight: 700, letterSpacing: 4 }}>TISEE</div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", maxWidth: 920 }}>
-          <div style={{ fontSize: 78, lineHeight: 1.02, fontWeight: 700, letterSpacing: -4 }}>
-            Developer portfolio.
+        <div style={{ display: "flex", flexDirection: "column", maxWidth: 960 }}>
+          <div style={{ fontSize: 72, lineHeight: 1.03, fontWeight: 700, letterSpacing: -3.5 }}>
+            Software, Automation & AI.
           </div>
           <div style={{ marginTop: 24, fontSize: 30, lineHeight: 1.35, color: "#52525B" }}>
-            Projects, experience, and the things I build.
+            Backend development, automation, AI, and selected work.
           </div>
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 18, color: "#71717A" }}>
-          <span>tisee-portfolio-v2.vercel.app</span>
+          <span>tisee.site</span>
           <span>2026</span>
         </div>
       </div>
