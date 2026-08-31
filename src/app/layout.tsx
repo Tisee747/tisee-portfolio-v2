@@ -10,18 +10,21 @@ const geist = Geist({
   display: "swap",
 });
 
-const siteTitle = "Tisee — Developer Portfolio";
+const siteTitle = "Tisee — Software, Automation & AI";
 const siteDescription =
-  "Backend-focused developer building dependable software, automation, and practical AI tools.";
+  "Backend development, automation, AI, and selected work.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tisee-portfolio-v2.vercel.app"),
+  metadataBase: new URL("https://tisee.site"),
   title: siteTitle,
   description: siteDescription,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: siteTitle,
     description: siteDescription,
-    url: "/",
+    url: "https://tisee.site",
     siteName: "Tisee",
     type: "website",
   },
