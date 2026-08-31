@@ -65,6 +65,7 @@ export const projectsData: Project[] = [
     category: 'Backend',
     categories: ['Backend'],
     technologies: ['FastAPI', 'Python', 'AST Code Runner', 'LSL/OSSL', 'OpenSim'],
+    repoUrl: 'https://github.com/Tisee747/Medusa-Simulator',
     projectLayout: 'web',
     images: ['/images/projects/medusa-algorithm-simulator.jpg']
   },
@@ -89,6 +90,7 @@ export const projectsData: Project[] = [
     category: 'Backend',
     categories: ['Backend'],
     technologies: ['OpenSim', 'LSL/OSSL'],
+    repoUrl: 'https://github.com/Tisee747/Supermarket',
     projectLayout: 'web',
     images: ['/images/projects/medusa-supermarket.jpg']
   },
