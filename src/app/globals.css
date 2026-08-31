@@ -85,13 +85,13 @@ html {
 @keyframes tisee-section-artwork-drift {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-    opacity: 0.82;
+    transform: translate3d(-2px, 1px, 0) rotate(-0.12deg);
+    opacity: 0.78;
   }
 
   50% {
-    transform: translate3d(4px, -3px, 0) rotate(0.3deg);
-    opacity: 0.98;
+    transform: translate3d(3px, -2px, 0) rotate(0.18deg);
+    opacity: 0.92;
   }
 }
 
@@ -168,5 +168,13 @@ html {
   .tisee-tech-marquee,
   .tisee-section-artwork-motion {
     animation: none !important;
+    will-change: auto;
+  }
+
+  .tisee-flow-canvas,
+  .tisee-flow-canvas-secondary,
+  .tisee-section-artwork-motion {
+    transform: none !important;
+    opacity: 0.86 !important;
   }
 }
