@@ -6,8 +6,10 @@ import { FadeIn } from "@/components/FadeIn";
 import SectionArtwork from "@/components/SectionArtwork";
 import { cn } from "@/lib/utils";
 import { projectsData } from "@/data/portfolioData";
+import type { ProjectCategory } from "@/types";
 
-const FILTERS = ["All", "Web", "Mobile", "Fullstack", "AI/ML", "Backend", "Simulation"];
+const FILTERS = ["All", "Web", "Mobile", "Fullstack", "AI/ML", "Backend"] as const;
+type ProjectFilter = (typeof FILTERS)[number];
 
 const TECHNOLOGY_ICONS: Record<string, string> = {
   "Next.js": "nextdotjs",
@@ -31,12 +33,8 @@ const TECHNOLOGY_ICONS: Record<string, string> = {
   "Groq AI": "groq",
 };
 
-function getProjectCategory(project: (typeof projectsData)[number]) {
-  if (project.category) return project.category;
-  if (project.projectLayout === "none") return "Backend";
-  if (project.projectLayout === "mobile") return "Mobile";
-  if (project.projectLayout === "hybrid") return "Fullstack";
-  return "Web";
+function getProjectCategory(project: (typeof projectsData)[number]): ProjectCategory {
+  return project.category ?? project.categories[0] ?? "Backend";
 }
 
 function ExternalArrowIcon() {
@@ -101,11 +99,11 @@ function TechnologyIcon({ technology }: { technology: string }) {
 }
 
 export default function ProjectsPage() {
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [activeFilter, setActiveFilter] = useState<ProjectFilter>("All");
 
   const filteredProjects = projectsData.filter((project) => {
     if (activeFilter === "All") return true;
-    return getProjectCategory(project) === activeFilter;
+    return project.categories.includes(activeFilter);
   });
 
   return (
