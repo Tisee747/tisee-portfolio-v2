@@ -83,7 +83,7 @@ export const projectsData: Project[] = [
   },
   {
     id: 'medusa-supermarket',
-    title: 'Interactive Product Simulation',
+    title: 'SuperMarket',
     description: 'Built an OpenSim product interaction scene where users can touch in-world items and inspect product names and prices as part of an interactive learning experience.',
     tags: ['Backend'],
     category: 'Backend',
@@ -168,6 +168,7 @@ export const projectsData: Project[] = [
     categories: ['Web', 'AI/ML'],
     technologies: ['Python', 'OpenCV'],
     demoUrl: 'https://microplast.streamlit.app/',
+    repoUrl: 'https://github.com/Tisee747/MicroPlast-CV-Scanner',
     projectLayout: 'web',
     images: ['/images/projects/microplast.png']
   },
