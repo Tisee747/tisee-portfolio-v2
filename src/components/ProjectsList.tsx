@@ -191,7 +191,7 @@ export default function ProjectsList() {
 
         <FadeIn delay={0.15}>
           <div className="relative">
-            <div className="pointer-events-none absolute inset-y-2 left-0 right-0 z-20 hidden items-center justify-between xl:flex">
+            <div className="pointer-events-none absolute inset-y-2 z-20 hidden items-center justify-between xl:flex xl:-left-16 xl:-right-16">
               <button
                 type="button"
                 aria-label="Previous selected project"
