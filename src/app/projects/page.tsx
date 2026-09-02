@@ -12,25 +12,25 @@ const FILTERS = ["All", "Web", "Mobile", "Fullstack", "AI/ML", "Backend"] as con
 type ProjectFilter = (typeof FILTERS)[number];
 
 const TECHNOLOGY_ICONS: Record<string, string> = {
-  "Next.js": "nextdotjs",
-  React: "react",
-  TypeScript: "typescript",
-  TailwindCSS: "tailwindcss",
-  "Tailwind CSS": "tailwindcss",
-  Laravel: "laravel",
-  Flutter: "flutter",
-  PHP: "php",
-  Dart: "dart",
-  Java: "openjdk",
-  "Spring Boot": "springboot",
-  Python: "python",
-  Streamlit: "streamlit",
-  OpenCV: "opencv",
-  LangChain: "langchain",
-  PostgreSQL: "postgresql",
-  FastAPI: "fastapi",
-  Groq: "groq",
-  "Groq AI": "groq",
+  "Next.js": "/images/tech/simple-icons/nextdotjs.svg",
+  React: "/images/tech/simple-icons/react.svg",
+  TypeScript: "/images/tech/simple-icons/typescript.svg",
+  TailwindCSS: "/images/tech/simple-icons/tailwindcss.svg",
+  "Tailwind CSS": "/images/tech/simple-icons/tailwindcss.svg",
+  Laravel: "/images/tech/simple-icons/laravel.svg",
+  Flutter: "/images/tech/simple-icons/flutter.svg",
+  PHP: "/images/tech/simple-icons/php.svg",
+  Dart: "/images/tech/simple-icons/dart.svg",
+  Java: "/images/tech/simple-icons/openjdk.svg",
+  "Spring Boot": "/images/tech/simple-icons/springboot.svg",
+  Python: "/images/tech/simple-icons/python.svg",
+  Streamlit: "/images/tech/simple-icons/streamlit.svg",
+  OpenCV: "/images/tech/simple-icons/opencv.svg",
+  LangChain: "/images/tech/simple-icons/langchain.svg",
+  PostgreSQL: "/images/tech/simple-icons/postgresql.svg",
+  FastAPI: "/images/tech/simple-icons/fastapi.svg",
+  Groq: "/images/tech/groq.svg",
+  "Groq AI": "/images/tech/groq.svg",
 };
 
 function getProjectCategory(project: (typeof projectsData)[number]): ProjectCategory {
@@ -82,13 +82,13 @@ function FallbackTechnologyIcon() {
 }
 
 function TechnologyIcon({ technology }: { technology: string }) {
-  const slug = TECHNOLOGY_ICONS[technology];
+  const iconPath = TECHNOLOGY_ICONS[technology];
 
-  if (!slug) return <FallbackTechnologyIcon />;
+  if (!iconPath) return <FallbackTechnologyIcon />;
 
   return (
     <img
-      src={`https://cdn.simpleicons.org/${slug}`}
+      src={iconPath}
       alt=""
       aria-hidden="true"
       loading="lazy"

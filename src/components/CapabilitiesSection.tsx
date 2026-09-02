@@ -5,22 +5,22 @@
 import SectionArtwork from "@/components/SectionArtwork";
 
 const techStack = [
-  { name: "Python", icon: "https://cdn.simpleicons.org/python/09090B" },
-  { name: "Go", icon: "https://cdn.simpleicons.org/go/09090B" },
-  { name: "Node.js", icon: "https://cdn.simpleicons.org/nodedotjs/09090B" },
-  { name: "React", icon: "https://cdn.simpleicons.org/react/09090B" },
-  { name: "Next.js", icon: "https://cdn.simpleicons.org/nextdotjs/09090B" },
-  { name: "Tailwind", icon: "https://cdn.simpleicons.org/tailwindcss/09090B" },
-  { name: "Laravel", icon: "https://cdn.simpleicons.org/laravel/09090B" },
-  { name: "PHP", icon: "https://cdn.simpleicons.org/php/09090B" },
-  { name: "Flutter", icon: "https://cdn.simpleicons.org/flutter/09090B" },
-  { name: "Dart", icon: "https://cdn.simpleicons.org/dart/09090B" },
-  { name: "PostgreSQL", icon: "https://cdn.simpleicons.org/postgresql/09090B" },
-  { name: "MySQL", icon: "https://cdn.simpleicons.org/mysql/09090B" },
-  { name: "MongoDB", icon: "https://cdn.simpleicons.org/mongodb/09090B" },
-  { name: "Redis", icon: "https://cdn.simpleicons.org/redis/09090B" },
+  { name: "Python", icon: "/images/tech/simple-icons/python-black.svg" },
+  { name: "Go", icon: "/images/tech/simple-icons/go-black.svg" },
+  { name: "Node.js", icon: "/images/tech/simple-icons/nodedotjs-black.svg" },
+  { name: "React", icon: "/images/tech/simple-icons/react-black.svg" },
+  { name: "Next.js", icon: "/images/tech/simple-icons/nextdotjs-black.svg" },
+  { name: "Tailwind", icon: "/images/tech/simple-icons/tailwindcss-black.svg" },
+  { name: "Laravel", icon: "/images/tech/simple-icons/laravel-black.svg" },
+  { name: "PHP", icon: "/images/tech/simple-icons/php-black.svg" },
+  { name: "Flutter", icon: "/images/tech/simple-icons/flutter-black.svg" },
+  { name: "Dart", icon: "/images/tech/simple-icons/dart-black.svg" },
+  { name: "PostgreSQL", icon: "/images/tech/simple-icons/postgresql-black.svg" },
+  { name: "MySQL", icon: "/images/tech/simple-icons/mysql-black.svg" },
+  { name: "MongoDB", icon: "/images/tech/simple-icons/mongodb-black.svg" },
+  { name: "Redis", icon: "/images/tech/simple-icons/redis-black.svg" },
   { name: "AWS", icon: "/images/tech/aws.svg" },
-  { name: "Docker", icon: "https://cdn.simpleicons.org/docker/09090B" },
+  { name: "Docker", icon: "/images/tech/simple-icons/docker-black.svg" },
 ];
 
 export default function CapabilitiesSection() {

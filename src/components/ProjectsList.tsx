@@ -29,6 +29,27 @@ function getProjectCategory(project: Project) {
   return "Web";
 }
 
+function CarouselArrowIcon({ direction }: { direction: "previous" | "next" }) {
+  return (
+    <svg
+      aria-hidden="true"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d={direction === "previous" ? "M15 18L9 12L15 6" : "M9 18L15 12L9 6"}
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function GalleryCard({ project, priority = false }: { project: Project; priority?: boolean }) {
   return (
     <div className="flex h-full w-full flex-col overflow-hidden rounded-[1.65rem] border border-zinc-100 bg-white text-left shadow-[0_12px_36px_rgba(24,24,27,0.065)]">
@@ -144,6 +165,9 @@ export default function ProjectsList() {
     scrollToIndex((currentIndex + 1) % featuredProjects.length);
   };
 
+  const isAtStart = currentIndex === 0;
+  const isAtEnd = currentIndex === featuredProjects.length - 1;
+
   if (!featuredProjects.length) return null;
 
   return (
@@ -166,69 +190,95 @@ export default function ProjectsList() {
         </FadeIn>
 
         <FadeIn delay={0.15}>
-          <div
-            ref={scrollerRef}
-            role="region"
-            aria-roledescription="carousel"
-            aria-label="Selected projects carousel"
-            tabIndex={0}
-            onPointerDown={() => {
-              interactionStartLeft.current = scrollerRef.current?.scrollLeft ?? 0;
-              didScroll.current = false;
-            }}
-            onScroll={handleScroll}
-            onKeyDown={(event) => {
-              if (event.key === "ArrowLeft") {
-                event.preventDefault();
-                showPrevious();
-              }
-              if (event.key === "ArrowRight") {
-                event.preventDefault();
-                showNext();
-              }
-            }}
-            className="-mx-6 flex snap-x snap-mandatory gap-[2%] overflow-x-auto overscroll-x-contain px-[8%] pb-7 pt-2 outline-none [scrollbar-width:none] focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 [&::-webkit-scrollbar]:hidden sm:px-[14%] md:-mx-12 lg:mx-0 lg:gap-6 lg:px-0"
-          >
-            {featuredProjects.map((project, index) => {
-              const isActive = index === currentIndex;
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-2 left-0 right-0 z-20 hidden items-center justify-between xl:flex">
+              <button
+                type="button"
+                aria-label="Previous selected project"
+                aria-controls="selected-projects-carousel"
+                disabled={isAtStart}
+                onClick={() => scrollToIndex(currentIndex - 1)}
+                className="pointer-events-auto inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 shadow-[0_8px_20px_rgba(24,24,27,0.08)] transition-[border-color,background-color,color,opacity] duration-200 hover:border-zinc-400 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                <CarouselArrowIcon direction="previous" />
+              </button>
+              <button
+                type="button"
+                aria-label="Next selected project"
+                aria-controls="selected-projects-carousel"
+                disabled={isAtEnd}
+                onClick={() => scrollToIndex(currentIndex + 1)}
+                className="pointer-events-auto inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 shadow-[0_8px_20px_rgba(24,24,27,0.08)] transition-[border-color,background-color,color,opacity] duration-200 hover:border-zinc-400 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                <CarouselArrowIcon direction="next" />
+              </button>
+            </div>
 
-              return (
-                <div
-                  key={project.id}
-                  ref={(node) => {
-                    cardRefs.current[index] = node;
-                  }}
-                  className="h-[400px] w-[84%] shrink-0 snap-center snap-always sm:h-[480px] sm:w-[72%] lg:h-[500px] lg:w-[72%] xl:h-[520px] xl:w-[70%]"
-                >
-                  <button
-                    type="button"
-                    aria-label={isActive ? `Open ${project.title}` : `Show ${project.title}`}
-                    aria-current={isActive ? "true" : undefined}
-                    onClick={(event) => {
-                      if (didScroll.current) {
-                        event.preventDefault();
-                        return;
-                      }
+            <div
+              id="selected-projects-carousel"
+              ref={scrollerRef}
+              role="region"
+              aria-roledescription="carousel"
+              aria-label="Selected projects carousel"
+              tabIndex={0}
+              onPointerDown={() => {
+                interactionStartLeft.current = scrollerRef.current?.scrollLeft ?? 0;
+                didScroll.current = false;
+              }}
+              onScroll={handleScroll}
+              onKeyDown={(event) => {
+                if (event.key === "ArrowLeft") {
+                  event.preventDefault();
+                  showPrevious();
+                }
+                if (event.key === "ArrowRight") {
+                  event.preventDefault();
+                  showNext();
+                }
+              }}
+              className="-mx-6 flex snap-x snap-mandatory gap-[2%] overflow-x-auto overscroll-x-contain px-[8%] pb-7 pt-2 outline-none [scrollbar-width:none] focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 [&::-webkit-scrollbar]:hidden sm:px-[14%] md:-mx-12 lg:mx-0 lg:gap-6 lg:px-0"
+            >
+              {featuredProjects.map((project, index) => {
+                const isActive = index === currentIndex;
 
-                      if (!isActive) {
-                        scrollToIndex(index);
-                        return;
-                      }
-
-                      const href = getProjectHref(project);
-                      if (href.startsWith("/")) {
-                        window.location.href = href;
-                      } else {
-                        window.open(href, "_blank", "noopener,noreferrer");
-                      }
+                return (
+                  <div
+                    key={project.id}
+                    ref={(node) => {
+                      cardRefs.current[index] = node;
                     }}
-                    className="h-full w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
+                    className="h-[400px] w-[84%] shrink-0 snap-center snap-always sm:h-[480px] sm:w-[72%] lg:h-[500px] lg:w-[72%] xl:h-[520px] xl:w-[70%]"
                   >
-                    <GalleryCard project={project} priority={index < 2} />
-                  </button>
-                </div>
-              );
-            })}
+                    <button
+                      type="button"
+                      aria-label={isActive ? `Open ${project.title}` : `Show ${project.title}`}
+                      aria-current={isActive ? "true" : undefined}
+                      onClick={(event) => {
+                        if (didScroll.current) {
+                          event.preventDefault();
+                          return;
+                        }
+
+                        if (!isActive) {
+                          scrollToIndex(index);
+                          return;
+                        }
+
+                        const href = getProjectHref(project);
+                        if (href.startsWith("/")) {
+                          window.location.href = href;
+                        } else {
+                          window.open(href, "_blank", "noopener,noreferrer");
+                        }
+                      }}
+                      className="h-full w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
+                    >
+                      <GalleryCard project={project} priority={index < 2} />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           <p className="mt-1 text-center text-[11px] font-medium text-zinc-950 sm:hidden">
