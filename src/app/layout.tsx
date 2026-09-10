@@ -10,7 +10,7 @@ const geist = Geist({
   display: "swap",
 });
 
-const siteTitle = "Tisee — Software, Automation & AI";
+const siteTitle = "Tisee | Software, Automation & AI";
 const siteDescription =
   "Backend development, automation, AI, and selected work.";
 
