@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { BrandMark } from "@/components/BrandMark";
 
-export const alt = "Tisee — Software, Automation & AI";
+export const alt = "Tisee | Software, Automation & AI";
 export const size = {
   width: 1200,
   height: 630,
