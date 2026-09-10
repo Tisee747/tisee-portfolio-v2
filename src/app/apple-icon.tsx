@@ -17,10 +17,11 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "transparent",
+          background: "#FFFFFF",
+          borderRadius: "50%",
         }}
       >
-        <BrandMark size={172} color="#09090B" cutout="transparent" />
+        <BrandMark size={180} color="#09090B" cutout="#FFFFFF" />
       </div>
     ),
     size,
