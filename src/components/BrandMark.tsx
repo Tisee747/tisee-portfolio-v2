@@ -22,32 +22,39 @@ export function BrandMark({
       className={className}
     >
       <path
-        d="M28 9A23 23 0 0 0 9 28"
+        d="M9 28C10.8 18 19 10.8 28 9"
         stroke={color}
         strokeWidth="3.25"
         strokeLinecap="round"
       />
       <path
-        d="M36 9A23 23 0 0 1 55 28"
+        d="M36 9C45 10.8 53.2 18 55 28"
         stroke={color}
         strokeWidth="3.25"
         strokeLinecap="round"
       />
       <path
-        d="M55 36A23 23 0 0 1 36 55"
+        d="M55 36C53.2 46 45 53.2 36 55"
         stroke={color}
         strokeWidth="3.25"
         strokeLinecap="round"
       />
       <path
-        d="M28 55A23 23 0 0 1 9 36"
+        d="M28 55C19 53.2 10.8 46 9 36"
         stroke={color}
         strokeWidth="3.25"
         strokeLinecap="round"
       />
       <circle cx="9" cy="32" r="3.7" fill={cutout} stroke={color} strokeWidth="2.25" />
       <circle cx="55" cy="32" r="3.7" fill={color} />
-      <path d="M20 17H44V24H35.25V42L32 47L28.75 42V24H20V17Z" fill={color} />
+      <path
+        d="M20.5 18.5L43.5 15.5L44.3 22L21.2 25L20.5 18.5Z"
+        fill={color}
+      />
+      <path
+        d="M29.9 23.8L36.8 22.9L35.3 42.2L32 47L28.7 43.4L29.9 23.8Z"
+        fill={color}
+      />
     </svg>
   );
 }
