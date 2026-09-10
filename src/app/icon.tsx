@@ -17,11 +17,10 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#09090B",
-          borderRadius: 16,
+          background: "transparent",
         }}
       >
-        <BrandMark size={52} color="#FFFFFF" cutout="#09090B" />
+        <BrandMark size={62} color="#09090B" cutout="transparent" />
       </div>
     ),
     size,
