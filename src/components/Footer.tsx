@@ -80,7 +80,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-zinc-100 pt-6 text-xs text-zinc-950 sm:flex-row sm:items-center sm:justify-center lg:mt-12">
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 border-t border-zinc-100 pt-6 text-center text-xs text-zinc-950 sm:flex-row lg:mt-12">
           <span>&copy; 2026 Tisee. All rights reserved.</span>
         </div>
       </div>
