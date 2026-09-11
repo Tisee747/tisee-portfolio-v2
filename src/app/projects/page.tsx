@@ -188,7 +188,7 @@ export default function ProjectsPage() {
       <SectionArtwork variant="archive" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col">
-        <FadeIn className="flex flex-col gap-8 border-b border-zinc-100 pb-12 sm:pb-16 md:flex-row md:items-end md:justify-between">
+        <FadeIn className="flex flex-col gap-4 border-b border-zinc-100 pb-6 sm:gap-5 sm:pb-8 md:flex-row md:items-end md:justify-between md:gap-8 md:pb-16">
           <div className="max-w-2xl">
             <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
               All time work
@@ -201,7 +201,7 @@ export default function ProjectsPage() {
             </p>
           </div>
 
-          <div ref={filterMenuRef} className="relative flex md:justify-end">
+          <div ref={filterMenuRef} className="relative flex justify-end">
             <button
               ref={filterTriggerRef}
               type="button"
@@ -209,7 +209,7 @@ export default function ProjectsPage() {
               aria-haspopup="menu"
               aria-expanded={isFilterOpen}
               aria-controls="project-filter-menu"
-              className="inline-flex min-h-11 items-center gap-2.5 rounded-full border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-950 shadow-[0_1px_2px_rgba(24,24,27,0.04)] transition-[border-color,box-shadow,transform] duration-200 hover:border-zinc-300 hover:shadow-[0_8px_22px_rgba(24,24,27,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 active:translate-y-px"
+              className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 text-xs font-medium text-zinc-950 shadow-[0_1px_2px_rgba(24,24,27,0.04)] transition-[border-color,box-shadow,transform] duration-200 hover:border-zinc-300 hover:shadow-[0_8px_22px_rgba(24,24,27,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 active:translate-y-px sm:min-h-11 sm:gap-2.5 sm:rounded-full sm:px-4 sm:text-sm"
             >
               <FilterIcon />
               <span>{activeFilter === "All" ? "Filter" : activeFilter}</span>
@@ -220,7 +220,7 @@ export default function ProjectsPage() {
                 id="project-filter-menu"
                 role="menu"
                 aria-label="Filter projects"
-                className="absolute left-0 top-[calc(100%+0.625rem)] z-30 w-48 rounded-2xl border border-zinc-200 bg-white p-1.5 shadow-[0_18px_48px_rgba(24,24,27,0.13)] md:left-auto md:right-0"
+                className="absolute right-0 top-[calc(100%+0.625rem)] z-30 w-44 rounded-2xl border border-zinc-200 bg-white p-1.5 shadow-[0_18px_48px_rgba(24,24,27,0.13)] sm:w-48"
               >
                 {FILTERS.map((filter) => {
                   const isActive = activeFilter === filter;
