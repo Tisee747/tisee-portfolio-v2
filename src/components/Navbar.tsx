@@ -72,9 +72,9 @@ export default function Navbar() {
 
             <Link
               href="/#contact"
-              className="group relative ml-0.5 inline-flex h-9 min-h-9 items-center justify-center overflow-hidden rounded-[10px] border border-zinc-950 bg-white px-3 text-[10.5px] font-semibold leading-none tracking-[0.015em] text-zinc-950 shadow-[0_2px_0_#18181b,0_5px_12px_rgba(9,9,11,0.08)] transition-[transform,background-color,color,box-shadow] duration-200 ease-out before:pointer-events-none before:absolute before:inset-[2px] before:rounded-[7px] before:border before:border-zinc-200 before:content-[''] hover:-translate-y-px hover:bg-zinc-950 hover:text-white hover:shadow-[0_1px_0_#18181b,0_7px_16px_rgba(9,9,11,0.12)] active:translate-y-px active:shadow-[0_1px_0_#18181b,0_4px_10px_rgba(9,9,11,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 motion-reduce:transform-none sm:ml-1 sm:h-11 sm:min-h-11 sm:rounded-[13px] sm:px-4 sm:text-[12px] sm:tracking-[0.035em] sm:shadow-[0_3px_0_#18181b,0_8px_20px_rgba(9,9,11,0.10)] sm:before:inset-[3px] sm:before:rounded-[9px]"
+              className="ml-0.5 inline-flex h-9 min-h-9 items-center justify-center whitespace-nowrap rounded-[10px] bg-zinc-950 px-3 text-[10.5px] font-semibold leading-none tracking-[0.015em] text-white shadow-[0_5px_14px_rgba(9,9,11,0.16)] ring-1 ring-inset ring-white/10 transition-[transform,background-color,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-black hover:shadow-[0_8px_18px_rgba(9,9,11,0.20)] active:translate-y-0 active:shadow-[0_3px_9px_rgba(9,9,11,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 motion-reduce:transform-none sm:ml-1 sm:h-11 sm:min-h-11 sm:rounded-[11px] sm:px-4 sm:text-[12px] sm:tracking-[0.035em]"
             >
-              <span className="relative z-10">Hire me</span>
+              Hire me
             </Link>
           </div>
         </div>
