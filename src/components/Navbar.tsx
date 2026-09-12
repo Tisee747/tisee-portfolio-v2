@@ -55,22 +55,31 @@ export default function Navbar() {
           <div className="flex min-w-0 items-center gap-1 sm:gap-2">
             {navItems.map((item) => {
               const isActive = item.path === "/projects" && pathname === "/projects";
+              const className = `relative inline-flex min-h-9 items-center whitespace-nowrap px-1.5 text-[11px] font-medium leading-none text-zinc-950 transition-colors duration-200 after:absolute after:bottom-1 after:left-1.5 after:right-1.5 after:h-px after:origin-left after:bg-zinc-900 after:transition-transform after:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:min-h-11 sm:px-3 sm:text-[13px] sm:after:bottom-1.5 ${
+                isActive ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100 focus-visible:after:scale-x-100"
+              }`;
+
+              if (item.path.startsWith("/#")) {
+                return (
+                  <a key={item.path} href={item.path} className={className}>
+                    {item.name}
+                  </a>
+                );
+              }
 
               return (
                 <Link
                   key={item.path}
                   href={item.path}
                   aria-current={isActive ? "page" : undefined}
-                  className={`relative inline-flex min-h-9 items-center whitespace-nowrap px-1.5 text-[11px] font-medium leading-none text-zinc-950 transition-colors duration-200 after:absolute after:bottom-1 after:left-1.5 after:right-1.5 after:h-px after:origin-left after:bg-zinc-900 after:transition-transform after:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:min-h-11 sm:px-3 sm:text-[13px] sm:after:bottom-1.5 ${
-                    isActive ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100 focus-visible:after:scale-x-100"
-                  }`}
+                  className={className}
                 >
                   {item.name}
                 </Link>
               );
             })}
 
-            <Link
+            <a
               href="/#contact"
               className="group relative ml-0.5 inline-flex h-8 min-h-8 items-center justify-center whitespace-nowrap rounded-[9px] border border-zinc-950 bg-zinc-950 px-2.5 text-[10px] font-semibold leading-none tracking-[0.015em] text-white transition-[transform,background-color,color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-white hover:text-zinc-950 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 motion-reduce:transform-none sm:ml-1 sm:h-9 sm:min-h-9 sm:rounded-[10px] sm:px-3 sm:text-[11px] sm:tracking-[0.025em]"
             >
@@ -79,7 +88,7 @@ export default function Navbar() {
                 className="pointer-events-none absolute -inset-[4px] rounded-[12px] border border-zinc-950 [clip-path:inset(0_100%_0_0_round_12px)] transition-[clip-path] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:[clip-path:inset(0_0_0_0_round_12px)] sm:rounded-[13px]"
               />
               <span className="relative z-10">Hire me</span>
-            </Link>
+            </a>
           </div>
         </div>
       </nav>
