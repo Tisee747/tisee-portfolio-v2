@@ -72,19 +72,13 @@ export default function Navbar() {
 
             <Link
               href="/#contact"
-              className="group relative ml-0.5 inline-flex h-8 min-h-8 items-center justify-center overflow-hidden whitespace-nowrap rounded-[9px] bg-zinc-950 px-2.5 text-[10px] font-semibold leading-none tracking-[0.015em] text-white ring-1 ring-inset ring-zinc-950 transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03] hover:bg-black active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 motion-reduce:transform-none sm:ml-1 sm:h-9 sm:min-h-9 sm:rounded-[10px] sm:px-3 sm:text-[11px] sm:tracking-[0.025em]"
+              className="group relative ml-0.5 inline-flex h-8 min-h-8 items-center justify-center whitespace-nowrap rounded-[9px] border border-zinc-950 bg-zinc-950 px-2.5 text-[10px] font-semibold leading-none tracking-[0.015em] text-white transition-[transform,background-color,color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-white hover:text-zinc-950 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 motion-reduce:transform-none sm:ml-1 sm:h-9 sm:min-h-9 sm:rounded-[10px] sm:px-3 sm:text-[11px] sm:tracking-[0.025em]"
             >
-              <span className="relative block overflow-hidden py-px">
-                <span className="block transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-full">
-                  Hire me
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="absolute left-0 top-full block transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-full"
-                >
-                  Hire me
-                </span>
-              </span>
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -inset-[4px] rounded-[12px] border border-zinc-950 [clip-path:inset(0_100%_0_0_round_12px)] transition-[clip-path] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:[clip-path:inset(0_0_0_0_round_12px)] sm:rounded-[13px]"
+              />
+              <span className="relative z-10">Hire me</span>
             </Link>
           </div>
         </div>
