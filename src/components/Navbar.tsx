@@ -72,7 +72,7 @@ export default function Navbar() {
 
             <Link
               href="/#contact"
-              className="ml-0.5 inline-flex h-9 min-h-9 items-center justify-center whitespace-nowrap rounded-[10px] bg-zinc-950 px-3 text-[10.5px] font-semibold leading-none tracking-[0.015em] text-white shadow-[0_5px_14px_rgba(9,9,11,0.16)] ring-1 ring-inset ring-white/10 transition-[transform,background-color,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-black hover:shadow-[0_8px_18px_rgba(9,9,11,0.20)] active:translate-y-0 active:shadow-[0_3px_9px_rgba(9,9,11,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 motion-reduce:transform-none sm:ml-1 sm:h-11 sm:min-h-11 sm:rounded-[11px] sm:px-4 sm:text-[12px] sm:tracking-[0.035em]"
+              className="ml-0.5 inline-flex h-8 min-h-8 items-center justify-center whitespace-nowrap rounded-[9px] bg-zinc-950 px-2.5 text-[10px] font-semibold leading-none tracking-[0.015em] text-white shadow-[0_3px_9px_rgba(9,9,11,0.14)] ring-1 ring-inset ring-white/10 transition-[transform,background-color,box-shadow] duration-150 ease-out hover:-translate-y-[2px] hover:scale-[1.02] hover:bg-black hover:shadow-[0_7px_16px_rgba(9,9,11,0.20)] active:translate-y-[1px] active:scale-[0.96] active:shadow-[0_1px_4px_rgba(9,9,11,0.16)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 motion-reduce:transform-none sm:ml-1 sm:h-9 sm:min-h-9 sm:rounded-[10px] sm:px-3 sm:text-[11px] sm:tracking-[0.025em]"
             >
               Hire me
             </Link>
