@@ -228,7 +228,7 @@ export default function ProjectsPage() {
               aria-haspopup="menu"
               aria-expanded={isFilterOpen}
               aria-controls="project-filter-menu"
-              className="inline-flex min-h-11 items-center gap-2.5 rounded-full border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-950 shadow-[0_1px_2px_rgba(24,24,27,0.04)] transition-[border-color,box-shadow,transform] duration-200 hover:border-zinc-300 hover:shadow-[0_8px_22px_rgba(24,24,27,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 active:translate-y-px"
+              className="inline-flex min-h-11 items-center gap-2.5 rounded-md px-1 text-sm font-medium text-zinc-950 transition-opacity duration-200 hover:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
             >
               <FilterIcon />
               <span>{activeFilter === "All" ? "Filter" : activeFilter}</span>
