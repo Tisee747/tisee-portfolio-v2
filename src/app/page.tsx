@@ -73,13 +73,13 @@ export default function Home() {
                 >
                   View Resume
                 </Link>
-                <Link
-                  href="#projects"
+                <a
+                  href="/#projects"
                   className="group inline-flex min-h-12 items-center gap-2 rounded-full border border-zinc-200 bg-white px-7 text-sm font-medium text-zinc-900 transition-colors hover:border-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
                 >
                   View Work
                   <ExternalArrowIcon />
-                </Link>
+                </a>
               </div>
             </FadeIn>
 
