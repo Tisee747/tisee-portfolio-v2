@@ -1,22 +1,152 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #F4F4F5;
+  --color-white: #FFFFFF;
+  --color-background: #FFFFFF;
   --color-foreground: #09090B;
 }
 
 :root {
-  --background: #F4F4F5;
+  --background: #FFFFFF;
   --foreground: #09090B;
+  color-scheme: light;
+}
+
+html,
+body {
+  margin: 0;
+  background-color: #FFFFFF !important;
+  background-image: none !important;
 }
 
 body {
-  background-color: var(--background);
+  min-height: 100vh;
+  background-color: var(--background) !important;
   color: var(--foreground);
+}
+
+main,
+section,
+footer,
+nav {
+  background-color: #FFFFFF;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Keep secondary copy readable without flattening the hierarchy. */
+.text-zinc-500 {
+  color: #52525B !important;
+}
+
+.text-zinc-400 {
+  color: #71717A !important;
+}
+
+/* The hero motion sits on a literal white canvas; only the strokes carry tone. */
+.tisee-flow-canvas path {
+  stroke: #D4D4D8 !important;
+  stroke-opacity: 0.3;
+}
+
+.tisee-flow-canvas-secondary path {
+  stroke-opacity: 0.2;
+}
+
+@keyframes tisee-flow {
+  0% {
+    transform: translate3d(-1.5%, -0.5%, 0);
+    opacity: 0.78;
+  }
+
+  50% {
+    transform: translate3d(0.5%, 0.25%, 0);
+    opacity: 0.92;
+  }
+
+  100% {
+    transform: translate3d(1.5%, 0.75%, 0);
+    opacity: 0.82;
+  }
+}
+
+.tisee-flow-canvas {
+  animation: tisee-flow 28s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+.tisee-flow-canvas-secondary {
+  animation-delay: -9s;
+  animation-duration: 34s;
+}
+
+@keyframes tisee-section-artwork-drift {
+  0%,
+  100% {
+    transform: translate3d(-2px, 1px, 0) rotate(-0.12deg);
+    opacity: 0.78;
+  }
+
+  50% {
+    transform: translate3d(3px, -2px, 0) rotate(0.18deg);
+    opacity: 0.92;
+  }
+}
+
+.tisee-section-artwork-motion {
+  position: absolute;
+  inset: 0;
+  animation: tisee-section-artwork-drift 30s ease-in-out infinite;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+
+.tisee-section-artwork-experience .tisee-section-artwork-motion {
+  animation-delay: -4s;
+  animation-duration: 28s;
+}
+
+.tisee-section-artwork-capabilities .tisee-section-artwork-motion {
+  animation-delay: -11s;
+  animation-duration: 34s;
+}
+
+.tisee-section-artwork-projects .tisee-section-artwork-motion {
+  animation-delay: -18s;
+  animation-duration: 31s;
+}
+
+.tisee-section-artwork-contact .tisee-section-artwork-motion {
+  animation-delay: -7s;
+  animation-duration: 27s;
+}
+
+.tisee-section-artwork-archive .tisee-section-artwork-motion {
+  animation-delay: -14s;
+  animation-duration: 36s;
+}
+
+.tisee-section-artwork-cta .tisee-section-artwork-motion {
+  animation-delay: -22s;
+  animation-duration: 25s;
+}
+
+@keyframes tisee-tech-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.tisee-tech-marquee {
+  animation: tisee-tech-marquee 38s linear infinite;
+  contain: layout paint;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -31,5 +161,20 @@ html {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .tisee-flow-canvas,
+  .tisee-flow-canvas-secondary,
+  .tisee-tech-marquee,
+  .tisee-section-artwork-motion {
+    animation: none !important;
+    will-change: auto;
+  }
+
+  .tisee-flow-canvas,
+  .tisee-flow-canvas-secondary,
+  .tisee-section-artwork-motion {
+    transform: none !important;
+    opacity: 0.86 !important;
   }
 }

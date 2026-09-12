@@ -1,52 +1,82 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { FadeIn } from "@/components/FadeIn";
+import SectionArtwork from "@/components/SectionArtwork";
 import { projectsData } from "@/data/portfolioData";
 import type { Project } from "@/types";
 
-const featuredProjects = projectsData
-  .filter((project) => project.demoUrl || project.repoUrl)
-  .slice(0, 4);
+const SELECTED_PROJECT_IDS = [
+  "medusa-npc",
+  "medusa-algorithm-simulator",
+  "posyandu-pintar",
+] as const;
+
+const featuredProjects = SELECTED_PROJECT_IDS
+  .map((id) => projectsData.find((project) => project.id === id))
+  .filter((project): project is Project => Boolean(project));
 
 function getProjectHref(project: Project) {
   return project.demoUrl ?? project.repoUrl ?? "/projects";
 }
 
 function getProjectCategory(project: Project) {
+  if (project.category) return project.category;
   if (project.projectLayout === "none") return "Backend";
   if (project.projectLayout === "mobile") return "Mobile";
   if (project.projectLayout === "hybrid") return "Fullstack";
   return "Web";
 }
 
-function ProjectPreview({ project }: { project: Project }) {
+function CarouselArrowIcon({ direction }: { direction: "previous" | "next" }) {
   return (
-    <div className="flex h-full min-h-[250px] w-full flex-col overflow-hidden rounded-3xl border border-zinc-200 bg-zinc-50 p-3 text-left shadow-sm transition-transform duration-500 group-hover:-translate-y-1 sm:p-4">
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white">
+    <svg
+      aria-hidden="true"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d={direction === "previous" ? "M15 18L9 12L15 6" : "M9 18L15 12L9 6"}
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function GalleryCard({ project, priority = false }: { project: Project; priority?: boolean }) {
+  return (
+    <div className="flex h-full w-full flex-col overflow-hidden rounded-[1.65rem] border border-zinc-100 bg-white text-left shadow-[0_12px_36px_rgba(24,24,27,0.065)]">
+      <div className="relative min-h-0 flex-1 overflow-hidden bg-zinc-50">
         {project.images?.[0] ? (
           <Image
             src={project.images[0]}
-            alt=""
+            alt={`${project.title} project screenshot`}
             fill
-            sizes="(min-width: 1024px) 260px, 30vw"
-            className="object-contain opacity-60"
+            sizes="(min-width: 1280px) 760px, (min-width: 1024px) 720px, (min-width: 640px) 72vw, 84vw"
+            className="object-contain p-2 sm:p-3 lg:p-4"
+            priority={priority}
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-xs text-zinc-400">
-            No image
-          </div>
+          <div className="flex h-full items-center justify-center text-sm text-zinc-950">No image available</div>
         )}
       </div>
-      <div className="mt-auto px-1 pt-4">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">
+
+      <div className="border-t border-zinc-100 p-5 sm:p-7 lg:p-6">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
           {getProjectCategory(project)}
         </p>
-        <p className="mt-2 line-clamp-2 text-base font-medium tracking-tight text-zinc-700">
+        <h3 className="mt-2 text-2xl font-medium tracking-tight text-zinc-950 sm:text-3xl">
           {project.title}
+        </h3>
+        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-zinc-950 sm:text-base lg:line-clamp-2">
+          {project.description}
         </p>
       </div>
     </div>
@@ -55,254 +85,205 @@ function ProjectPreview({ project }: { project: Project }) {
 
 export default function ProjectsList() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [isPointerOver, setIsPointerOver] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
-
-  const activeProject = featuredProjects[currentIndex];
-  const previousProject = featuredProjects[
-    (currentIndex - 1 + featuredProjects.length) % featuredProjects.length
-  ];
-  const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.length];
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const settleTimer = useRef<number | null>(null);
+  const clickResetTimer = useRef<number | null>(null);
+  const interactionStartLeft = useRef(0);
+  const didScroll = useRef(false);
 
   useEffect(() => {
-    if (
-      featuredProjects.length < 2 ||
-      shouldReduceMotion ||
-      isPaused ||
-      isPointerOver ||
-      isFocused
-    ) {
-      return;
+    return () => {
+      if (settleTimer.current !== null) window.clearTimeout(settleTimer.current);
+      if (clickResetTimer.current !== null) window.clearTimeout(clickResetTimer.current);
+    };
+  }, []);
+
+  const scrollToIndex = (index: number) => {
+    const scroller = scrollerRef.current;
+    const card = cardRefs.current[index];
+    if (!scroller || !card) return;
+
+    const left = card.offsetLeft - (scroller.clientWidth - card.offsetWidth) / 2;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    setCurrentIndex(index);
+    scroller.scrollTo({
+      left,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  };
+
+  const syncIndexFromScroll = () => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+
+    const viewportCenter = scroller.scrollLeft + scroller.clientWidth / 2;
+    let closestIndex = 0;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    cardRefs.current.forEach((card, index) => {
+      if (!card) return;
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(cardCenter - viewportCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    setCurrentIndex(closestIndex);
+
+    if (clickResetTimer.current !== null) {
+      window.clearTimeout(clickResetTimer.current);
+    }
+    clickResetTimer.current = window.setTimeout(() => {
+      didScroll.current = false;
+    }, 90);
+  };
+
+  const handleScroll = () => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+
+    if (Math.abs(scroller.scrollLeft - interactionStartLeft.current) > 6) {
+      didScroll.current = true;
     }
 
-    const interval = window.setInterval(() => {
-      setCurrentIndex((previousIndex) => (previousIndex + 1) % featuredProjects.length);
-    }, 6500);
+    if (settleTimer.current !== null) {
+      window.clearTimeout(settleTimer.current);
+    }
 
-    return () => window.clearInterval(interval);
-  }, [isFocused, isPaused, isPointerOver, shouldReduceMotion]);
-
-  const showNext = () => {
-    setCurrentIndex((previousIndex) => (previousIndex + 1) % featuredProjects.length);
+    settleTimer.current = window.setTimeout(syncIndexFromScroll, 90);
   };
 
   const showPrevious = () => {
-    setCurrentIndex(
-      (previousIndex) => (previousIndex - 1 + featuredProjects.length) % featuredProjects.length,
-    );
+    scrollToIndex((currentIndex - 1 + featuredProjects.length) % featuredProjects.length);
   };
 
-  if (!activeProject) return null;
+  const showNext = () => {
+    scrollToIndex((currentIndex + 1) % featuredProjects.length);
+  };
+
+  const isAtStart = currentIndex === 0;
+  const isAtEnd = currentIndex === featuredProjects.length - 1;
+
+  if (!featuredProjects.length) return null;
 
   return (
-    <section
-      id="projects"
-      className="relative flex w-full flex-col justify-center overflow-hidden border-t border-zinc-100 bg-white py-24"
-    >
-      {/* Decorative background for Projects */}
-      <svg
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.03]"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        <defs>
-          <pattern id="plus-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M30 25 V35 M25 30 H35" stroke="black" strokeWidth="2" strokeLinecap="round" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#plus-pattern)" />
-      </svg>
+    <section id="projects" className="relative flex w-full flex-col justify-center overflow-hidden bg-white pb-10 pt-20 md:pb-12 md:pt-24 lg:pt-28">
+      <SectionArtwork variant="projects" />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 md:px-12">
-        <FadeIn className="mb-10 flex flex-col gap-4 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
-          <div>
+        <FadeIn className="mb-8 flex items-end justify-between gap-5 sm:mb-10 lg:mb-12">
+          <div className="min-w-0">
             <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
-              A few things I&apos;ve built
+              Selected projects
             </p>
-            <h2 className="text-4xl font-medium tracking-tight text-neutral-900 md:text-5xl">
-              Work Gallery
+            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-zinc-950 md:text-5xl">
+              A few things I&apos;ve built.
             </h2>
           </div>
-          <p className="text-sm text-zinc-400 sm:pb-1">
+          <p className="shrink-0 pb-1 text-xs font-medium text-zinc-950 sm:text-sm">
             {String(currentIndex + 1).padStart(2, "0")} / {String(featuredProjects.length).padStart(2, "0")}
           </p>
         </FadeIn>
 
-        <FadeIn delay={0.2}>
-          <div
-            role="region"
-            aria-roledescription="carousel"
-            aria-label="Featured work gallery"
-            tabIndex={0}
-            onKeyDown={(event) => {
-              if (event.key === "ArrowLeft") {
-                event.preventDefault();
-                showPrevious();
-              }
-              if (event.key === "ArrowRight") {
-                event.preventDefault();
-                showNext();
-              }
-            }}
-            onPointerEnter={() => setIsPointerOver(true)}
-            onPointerLeave={() => setIsPointerOver(false)}
-            onFocusCapture={() => setIsFocused(true)}
-            onBlurCapture={(event) => {
-              const nextTarget = event.relatedTarget as Node | null;
-              if (!nextTarget || !event.currentTarget.contains(nextTarget)) {
-                setIsFocused(false);
-              }
-            }}
-            className="relative overflow-hidden rounded-[2rem] border border-zinc-200 bg-white outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
-          >
-            <div className="relative flex min-h-[470px] items-center justify-center px-4 py-6 sm:min-h-[520px] sm:px-8 sm:py-10">
+        <FadeIn delay={0.15}>
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-2 z-20 hidden items-center justify-between xl:flex xl:-left-16 xl:-right-16">
               <button
                 type="button"
-                onClick={showPrevious}
-                aria-label={`Show previous project: ${previousProject.title}`}
-                className="group absolute left-[-12%] top-1/2 hidden h-[72%] w-[28%] -translate-y-1/2 text-left opacity-60 transition-opacity hover:opacity-80 focus-visible:z-20 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:flex lg:left-[-4%] lg:w-[24%]"
+                aria-label="Previous selected project"
+                aria-controls="selected-projects-carousel"
+                disabled={isAtStart}
+                onClick={() => scrollToIndex(currentIndex - 1)}
+                className="pointer-events-auto inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 shadow-[0_8px_20px_rgba(24,24,27,0.08)] transition-[border-color,background-color,color,opacity] duration-200 hover:border-zinc-400 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40"
               >
-                <ProjectPreview project={previousProject} />
+                <CarouselArrowIcon direction="previous" />
               </button>
-
-              <Link
-                href={getProjectHref(activeProject)}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Open ${activeProject.title} ${activeProject.demoUrl ? "live demo" : "repository"}`}
-                className="group relative z-10 flex w-full max-w-[700px] flex-col overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-[0_18px_60px_rgba(24,24,27,0.1)] transition-shadow duration-500 hover:shadow-[0_22px_70px_rgba(24,24,27,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 sm:w-[76%] lg:w-[58%]"
-              >
-                <div className="relative aspect-[4/3] w-full overflow-hidden border-b border-zinc-100 bg-zinc-50 sm:aspect-[16/10]">
-                  {activeProject.images?.[0] ? (
-                    <Image
-                      src={activeProject.images[0]}
-                      alt={activeProject.title}
-                      fill
-                      sizes="(min-width: 1024px) 700px, 92vw"
-                      className="object-contain p-4 transition-transform duration-700 ease-out group-hover:scale-[1.02] sm:p-8"
-                      priority={currentIndex === 0}
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center text-sm text-zinc-400">
-                      No image available
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex flex-col p-5 sm:p-8">
-                  <div className="mb-3 flex items-center justify-between gap-4">
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
-                      {getProjectCategory(activeProject)}
-                    </span>
-                    <span className="shrink-0 text-xs font-medium text-zinc-400">
-                      {activeProject.demoUrl ? "Live demo" : "Repository"}
-                      <span className="ml-1 inline-block transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">
-                        ↗
-                      </span>
-                    </span>
-                  </div>
-                  <h3 className="text-2xl font-medium tracking-tight text-neutral-900 sm:text-3xl">
-                    {activeProject.title}
-                  </h3>
-                  <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-zinc-500 sm:text-base">
-                    {activeProject.description}
-                  </p>
-                </div>
-              </Link>
-
               <button
                 type="button"
-                onClick={showNext}
-                aria-label={`Show next project: ${nextProject.title}`}
-                className="group absolute right-[-12%] top-1/2 hidden h-[72%] w-[28%] -translate-y-1/2 text-left opacity-60 transition-opacity hover:opacity-80 focus-visible:z-20 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:flex lg:right-[-4%] lg:w-[24%]"
+                aria-label="Next selected project"
+                aria-controls="selected-projects-carousel"
+                disabled={isAtEnd}
+                onClick={() => scrollToIndex(currentIndex + 1)}
+                className="pointer-events-auto inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 shadow-[0_8px_20px_rgba(24,24,27,0.08)] transition-[border-color,background-color,color,opacity] duration-200 hover:border-zinc-400 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40"
               >
-                <ProjectPreview project={nextProject} />
+                <CarouselArrowIcon direction="next" />
               </button>
             </div>
-          </div>
-        </FadeIn>
 
-        <FadeIn delay={0.3} className="mt-6 flex items-center gap-3">
-          <div className="flex min-w-0 flex-1 items-center gap-0.5 sm:gap-1" aria-label="Choose a project">
-            {featuredProjects.map((project, index) => (
-              <button
-                key={project.id}
-                type="button"
-                onClick={() => setCurrentIndex(index)}
-                aria-label={`Show ${project.title}`}
-                aria-current={currentIndex === index ? "true" : undefined}
-                className="flex h-11 min-w-7 flex-1 items-center justify-center rounded-md px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
-              >
-                <span
-                  className={`block h-1.5 w-full max-w-12 rounded-full transition-colors duration-300 ${
-                    currentIndex === index
-                      ? "bg-zinc-900"
-                      : "bg-zinc-200 hover:bg-zinc-400"
-                  }`}
-                />
-              </button>
-            ))}
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setIsPaused((paused) => !paused)}
-            disabled={Boolean(shouldReduceMotion)}
-            aria-pressed={Boolean(shouldReduceMotion) || isPaused}
-            aria-label={
-              shouldReduceMotion
-                ? "Autoplay disabled because reduced motion is enabled"
-                : isPaused
-                  ? "Resume autoplay"
-                  : "Pause autoplay"
-            }
-            title={
-              shouldReduceMotion
-                ? "Autoplay disabled because reduced motion is enabled"
-                : isPaused
-                  ? "Resume autoplay"
-                  : "Pause autoplay"
-            }
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-700 transition-colors hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 sm:w-auto sm:gap-2 sm:px-3"
-          >
-            {isPaused || shouldReduceMotion ? (
-              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M4 2.75L10 7L4 11.25V2.75Z" fill="currentColor" />
-              </svg>
-            ) : (
-              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M4 3V11M10 3V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            )}
-            <span className="hidden text-xs font-medium sm:inline">
-              {shouldReduceMotion ? "Motion off" : isPaused ? "Play" : "Pause"}
-            </span>
-          </button>
-
-          <div className="flex shrink-0 items-center gap-2">
-            <button
-              type="button"
-              onClick={showPrevious}
-              aria-label="Previous project"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 transition-colors hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+            <div
+              id="selected-projects-carousel"
+              ref={scrollerRef}
+              role="region"
+              aria-roledescription="carousel"
+              aria-label="Selected projects carousel"
+              tabIndex={0}
+              onPointerDown={() => {
+                interactionStartLeft.current = scrollerRef.current?.scrollLeft ?? 0;
+                didScroll.current = false;
+              }}
+              onScroll={handleScroll}
+              onKeyDown={(event) => {
+                if (event.key === "ArrowLeft") {
+                  event.preventDefault();
+                  showPrevious();
+                }
+                if (event.key === "ArrowRight") {
+                  event.preventDefault();
+                  showNext();
+                }
+              }}
+              className="-mx-6 flex snap-x snap-mandatory gap-[2%] overflow-x-auto overscroll-x-contain px-[8%] pb-7 pt-2 outline-none [scrollbar-width:none] focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4 [&::-webkit-scrollbar]:hidden sm:px-[14%] md:-mx-12 lg:mx-0 lg:gap-6 lg:px-0"
             >
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M10 3L6 8L10 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-            <button
-              type="button"
-              onClick={showNext}
-              aria-label="Next project"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-900 bg-zinc-900 text-white transition-colors hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
-            >
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M6 3L10 8L6 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
+              {featuredProjects.map((project, index) => {
+                const isActive = index === currentIndex;
+
+                return (
+                  <div
+                    key={project.id}
+                    ref={(node) => {
+                      cardRefs.current[index] = node;
+                    }}
+                    className="h-[400px] w-[84%] shrink-0 snap-center snap-always sm:h-[480px] sm:w-[72%] lg:h-[500px] lg:w-[72%] xl:h-[520px] xl:w-[70%]"
+                  >
+                    <button
+                      type="button"
+                      aria-label={isActive ? `Open ${project.title}` : `Show ${project.title}`}
+                      aria-current={isActive ? "true" : undefined}
+                      onClick={(event) => {
+                        if (didScroll.current) {
+                          event.preventDefault();
+                          return;
+                        }
+
+                        if (!isActive) {
+                          scrollToIndex(index);
+                          return;
+                        }
+
+                        const href = getProjectHref(project);
+                        if (href.startsWith("/")) {
+                          window.location.href = href;
+                        } else {
+                          window.open(href, "_blank", "noopener,noreferrer");
+                        }
+                      }}
+                      className="h-full w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-4"
+                    >
+                      <GalleryCard project={project} priority={index < 2} />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
+
+          <p className="mt-1 text-center text-[11px] font-medium text-zinc-950 sm:hidden">
+            Swipe to browse
+          </p>
         </FadeIn>
       </div>
     </section>
