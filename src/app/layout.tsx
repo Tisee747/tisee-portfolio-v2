@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import BackToTop from "@/components/BackToTop";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import PandaPet from "@/components/PandaPet";
 import "./globals.css";
 
 const geist = Geist({
@@ -46,6 +47,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex w-full flex-grow flex-col bg-white">{children}</main>
         <Footer />
+        <PandaPet />
         <BackToTop />
       </body>
     </html>
